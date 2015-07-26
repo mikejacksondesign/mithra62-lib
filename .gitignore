@@ -1,0 +1,9 @@
+/mithra62/BackupPro
+/mithra62/bin/phpDocumentor.phar
+/mithra62/bin/phpunit.phar
+/vendor
+/composer.lock
+/composer.phar
+/.settings
+/.buildpath
+/.project
