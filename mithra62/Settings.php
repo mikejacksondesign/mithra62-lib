@@ -357,14 +357,16 @@ abstract class Settings
             $settings = array();
             foreach($_settings AS $setting)
             {
+                //decrypt the value if needed
                 if( in_array($setting['setting_key'], $this->getEncrypted()) && !empty($setting['setting_value']) )
                 {
                     $settings[$setting['setting_key']] = $setting['setting_value'] = $this->getEncrypt()->decode($setting['setting_value']);
                 }
                 
+                //unserialize the value
                 if( in_array($setting['setting_key'], $this->getSerialized()) && !empty($setting['setting_value']) )
                 {
-                    $settings[$setting['setting_key']] = unserialize($setting['setting_value']);
+                    $settings[$setting['setting_key']] = $setting['setting_value'] = unserialize($setting['setting_value']);
                     foreach($settings[$setting['setting_key']] AS $key => $value)
                     {
                         if($value == '')
@@ -373,10 +375,26 @@ abstract class Settings
                         }
                     }
                 }
-                else
+                
+                //sort out new line values
+                if( in_array($setting['setting_key'], $this->getNewLines()) && !empty($setting['setting_value']) )
                 {
-                    $settings[$setting['setting_key']] = $setting['setting_value'];
+                    $settings[$setting['setting_key']] = $setting['setting_value'] = explode("\n", $setting['setting_value']);
+                    foreach($settings[$setting['setting_key']] AS $key => $value)
+                    {
+                        $value = trim($value);
+                        if($value == '')
+                        {
+                            unset($settings[$setting['setting_key']][$key]); //remove blank entries
+                        }
+                        else 
+                        {
+                            $settings[$setting['setting_key']][$key] = $value;
+                        }
+                    }
                 }
+                
+                $settings[$setting['setting_key']] = $setting['setting_value'];
             }
             
             $ignore = array('license_check','license_status');

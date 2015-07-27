@@ -2,7 +2,7 @@
 	"require": {
 		"pimple/pimple": "3.*",
 		"monolog/monolog": "^1.13",
-		"voku/simple-mysqli": "^1.8",
+		"voku/simple-mysqli": "dev-master",
 		"phpseclib/phpseclib": "dev-master",
 		"vlucas/valitron": "dev-master",
 		"phpmailer/phpmailer": "dev-master",

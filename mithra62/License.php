@@ -32,7 +32,7 @@ class License
      * @param \mithra62\Settings $settings
      * @return \mithra62\License
      */
-    public function setSetting(\mithra62\Settings $settings)
+    public function setSetting(\mithra62\Settings $settings) 
     {
         $this->setting = $settings;
         return $this;
