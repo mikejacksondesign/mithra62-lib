@@ -55,6 +55,7 @@ class SettingsTest extends TestFixture
         $this->assertClassHasAttribute('_global_defaults', '\mithra62\tests\_settings');
         $this->assertClassHasAttribute('serialized', '\mithra62\tests\_settings');
         $this->assertClassHasAttribute('custom_options', '\mithra62\tests\_settings');
+        $this->assertClassHasAttribute('new_lines', '\mithra62\tests\_settings');
         $this->assertClassHasAttribute('encrypted', '\mithra62\tests\_settings');
         $this->assertClassHasAttribute('defaults', '\mithra62\tests\_settings');
         $this->assertClassHasAttribute('overrides', '\mithra62\tests\_settings');
@@ -68,6 +69,7 @@ class SettingsTest extends TestFixture
         $this->assertObjectHasAttribute('_global_defaults', $settings);
         $this->assertObjectHasAttribute('serialized', $settings);
         $this->assertObjectHasAttribute('custom_options', $settings);
+        $this->assertObjectHasAttribute('new_lines', $settings);
         $this->assertObjectHasAttribute('encrypted', $settings);
         $this->assertObjectHasAttribute('defaults', $settings);
         $this->assertObjectHasAttribute('overrides', $settings);

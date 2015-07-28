@@ -279,14 +279,6 @@ abstract class Settings
             }
         }    
         
-        foreach($this->getNewLines() AS $new_line)
-        {
-            if( isset($data[$new_line]) && is_string($data[$new_line]) )
-            {
-                $data[$new_line] = explode(PHP_EOL, trim($data[$new_line]));
-            }
-        }
-        
         foreach($data AS $key => $value)
         {
             if(in_array($key, $this->getSerialized()))
@@ -377,7 +369,7 @@ abstract class Settings
                 }
                 
                 //sort out new line values
-                if( in_array($setting['setting_key'], $this->getNewLines()) && !empty($setting['setting_value']) )
+                if( in_array($setting['setting_key'], $this->getNewLines()) )
                 {
                     $settings[$setting['setting_key']] = $setting['setting_value'] = explode("\n", $setting['setting_value']);
                     foreach($settings[$setting['setting_key']] AS $key => $value)
