@@ -82,7 +82,12 @@ class Eecms extends Platforms
      */
     public function getCurrentUrl()
     {
+        if( !function_exists('current_url') )
+        {
+            ee()->load->helper('url');
+        }
         
+        return current_url();
     }
     
     /**
