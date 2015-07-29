@@ -290,7 +290,7 @@ class Email
     /**
      * Sends the email
      */
-    public function send()
+    public function send(array $vars = array())
     {
         if( count($this->getTo()) == 0 )
         {
@@ -332,8 +332,8 @@ class Email
         
         $this->getMailer()->From = $this->config['from_email'];
         $this->getMailer()->FromName = $this->config['sender_name'];
-        $this->getMailer()->Subject = $this->getSubject();
-        $this->getMailer()->Body = ($this->view_template != '' ? $this->getView()->fetch($this->view_template, $this->view_options) : $this->getMessage());
+        $this->getMailer()->Subject = $this->getView()->render($this->getSubject(), $vars);
+        $this->getMailer()->Body = $this->getView()->render($this->getMessage(), $vars);
         if( $this->getMailtype() == 'html' )
         {
             $this->getMailer()->isHTML(true);
