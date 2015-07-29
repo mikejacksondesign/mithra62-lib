@@ -91,7 +91,7 @@ class Eecms extends Platforms
      */
     public function getSiteName()
     {
-        
+        return ee()->config->config['site_name'];
     }
     
     /**
