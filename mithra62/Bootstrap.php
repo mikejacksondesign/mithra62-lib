@@ -196,6 +196,7 @@ class Bootstrap
         };
         
         $this->container['email'] = function($c) {
+            
             $email = new Email();
             $email->setView($c['view']);
             $email->setLang($c['lang']);
@@ -204,6 +205,25 @@ class Bootstrap
         
         $this->container['view'] = function($c) {
             $view = new View();
+            $helpers = array(
+                'file_size' => function($text) {
+                    return $this->container['view_helpers']->m62FileSize($text);
+                },
+                'lang' => function($text) {
+                    return $this->container['view_helpers']->m62Lang($text);
+                },
+                'date_time' => function($text, $html = true) {
+                    return $this->container['view_helpers']->m62DateTime($text, $html = true);
+                },
+                'encode' => function($text) {
+                    return $this->container['view_helpers']->m62Encode($text);
+                },
+                'decode' => function($text) {
+                    return $this->container['view_helpers']->m62Decode($text);
+                }
+            );
+            
+            $view->addHelper('m62', $helpers);
             return $view;
         };
         
