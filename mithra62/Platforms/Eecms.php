@@ -107,4 +107,18 @@ class Eecms extends Platforms
     {
         
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms::getSiteUrl()
+     */
+    public function getSiteUrl()
+    {
+        if( !function_exists('site_url') )
+        {
+            ee()->load->helper('url');
+        }
+        
+        return site_url();
+    }
 }

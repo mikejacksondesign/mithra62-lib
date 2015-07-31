@@ -45,4 +45,9 @@ abstract class Platforms
      * Returns the user's timezone
     */
     abstract public function getTimezone();
+    
+    /**
+     * Returns the site URL
+     */
+    abstract public function getSiteUrl();
 }
