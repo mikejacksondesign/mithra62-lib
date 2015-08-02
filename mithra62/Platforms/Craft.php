@@ -115,4 +115,9 @@ class Craft extends Platforms
     {
         return \Craft\craft()->getTimezone();
     }
+    
+    public function getSiteUrl()
+    {
+        
+    }
 }
