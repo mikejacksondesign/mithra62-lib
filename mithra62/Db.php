@@ -257,4 +257,10 @@ class Db
     {
         return $this->getDb()->escape($string);
     }
+    
+    public function setDbName($db_name)
+    {
+        mysqli_select_db($this->getDb()->getLink(), $db_name);
+        return $this;
+    }
 }
