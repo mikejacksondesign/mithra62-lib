@@ -10,7 +10,7 @@
  
 namespace mithra62\Platforms;
 
-use mithra62\Platforms;
+use mithra62\AbstractPlatform;
 
 /**
  * mithra62 - ExpressionEngine Platform Object
@@ -20,7 +20,7 @@ use mithra62\Platforms;
  * @package 	mithra62\Eecms
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class Eecms extends Platforms
+class Eecms extends AbstractPlatform
 {
     /**
      * The Eecms config array

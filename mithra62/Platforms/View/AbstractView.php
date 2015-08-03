@@ -66,14 +66,14 @@ abstract class AbstractView implements ViewInterface
      * @param \mithra62\Files $file
      * @param \mithra62\Settings $setting
      * @param \mithra62\Encrypt $encrypt
-     * @param \mithra62\Platforms $platform
+     * @param \mithra62\AbstractPlatform $platform
      */
     public function __construct(
         \mithra62\Language $lang,
         \mithra62\Files $file,
         \mithra62\Settings $setting,
         \mithra62\Encrypt $encrypt,
-        \mithra62\Platforms $platform)
+        \mithra62\AbstractPlatform $platform)
     {
         $this->lang = $lang;
         $this->file = $file;

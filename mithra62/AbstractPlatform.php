@@ -18,7 +18,7 @@ namespace mithra62;
  * @package 	Platforms
  * @author		Eric Lamb <eric@mithra62.com>
  */
-abstract class Platforms
+abstract class AbstractPlatform
 {
     /**
      * Returns an array of details about interacting with the database

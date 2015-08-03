@@ -74,7 +74,7 @@ class m62LangTwigExtension extends \Twig_Extension
         \mithra62\Files $file, 
         \mithra62\Settings $setting,
         \mithra62\Encrypt $encrypt,
-        \mithra62\Platforms $platform)
+        \mithra62\AbstractPlatform $platform)
     {
         $this->lang = $lang;
         $this->file = $file;

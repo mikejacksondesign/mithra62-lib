@@ -10,7 +10,7 @@
  
 namespace mithra62\Platforms;
 
-use mithra62\Platforms;
+use mithra62\AbstractPlatform;
 use mithra62\Exceptions\PlatformsException;
 
 /**
@@ -21,7 +21,7 @@ use mithra62\Exceptions\PlatformsException;
  * @package 	mithra62\Craft
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class Craft extends Platforms
+class Craft extends AbstractPlatform
 {
     /**
      * The base email configuration prototype
