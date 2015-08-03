@@ -153,7 +153,7 @@ class Files
         }
         @closedir($current_dir);
     
-        if ($del_dir == true AND $level > 0)
+        if ($del_dir == true AND $level >= 0)
         {
             return @rmdir($path);
         }
