@@ -118,7 +118,7 @@ abstract class Settings
      * @param array $data
      * @param \mithra62\Validate $validate
      */
-    public abstract function validate(array $data);
+    public abstract function validate(array $data, array $extra = array());
     
     /**
      * Sets the default settings values
