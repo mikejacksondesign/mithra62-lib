@@ -61,8 +61,8 @@ class Wordpress extends AbstractPlatform
      */
     public function getEmailConfig()
     {
-        $this->email_config['type'] = ee()->config->config['mail_protocol'];
-        $this->email_config['port'] = ee()->config->config['smtp_port'];
+        $this->email_config['type'] = 'php';//ee()->config->config['mail_protocol'];
+        $this->email_config['port'] = '';//ee()->config->config['smtp_port'];
         if( $this->email_config['type'] == 'smtp' )
         {
             $this->email_config['smtp_options']['host'] = ee()->config->config['smtp_server'];
@@ -71,8 +71,8 @@ class Wordpress extends AbstractPlatform
             $this->email_config['smtp_options']['port'] = $this->email_config['port'];
         }
         
-        $this->email_config['sender_name'] = ee()->config->config['site_label'];
-        $this->email_config['from_email'] = ee()->config->config['webmaster_email'];
+        $this->email_config['sender_name'] = get_bloginfo( 'name', 'raw' );
+        $this->email_config['from_email'] = get_bloginfo( 'admin_email', 'raw' );
         
         return $this->email_config;
     }
@@ -83,12 +83,7 @@ class Wordpress extends AbstractPlatform
      */
     public function getCurrentUrl()
     {
-        if( !function_exists('current_url') )
-        {
-            ee()->load->helper('url');
-        }
-        
-        return current_url();
+        return $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
     
     /**
@@ -97,7 +92,7 @@ class Wordpress extends AbstractPlatform
      */
     public function getSiteName()
     {
-        return ee()->config->config['site_name'];
+        return get_bloginfo( 'name', 'raw' );
     }
     
     /**
@@ -106,7 +101,11 @@ class Wordpress extends AbstractPlatform
      */
     public function getTimezone() 
     {
-        
+        $tz = get_option('timezone_string');
+        if( !empty($tz) )
+        {
+            return $tz;
+        }
     }
     
     /**
@@ -115,11 +114,6 @@ class Wordpress extends AbstractPlatform
      */
     public function getSiteUrl()
     {
-        if( !function_exists('site_url') )
-        {
-            ee()->load->helper('url');
-        }
-        
-        return site_url();
+        return get_bloginfo( 'wpurl', 'raw' );
     }
 }
