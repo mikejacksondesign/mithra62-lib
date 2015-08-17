@@ -289,6 +289,9 @@ class Email
     
     /**
      * Sends the email
+     * @param array $vars
+     * @throws \InvalidArgumentException
+     * @throws EmailException
      */
     public function send(array $vars = array())
     {
@@ -307,9 +310,19 @@ class Email
             throw new \InvalidArgumentException('__exception_missing_message');
         }
         
+        $valid_email = false;
         foreach( $this->getTo() AS $to )
         {
-            $this->getMailer()->addAddress($to);
+            if( filter_var($to, FILTER_VALIDATE_EMAIL) )
+            {
+                $this->getMailer()->addAddress($to);
+                $valid_email = true;
+            }
+        }
+        
+        if(!$valid_email)
+        {
+            return;
         }
         
         if( $this->getAttachments() )
