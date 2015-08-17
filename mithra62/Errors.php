@@ -54,7 +54,8 @@ class Errors
      */
     public function getError()
     {
-        return array_pop( $this->getErrors() );
+        $errors = $this->getErrors();
+        return array_pop( $errors );
     }
     
     /**
