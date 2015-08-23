@@ -10,7 +10,7 @@
  
 namespace mithra62\Platforms;
 
-use mithra62\AbstractPlatform;
+use mithra62\Platforms\AbstractPlatform;
 
 /**
  * mithra62 - Wordpress Platform Object
@@ -115,5 +115,26 @@ class Wordpress extends AbstractPlatform
     public function getSiteUrl()
     {
         return get_bloginfo( 'wpurl', 'raw' );
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getEncryptionKey()
+     */
+    public function getEncryptionKey()
+    {
+        if( defined('NONCE_SALT') )
+        {
+            return NONCE_SALT;
+        }
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getConfigOverrides()
+     */
+    public function getConfigOverrides()
+    {
+    
     }
 }

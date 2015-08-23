@@ -149,6 +149,8 @@ class Bootstrap
         
         $this->container['encrypt'] = function($c) {
             $encrypt = new Encrypt();
+            $new_key = $c['platform']->getEncryptionKey();
+            $encrypt->setKey($new_key);
             return $encrypt;
         };
         

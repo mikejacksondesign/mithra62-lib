@@ -195,12 +195,13 @@ abstract class Settings
      */
     public function getEncrypt()
     {
-        if( is_null($this->encrypt) )
-        {
-            $this->encrypt = new Encrypt;
-        }
-        
         return $this->encrypt;
+    }
+    
+    public function setEncrypt(\mithra62\Encrypt $encrypt)
+    {
+        $this->encrypt = $encrypt;
+        return $this;
     }
     
     /**

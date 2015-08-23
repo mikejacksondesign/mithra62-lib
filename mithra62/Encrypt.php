@@ -41,7 +41,11 @@ class Encrypt
      */
     public function setKey($key)
     {
-        $this->key = $key;
+        if( $key != '' )
+        {
+            $this->key = $key;
+        }
+        
         return $this;
     }
     

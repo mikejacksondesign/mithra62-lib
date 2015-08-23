@@ -10,7 +10,7 @@
  
 namespace mithra62\Platforms;
 
-use mithra62\AbstractPlatform;
+use mithra62\Platforms\AbstractPlatform;
 use mithra62\Exceptions\PlatformsException;
 
 /**
@@ -117,6 +117,16 @@ class Craft extends AbstractPlatform
     }
     
     public function getSiteUrl()
+    {
+        return \Craft\craft()->getInfo('siteUrl');
+    }
+    
+    public function getEncryptionKey()
+    {
+        
+    }
+    
+    public function getConfigOverrides()
     {
         
     }

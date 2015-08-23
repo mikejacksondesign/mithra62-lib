@@ -8,7 +8,7 @@
  * @filesource 	./mithra62/Platforms.php
  */
  
-namespace mithra62;
+namespace mithra62\Platforms;
 
 /**
  * mithra62 - Platform Abstract
@@ -50,4 +50,14 @@ abstract class AbstractPlatform
      * Returns the site URL
      */
     abstract public function getSiteUrl();
+    
+    /**
+     * Returns the encryption key to use for salting the encrypted data
+     */
+    abstract public function getEncryptionKey();
+    
+    /**
+     * Returns an array of the configuration overrides to use (if any)
+     */
+    abstract public function getConfigOverrides();
 }

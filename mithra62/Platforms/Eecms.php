@@ -10,7 +10,7 @@
  
 namespace mithra62\Platforms;
 
-use mithra62\AbstractPlatform;
+use mithra62\Platforms\AbstractPlatform;
 
 /**
  * mithra62 - ExpressionEngine Platform Object
@@ -120,5 +120,15 @@ class Eecms extends AbstractPlatform
         }
         
         return site_url();
+    }
+    
+    public function getEncryptionKey()
+    {
+    
+    }
+    
+    public function getConfigOverrides()
+    {
+    
     }
 }
