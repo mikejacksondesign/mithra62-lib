@@ -28,7 +28,7 @@ class _settings extends Settings
      * @ignore
      * @see \mithra62\Settings::validate()
      */
-    public function validate(array $data)
+    public function validate(array $data, array $extra = array())
     {
         
     }

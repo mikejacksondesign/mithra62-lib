@@ -144,5 +144,7 @@ class Eecms extends AbstractPlatform
         {
             return ee()->config->config['backup_pro'];
         }
+        
+        return array();
     }
 }
