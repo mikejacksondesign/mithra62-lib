@@ -21,6 +21,24 @@ namespace mithra62\Platforms;
 abstract class AbstractPlatform
 {
     /**
+     * The base email configuration prototype
+     * @var array
+     */
+    private $email_config = array(
+        'from_email' => '',
+        'sender_name' => '',
+        'type' => 'smtp', //choose between `php` and `smtp`
+        'smtp_options' => array( //if `smtp` chosen above, this must be completed and accurate
+            'host' => '',
+            'connection_config' => array(
+                'username' => '',
+                'password' => '',
+            ),
+            'port' => '',
+        )
+    );
+    
+    /**
      * Returns an array of details about interacting with the database
      */
     abstract public function getDbCredentials();

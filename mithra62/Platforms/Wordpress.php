@@ -135,6 +135,13 @@ class Wordpress extends AbstractPlatform
      */
     public function getConfigOverrides()
     {
-    
+        global $backup_pro_settings;
+        
+        if( !empty($backup_pro_settings) && is_array($backup_pro_settings) )
+        {
+            return $backup_pro_settings;
+        }
+        
+        return array();
     }
 }

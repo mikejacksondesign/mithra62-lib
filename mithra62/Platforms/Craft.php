@@ -12,6 +12,7 @@ namespace mithra62\Platforms;
 
 use mithra62\Platforms\AbstractPlatform;
 use mithra62\Exceptions\PlatformsException;
+use \CSecurityManager;
 
 /**
  * mithra62 - Craft Platform Object
@@ -22,25 +23,7 @@ use mithra62\Exceptions\PlatformsException;
  * @author		Eric Lamb <eric@mithra62.com>
  */
 class Craft extends AbstractPlatform
-{
-    /**
-     * The base email configuration prototype
-     * @var array
-     */
-    private $email_config = array(
-        'from_email' => '',
-        'sender_name' => '',
-        'type' => 'smtp', //choose between `php` and `smtp`
-        'smtp_options' => array( //if `smtp` chosen above, this must be completed and accurate
-            'host' => '',
-            'connection_config' => array(
-                'username' => '',
-                'password' => '',
-            ),
-            'port' => '',
-        )
-    );
-    
+{   
     /**
      * (non-PHPdoc)
      * @see \mithra62\Platforms::getDbCredentials()
@@ -116,18 +99,31 @@ class Craft extends AbstractPlatform
         return \Craft\craft()->getTimezone();
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getSiteUrl()
+     */
     public function getSiteUrl()
     {
         return \Craft\craft()->getInfo('siteUrl');
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getEncryptionKey()
+     */
     public function getEncryptionKey()
     {
-        
+        $sec = new CSecurityManager;
+        return $sec->getEncryptionKey();
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getConfigOverrides()
+     */
     public function getConfigOverrides()
     {
-        
+        return array();
     }
 }

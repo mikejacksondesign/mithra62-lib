@@ -122,13 +122,27 @@ class Eecms extends AbstractPlatform
         return site_url();
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getEncryptionKey()
+     */
     public function getEncryptionKey()
     {
-    
+        if( !empty(ee()->config->config['encryption_key']) )
+        {
+            return ee()->config->config['encryption_key'];
+        }
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getConfigOverrides()
+     */
     public function getConfigOverrides()
     {
-    
+        if( !empty(ee()->config->config['backup_pro']) && is_array(ee()->config->config['backup_pro']) )
+        {
+            return ee()->config->config['backup_pro'];
+        }
     }
 }
