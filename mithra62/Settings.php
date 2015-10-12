@@ -10,8 +10,6 @@
  
 namespace mithra62;
 
-use \mithra62\Encrypt;
-
 /**
  * mithra62 - Settings Object
  *
@@ -115,7 +113,8 @@ abstract class Settings
     
     /**
      * Will validate the passed setting data for errors
-     * @param array $data
+     * @param array $data The data to valiate
+     * @param array $extra Any extra data to provide context for the $data
      * @param \mithra62\Validate $validate
      */
     public abstract function validate(array $data, array $extra = array());
@@ -198,6 +197,11 @@ abstract class Settings
         return $this->encrypt;
     }
     
+    /**
+     * Sets the encryption object we're using
+     * @param \mithra62\Encrypt $encrypt
+     * @return \mithra62\Settings
+     */
     public function setEncrypt(\mithra62\Encrypt $encrypt)
     {
         $this->encrypt = $encrypt;

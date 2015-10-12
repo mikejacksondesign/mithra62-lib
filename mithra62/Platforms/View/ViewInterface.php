@@ -10,6 +10,14 @@
  
 namespace mithra62\Platforms\View;
 
+/**
+ * Backup Pro - View Interface
+ *
+ * Defines the view helpers for we provide
+ *
+ * @package 	View
+ * @author		Eric Lamb <eric@mithra62.com>
+ */
 interface ViewInterface
 {
     /**

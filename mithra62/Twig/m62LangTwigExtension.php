@@ -68,6 +68,7 @@ class m62LangTwigExtension extends \Twig_Extension
      * @param \mithra62\Files $file
      * @param \mithra62\Settings $setting
      * @param \mithra62\Encrypt $encrypt
+     * @param \mithra62\Platforms\AbstractPlatform $platform
      */
     public function __construct(
         \mithra62\Language $lang, 

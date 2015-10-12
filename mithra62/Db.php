@@ -258,6 +258,11 @@ class Db
         return $this->getDb()->escape($string);
     }
     
+    /**
+     * Changes the database to $db_name
+     * @param string $db_name The name of the database we want to change to
+     * @return \mithra62\Db
+     */
     public function setDbName($db_name)
     {
         @mysqli_select_db($this->getDb()->getLink(), $db_name);
