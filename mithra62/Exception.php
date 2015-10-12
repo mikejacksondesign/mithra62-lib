@@ -26,6 +26,11 @@ class Exception extends Phine
 { 
     use Log;
     
+    /**
+     * Logs an exeption 
+     * @param \Exception $e
+     * @return bool
+     */
     public function logException(\Exception $e)
     {
         $error = $e->getMessage().$e->getTraceAsString();

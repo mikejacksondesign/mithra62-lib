@@ -12,6 +12,7 @@ namespace mithra62\tests;
 
 use mithra62\tests\TestFixture;
 use mithra62\Bootstrap;
+use mithra62\BackupPro\Platforms\Ee3 AS Platform;
 
 /**
  * mithra62 - Bootstrap object Unit Tests
@@ -48,15 +49,7 @@ class BootstrapTest extends TestFixture
     
     public function testServices()
     {
-        $m62 = new Bootstrap;
-        $services = $m62->getServices();
-        $m62->setLangPath($this->lang1Path());
+
         
-        $this->assertInstanceOf('\\mithra62\\Encrypt', $services['encrypt']);
-        $this->assertInstanceOf('\\mithra62\\Language', $services['lang']);
-        $this->assertInstanceOf('\\Valitron\\Validator', $services['validate']);
-        $this->assertInstanceOf('\\mithra62\\Files', $services['files']);
-        $this->assertInstanceOf('\\mithra62\\Errors', $services['errors']);
-        $this->assertInstanceOf('\\mithra62\\License', $services['license']);
     }
 }

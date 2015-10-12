@@ -17,7 +17,7 @@ use Craft\BaseRecord;
  *
  * Container for any future global Record methods
  *
- * @package 	mithra62\Craft
+ * @package 	Platforms\Craft
  * @author		Eric Lamb <eric@mithra62.com>
  */
 abstract class Records extends BaseRecord

@@ -46,7 +46,7 @@ class Regex
     
     /**
      * Validates a given regular expression
-     * @param string $regexp
+     * @param string $regexp The regular expression to validate
      * @return boolean
      */
     public function validate($regexp)
@@ -56,8 +56,9 @@ class Regex
     
     /**
      * Matches  a regular expression
-     * @param string $pattern
-     * @param string $subject
+     * @param string $pattern The regular expression to execute
+     * @param string $subject The string to search within
+     * @return boolean
      */
     public function match($pattern, $subject)
     {

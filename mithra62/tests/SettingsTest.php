@@ -105,13 +105,4 @@ class SettingsTest extends TestFixture
         $this->assertEquals('test_table', $settings->getTable());
         
     }
-    
-    /**
-     * Tests the encryption instance
-     */
-    public function testEncrypt()
-    {
-        $settings = new _settings(new Db, new Language );
-        $this->assertInstanceOf('\mithra62\Encrypt', $settings->getEncrypt());
-    }
 }

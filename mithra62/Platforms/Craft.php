@@ -19,7 +19,7 @@ use \CSecurityManager;
  *
  * The bridge between mithra62 code and Craft specific logic
  *
- * @package 	mithra62\Craft
+ * @package 	Platforms\Craft
  * @author		Eric Lamb <eric@mithra62.com>
  */
 class Craft extends AbstractPlatform

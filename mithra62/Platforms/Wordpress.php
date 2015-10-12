@@ -17,7 +17,7 @@ use mithra62\Platforms\AbstractPlatform;
  *
  * The bridge between mithra62 code and Wordpress specific logic
  *
- * @package 	mithra62\Wordpress
+ * @package 	Platforms\Wordpress
  * @author		Eric Lamb <eric@mithra62.com>
  */
 class Wordpress extends AbstractPlatform

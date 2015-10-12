@@ -108,7 +108,7 @@ class Email
     
     /**
      * Sets the Language object
-     * @param \mithra62\Language $mail
+     * @param \mithra62\Language $lang
      * @return \mithra62\Email
      */
     public function setLang(\mithra62\Language $lang)
@@ -148,6 +148,12 @@ class Email
         return $this;
     }
     
+    /**
+     * Compiles the options to use for the view
+     * @param string $template
+     * @param array $view_data
+     * @return \mithra62\Email
+     */
     public function setViewOptions($template, array $view_data = array())
     {
         $this->view_options = $view_data;
@@ -265,6 +271,10 @@ class Email
         return $this;
     }
     
+    /**
+     * Returns an instance of the mail object
+     * @return PHPMailer
+     */
     public function getMailer()
     {
         if( is_null($this->mailer) )

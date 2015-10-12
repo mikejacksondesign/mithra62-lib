@@ -19,7 +19,7 @@ use mithra62\Platforms\Craft\Records;
  * 
  * Contains the global mithra62 Settings object for Craft usage
  *
- * @package 	mithra62\Craft
+ * @package 	Platforms\Craft
  * @author		Eric Lamb <eric@mithra62.com>
  */
 class Settings extends Records

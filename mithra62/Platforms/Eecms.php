@@ -17,7 +17,7 @@ use mithra62\Platforms\AbstractPlatform;
  *
  * The bridge between mithra62 code and ExpressionEngine specific logic
  *
- * @package 	mithra62\Eecms
+ * @package 	Platforms\Eecms
  * @author		Eric Lamb <eric@mithra62.com>
  */
 class Eecms extends AbstractPlatform

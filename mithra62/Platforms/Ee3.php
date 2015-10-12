@@ -17,7 +17,7 @@ use mithra62\Platforms\AbstractPlatform;
  *
  * The bridge between mithra62 code and ExpressionEngine 3 specific logic
  *
- * @package 	Ee3
+ * @package 	Platforms\Ee3
  * @author		Eric Lamb <eric@mithra62.com>
  */
 class Ee3 extends AbstractPlatform

@@ -37,6 +37,12 @@ class Ftp extends Adapter
      * (non-PHPdoc)
      * @see \League\Flysystem\Adapter\Ftp::getMetadata()
      */
+    
+    /**
+     * @ignore
+     * (non-PHPdoc)
+     * @see \League\Flysystem\Adapter\Ftp::getMetadata()
+     */
     public function getMetadata($path)
     {
         return @parent::getMetadata($path);
@@ -44,9 +50,8 @@ class Ftp extends Adapter
     
     /**
      * Returns the remote transport client
-     * @param string $access_key
-     * @param string $secret_key
-     * @return \Aws\S3\S3Client
+     * @param array $params An array of the connection details 
+     * @return \mithra62\Remote\Ftp
      */
     public static function getRemoteClient(array $params)
     {
