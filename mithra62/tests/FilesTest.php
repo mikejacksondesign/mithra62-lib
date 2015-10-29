@@ -23,7 +23,12 @@ use mithra62\Files;
  */
 class FilesTest extends TestFixture
 {
-    public function testWriteDelete()
+    public function testInit()
+    {
+        $this->assertClassHasAttribute('file_data', 'mithra62\\Files');
+    }
+    
+    public function testWrite()
     {
         $test_file = $this->getWorkingDir().'test_file.txt';
         $file = new Files;
@@ -33,7 +38,44 @@ class FilesTest extends TestFixture
         $file->write($test_file, 'Test Content', 'a+');
         $this->assertFileExists($test_file);
         
+        return $test_file;
+    }
+    
+    /**
+     * @depends testWrite
+     */
+    public function testDelete($test_file)
+    {
+        $file = new Files;
         $file->delete($test_file);
         $this->assertFileNotExists($test_file);
+        
+        return $test_file;
+    }
+    
+    /**
+     * Tests the various states of the $file->file_data container
+     */
+    public function testFileData()
+    {
+        //check defaults
+        $file = new Files;
+        $this->assertEmpty($file->getFileData());
+        
+        //check adding works
+        $file_data = array('Foo', 'Bar');
+        foreach($file_data AS $data)
+        {
+            $file->setFileData($data);
+        }
+        
+        $this->assertNotEmpty($file->getFileData());
+        $this->assertContains('Foo', $file->getFileData());
+        $this->assertContains('Bar', $file->getFileData());
+        $this->assertCount( 2, $file->getFileData() );
+        
+        //check breakdown
+        $file->setFileData(false, true);
+        $this->assertEmpty($file->getFileData());
     }
 }
