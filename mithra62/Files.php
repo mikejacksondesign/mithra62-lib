@@ -170,7 +170,8 @@ class Files
      * @param string $bB Whether to use b or B formatting
      * @return string
      */
-    public function filesizeFormat($val, $digits = 3, $mode = "IEC", $bB = "B"){ //$mode == "SI"|"IEC", $bB == "b"|"B"
+    public function filesizeFormat($val, $digits = 3, $mode = "IEC", $bB = "B")
+    { //$mode == "SI"|"IEC", $bB == "b"|"B"
     
         $si = array("", "k", "M", "G", "T", "P", "E", "Z", "Y");
         $iec = array("", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi", "Yi");

@@ -78,4 +78,15 @@ class FilesTest extends TestFixture
         $file->setFileData(false, true);
         $this->assertEmpty($file->getFileData());
     }
+    
+    public function testFilesizeFormat()
+    {
+        $number = 555555;
+        $file = new Files;
+        
+        $this->assertEquals('543 KiB', $file->filesizeFormat($number));
+        $this->assertEquals('556 kB', $file->filesizeFormat($number, 3, 'SI'));
+        $this->assertEquals('4.24 Mib', $file->filesizeFormat($number, 3, 'IEC', 'b'));
+        $this->assertEquals('0 B', $file->filesizeFormat(false));
+    }
 }
