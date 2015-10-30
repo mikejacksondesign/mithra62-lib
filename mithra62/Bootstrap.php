@@ -14,7 +14,6 @@ use Pimple\Container;
 use mithra62\Encrypt;
 use mithra62\Db;
 use mithra62\Language;
-use mithra62\Settings;
 use mithra62\Validate;
 use mithra62\Files;
 use mithra62\Errors;
@@ -56,7 +55,9 @@ class Bootstrap
      * The environment config details
      * @var array
      */
-    protected $config = array();
+    protected $config = array(
+        'db' => array()
+    );
     
     /**
      * @ignore
@@ -168,11 +169,6 @@ class Bootstrap
                 $lang->init($this->getLangPath());
             }
             return $lang;
-        };
-        
-        $this->container['settings'] = function($c) {
-            $settings = new Settings($c['db'], $c['lang']);
-            return $settings;
         };
         
         $this->container['validate'] = function($c) {

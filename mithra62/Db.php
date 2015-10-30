@@ -48,6 +48,12 @@ class Db
     protected $where = '1=1';
     
     /**
+     * The table name we're working with
+     * @var string
+     */
+    protected $table = false;
+    
+    /**
      * Set the columns we want to return
      * @param array $columns
      * @return \mithra62\Db
@@ -134,6 +140,15 @@ class Db
         }
         
         return true;
+    }
+    
+    /**
+     * Truncates a given table
+     * @param string $table
+     */
+    public function emptyTable($table)
+    {
+        return $this->getDb()->query("TRUNCATE ".$table);
     }
     
     /**

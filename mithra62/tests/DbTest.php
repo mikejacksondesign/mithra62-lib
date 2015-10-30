@@ -115,6 +115,8 @@ class DbTest extends TestFixture
         $tables = $db->setCredentials( $this->getDbCreds() )->getTables();
         $this->assertTrue(is_array($tables));
         $this->assertCount(0, $tables);
+        
+        $db->setDbName($creds['database']);
     }
     
     public function testEscape()
@@ -122,5 +124,37 @@ class DbTest extends TestFixture
         $db = new Db;
         $string = $db->escape("My String isn't really here. \"I hope this works!\"");
         $this->assertEquals($string, "My String isn\'t really here. \\\"I hope this works!\\\"");
+    }
+    
+    public function testCrud()
+    {
+        $db = new Db;
+        $db->setCredentials( $this->getDbCreds() )->emptyTable($this->test_table_name);
+        $data = $db->select()->from($this->test_table_name)->get();
+        $this->assertTrue(is_array($data));
+        $this->assertCount(0, $data);
+        
+        //add 2 rows and verify they're in there
+        $db->insert($this->test_table_name, array('setting_key' => 'test_key_value', 'setting_value' => 'here is the value'));
+        $db->insert($this->test_table_name, array('setting_key' => 'test_key_value2', 'setting_value' => 'here is the value 2'));
+        $data = $db->select()->from($this->test_table_name)->get();
+        $this->assertTrue(is_array($data));
+        $this->assertCount(2, $data);
+        
+        //grab 1 row and check for such
+        $data = $db->select()->from($this->test_table_name)->where(array('id' => '1'))->get();
+        $this->assertTrue(is_array($data));
+        $this->assertCount(1, $data);
+        
+        //update 1 row with some data
+        $db->update($this->test_table_name, array('setting_value' => 'And here\'s the new content'), array('id' => 1));
+        $data = $db->select()->from($this->test_table_name)->where(array('id' => '1'))->get();
+        $this->assertEquals('And here\'s the new content', $data['0']['setting_value']);
+
+        //remove everything and verify
+        $db->setCredentials( $this->getDbCreds() )->emptyTable($this->test_table_name);
+        $data = $db->select()->from($this->test_table_name)->get();
+        $this->assertTrue(is_array($data));
+        $this->assertCount(0, $data);
     }
 }

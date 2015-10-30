@@ -72,8 +72,6 @@ class FilesTest extends TestFixture
         $destination = $this->dataPath().DIRECTORY_SEPARATOR.'file_test';
         $file->copyDir($path, $destination);
         $this->assertFileExists($destination);
-
-        $file_names = $file->getFilenames($destination);
         return $destination;
     }
     
