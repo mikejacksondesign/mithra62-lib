@@ -118,6 +118,15 @@ class Email
     }    
     
     /**
+     * Returns an instance of the Language object
+     * @return \mithra62\Language
+     */
+    public function getLang()
+    {
+        return $this->lang;
+    }
+    
+    /**
      * Sets the View object
      * @param \mithra62\View $view
      * @return \mithra62\Email
