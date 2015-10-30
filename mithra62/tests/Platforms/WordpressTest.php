@@ -34,7 +34,6 @@ class WordpressTest extends TestFixture
         $this->assertTrue(method_exists($wp, 'getSiteUrl'));
         $this->assertTrue(method_exists($wp, 'getEncryptionKey'));
         $this->assertTrue(method_exists($wp, 'getConfigOverrides'));
-        
         $this->assertInstanceOf('mithra62\\Platforms\\AbstractPlatform', $wp);
     }
 }

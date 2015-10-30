@@ -47,6 +47,8 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\Host') )
             {
                 return false;
             }
+            
+            return true;
         }    
     }
 }
