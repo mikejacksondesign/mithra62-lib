@@ -61,4 +61,9 @@ class TestFixture extends \PHPUnit_Framework_TestCase
     {
         return include 'data/s3creds.config.php';
     }
+    
+    protected function getFtpCreds()
+    {
+        return include 'data/ftpcreds.config.php';
+    }
 }
