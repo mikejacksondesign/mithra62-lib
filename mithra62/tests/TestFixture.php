@@ -59,6 +59,6 @@ class TestFixture extends \PHPUnit_Framework_TestCase
     
     protected function getS3Creds()
     {
-        return array();
+        return include 'data/s3creds.config.php';
     }
 }

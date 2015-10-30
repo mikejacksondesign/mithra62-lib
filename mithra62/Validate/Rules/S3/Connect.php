@@ -50,14 +50,16 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\S3\\Connect') )
                 {
                     return false;
                 }
+                
                 $params = $params['0'];
                 if( empty($params['s3_access_key']) || empty($params['s3_secret_key']) )
                 {
                     return false;
                 }
-            
+                
                 $client = m62S3::getRemoteClient($params['s3_access_key'], $params['s3_secret_key']);
                 $client->listBuckets();
+                
                 return true;
             }
             catch (\Exception $e)
