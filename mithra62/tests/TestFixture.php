@@ -66,4 +66,14 @@ class TestFixture extends \PHPUnit_Framework_TestCase
     {
         return include 'data/ftpcreds.config.php';
     }
+    
+    protected function getDbCreds()
+    {
+        return include 'data/db.config.php';
+    }
+    
+    protected function getSettingsTableCreateSql()
+    {
+        return include 'data/db.sql.php';
+    }
 }

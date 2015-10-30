@@ -12,7 +12,6 @@ namespace mithra62\tests;
 
 use mithra62\tests\TestFixture;
 use mithra62\Bootstrap;
-use mithra62\BackupPro\Platforms\Ee3 AS Platform;
 
 /**
  * mithra62 - Bootstrap object Unit Tests
@@ -49,7 +48,31 @@ class BootstrapTest extends TestFixture
     
     public function testServices()
     {
+        $m62 = new Bootstrap;
+        $services = $m62->getServices();
+        $m62->setDbConfig(array());
+        $this->assertArrayHasKey('db', $services);
+        $this->assertArrayHasKey('encrypt', $services);
+        $this->assertArrayHasKey('lang', $services);
+        $this->assertArrayHasKey('validate', $services);
+        $this->assertArrayHasKey('files', $services);
+        $this->assertArrayHasKey('errors', $services);
+        $this->assertArrayHasKey('license', $services);
+        $this->assertArrayHasKey('email', $services);
+        $this->assertArrayHasKey('view', $services);
 
-        
+        $this->assertInstanceOf('\mithra62\Shell', $services['shell']);
+        $this->assertInstanceOf('\mithra62\Regex', $services['regex']);
+        $this->assertInstanceOf('\mithra62\Db', $services['db']);
+        $this->assertInstanceOf('\mithra62\Language', $services['lang']);
+        $this->assertInstanceOf('\mithra62\Validate', $services['validate']);
+        $this->assertInstanceOf('\mithra62\Files', $services['files']);
+    }
+    
+    public function testDbConfig()
+    {
+        $m62 = new Bootstrap;
+        $this->assertTrue(is_array($m62->getDbConfig()));
+        $this->assertCount(0, $m62->getDbConfig());
     }
 }
