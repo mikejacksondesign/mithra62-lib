@@ -55,5 +55,10 @@ class TestFixture extends \PHPUnit_Framework_TestCase
     protected function lang3Path()
     {
         return realpath(dirname(__FILE__).'/data/languages/language3');
-    }    
+    }   
+    
+    protected function getS3Creds()
+    {
+        return array();
+    }
 }
