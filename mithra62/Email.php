@@ -49,6 +49,12 @@ class Email
     protected $mailtype = 'html';
     
     /**
+     * The mailtype values we allow
+     * @var array
+     */
+    protected $allowed_mailtypes = array('html', 'txt');
+    
+    /**
      * The View object
      * @var \mithra62\View
      */
@@ -201,7 +207,11 @@ class Email
      */
     public function addAttachment($file, $name = false)
     {
-        $this->attachemnts[] = array($file => $name);
+        if( file_exists($file) )
+        {
+            $this->attachemnts[] = array($file => $name);
+        }
+        
         return $this;
     }
     
@@ -300,9 +310,8 @@ class Email
      */
     public function clear()
     {
-        $this->to = array();
-        $this->subject = false;
-        $this->message = false;
+        $this->to = $this->attachemnts = array();
+        $this->subject = $this->message = false;
         return $this;
     }
     

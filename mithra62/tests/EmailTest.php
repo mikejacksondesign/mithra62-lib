@@ -72,7 +72,7 @@ class EmailTest extends TestFixture
     {
         $email = new Email;
         $this->assertFalse( $email->getSubject() );
-        $email->setSubject($this->subject_string);
+        $this->assertInstanceOf('mithra62\\Email', $email->setSubject($this->subject_string));
         $this->assertEquals($this->subject_string, $email->getSubject());
     }
     
@@ -80,7 +80,55 @@ class EmailTest extends TestFixture
     {
         $email = new Email;
         $this->assertFalse( $email->getMessage() );
-        $email->setMessage($this->test_message);
+        $this->assertInstanceOf('mithra62\\Email', $email->setMessage($this->test_message));
         $this->assertEquals($this->test_message, $email->getMessage());
+    }
+    
+    public function testSetTo()
+    {
+        $email = new Email;
+        $to = array('eric@ericlamb.net', 'eric@mithra62.com');
+        $this->assertInstanceOf('mithra62\\Email', $email->setTo($to));
+        $this->assertCount( 2, $email->getTo() );
+
+        //make sure we reset the container on each use
+        $email->setTo(array('eric@ericlamb.net'));
+        $this->assertCount( 1, $email->getTo() );
+        
+    }
+    
+    public function testAddTo()
+    {
+        $email = new Email;
+        $this->assertInstanceOf('mithra62\\Email', $email->addTo('eric@ericlamb.net'));
+        $this->assertCount( 1, $email->getTo() );
+
+        //make sure we reset the container on each use
+        $email->addTo('eric@ericlamb.net');
+        $this->assertCount( 2, $email->getTo() );
+    }
+    
+    public function testAttachment()
+    {
+        $email = new Email;
+        $this->assertCount( 0, $email->getAttachments() );
+        
+        //add a new attachment
+        $this->assertInstanceOf('mithra62\\Email', $email->addAttachment(__FILE__));
+        $this->assertCount(1,  $email->getAttachments() );
+
+        $email->addAttachment(__FILE__);
+        $email->addAttachment(__FILE__);
+        $this->assertCount(3,  $email->getAttachments() );
+    }
+    
+    public function testClear()
+    {
+        $email = new Email;
+        $email->setTo(array('eric@ericlamb.net'))->setSubject($this->subject_string)->setMessage($this->test_message)->clear();
+        $this->assertFalse( $email->getMessage() );
+        $this->assertFalse( $email->getSubject() );
+        $this->assertCount( 0, $email->getTo() );
+        
     }
 }
