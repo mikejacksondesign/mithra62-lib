@@ -25,6 +25,11 @@ class TestFixture extends \PHPUnit_Framework_TestCase
         return rtrim(realpath(dirname(__FILE__).'/working_dir'), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
     }
     
+    protected function dataPath()
+    {
+        return realpath(dirname(__FILE__).'/data');
+    }
+    
     /**
      * Just returns the path to the testing language1 directory
      * @return string

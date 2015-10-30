@@ -147,7 +147,7 @@ class Files
                 }
                 else
                 {
-                    unlink($path.DIRECTORY_SEPARATOR.$filename);
+                    $this->delete($path.DIRECTORY_SEPARATOR.$filename);
                 }
             }
         }
@@ -278,7 +278,6 @@ class Files
      */
     public function getFilenames($source_dir, $include_path = true, $recursion = true)
     {
-        $this->setFileData(false, true);
         $fp = @opendir($source_dir);
         if ($fp)
         {
@@ -297,7 +296,7 @@ class Files
                 }
                 elseif (strncmp($file, '.', 1) !== 0)
                 {
-                    $filedata = ($include_path == TRUE) ? $source_dir.$file : $file;
+                    $filedata = ($include_path == TRUE) ? $source_dir.DIRECTORY_SEPARATOR.$file : $file;
                     $this->setFileData($filedata);
                 }
             }
@@ -324,7 +323,7 @@ class Files
         ) {
             
             if ($item->isDir()) {
-                mkdir($destination . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+                mkdir($destination . DIRECTORY_SEPARATOR . $iterator->getSubPathName(), '0777', true);
             } else {
                 copy($item, $destination . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
             }

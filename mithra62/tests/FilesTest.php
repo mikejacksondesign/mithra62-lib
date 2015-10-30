@@ -23,6 +23,8 @@ use mithra62\Files;
  */
 class FilesTest extends TestFixture
 {
+    protected $test_content = 'Test Content';
+    
     public function testInit()
     {
         $this->assertClassHasAttribute('file_data', 'mithra62\\Files');
@@ -35,9 +37,19 @@ class FilesTest extends TestFixture
         
         $this->assertFileNotExists($test_file);
         
-        $file->write($test_file, 'Test Content', 'a+');
+        $file->write($test_file, $this->test_content, 'a+');
         $this->assertFileExists($test_file);
         
+        return $test_file;
+    }
+    
+    /**
+     * @depends testWrite
+     */
+    public function testRead($test_file)
+    {
+        $file = new Files;
+        $this->assertEquals($this->test_content, $file->read($test_file));
         return $test_file;
     }
     
@@ -51,6 +63,41 @@ class FilesTest extends TestFixture
         $this->assertFileNotExists($test_file);
         
         return $test_file;
+    }
+    
+    public function testCopyDir()
+    {
+        $file = new Files;
+        $path = $this->dataPath().DIRECTORY_SEPARATOR.'languages';
+        $destination = $this->dataPath().DIRECTORY_SEPARATOR.'file_test';
+        $file->copyDir($path, $destination);
+        $this->assertFileExists($destination);
+
+        $file_names = $file->getFilenames($destination);
+        return $destination;
+    }
+    
+    /**
+     * @depends testCopyDir
+     */
+    public function testGetFilenames($destination)
+    {
+        $file = new Files;
+        $file_data = $file->getFilenames($destination);
+        
+        return $destination;
+    }
+    
+    /**
+     * @depends testGetFilenames
+     */
+    public function testRemoveDir($destination)
+    {
+        $file = new Files;
+        $file_data = $file->deleteDir($destination, true);
+
+        $this->assertFileNotExists($destination);
+        return $destination;
     }
     
     /**
