@@ -12,7 +12,6 @@
 namespace mithra62;
 
 use RegexGuard\RegexGuard;
-use mithra62\Exceptions\RegexException;
 
 /**
  * mithra62 - Regex Object
