@@ -8,21 +8,21 @@
  * @filesource 	./mithra62/Validate/Rules/S3/Connect.php
  */
  
-namespace mithra62\Validate\Rules\Rcf\Buckets;
+namespace mithra62\Validate\Rules\Rcf\Containers;
 
-use mithra62\Remote\S3 AS m62S3;
+use mithra62\Remote\Rcf;
 use mithra62\Validate\AbstractRule;
 use mithra62\Remote;
 use mithra62\Remote\Local;
 
-if( !class_exists('\\mithra62\\Validate\\Rules\\S3\\Buckets\\Writable') )
+if( !class_exists('\\mithra62\\Validate\\Rules\\Rcf\\Containers\\Writable') )
 {
     /**
      * mithra62 - Directory Validation Rule
      *
      * Validates that a given input is a directory
      *
-     * @package 	Validate\Rules\S3\Buckets
+     * @package 	Validate\Rules\Rcf\Buckets
      * @author		Eric Lamb <eric@mithra62.com>
      */
     class Writable extends AbstractRule
@@ -31,13 +31,13 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\S3\\Buckets\\Writable') )
          * The shortname of the rule
          * @var string
          */
-        protected $name = 's3_bucket_writable';
+        protected $name = 'rcf_container_writable';
         
         /**
          * The error message template
          * @var string
          */
-        protected $error_message = 'Your bucket doesn\'t appear to be writable...';
+        protected $error_message = 'Your container doesn\'t appear to be writable...';
         
         /**
          * (non-PHPdoc)
@@ -54,17 +54,17 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\S3\\Buckets\\Writable') )
                 }
                 
                 $params = $params['0'];
-                if( empty($params['s3_access_key']) || empty($params['s3_secret_key']) || empty($params['s3_bucket']) )
+                if( empty($params['rcf_username']) || empty($params['rcf_api']) || empty($params['rcf_container']) )
                 {
                     return false;
                 }
             
                 $local = new Remote( new Local( dirname( $this->getTestFilePath() ) ) );
-                $client = m62S3::getRemoteClient($params['s3_access_key'], $params['s3_secret_key']);
-                if( $client->doesBucketExist($params['s3_bucket']) )
+                $client = Rcf::getRemoteClient($params, true);
+                if( $client instanceof \OpenCloud\ObjectStore\Resource\Container )
                 {
                     $contents = $local->read($this->test_file);
-                    $filesystem = new Remote(new m62S3($client, $params['s3_bucket']));
+                    $filesystem = new Remote(new Rcf($client, $params['rcf_container']));
                     
                     if( $filesystem->has($this->test_file) )
                     {

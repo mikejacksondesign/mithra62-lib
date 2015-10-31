@@ -13,7 +13,7 @@ namespace mithra62\Validate\Rules\Rcf\Containers;
 use mithra62\Remote\Rcf AS m62Rcf;
 use mithra62\Validate\AbstractRule;
 
-if( !class_exists('\\mithra62\\Validate\\Rules\\Rcf\\Container\\Exists') )
+if( !class_exists('\\mithra62\\Validate\\Rules\\Rcf\\Containers\\Exists') )
 {
     /**
      * mithra62 - S3 Bucket Existance Validation Rule
@@ -35,7 +35,7 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\Rcf\\Container\\Exists') )
          * The error template
          * @var string
          */        
-        protected $error_message = 'Your bucket doesn\'t appear to exist...';
+        protected $error_message = 'Your container doesn\'t appear to exist...';
         
         /**
          * (non-PHPdoc)

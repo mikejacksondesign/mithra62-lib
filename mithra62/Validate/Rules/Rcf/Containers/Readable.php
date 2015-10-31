@@ -8,13 +8,13 @@
  * @filesource 	./mithra62/Validate/Rules/S3/Bukets/Readable.php
  */
  
-namespace mithra62\Validate\Rules\Rcf\Buckets;
+namespace mithra62\Validate\Rules\Rcf\Containers;
 
 use mithra62\Validate\AbstractRule;
 use mithra62\Remote;
-use mithra62\Remote\S3 AS m62S3;
+use mithra62\Remote\Rcf;
 
-if( !class_exists('\\mithra62\\Validate\\Rules\\S3\\Buckets\\Readable') )
+if( !class_exists('\\mithra62\\Validate\\Rules\\Rcf\\Containers\\Readable') )
 {
     /**
      * mithra62 - Directory Validation Rule
@@ -30,13 +30,13 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\S3\\Buckets\\Readable') )
          * The Rule shortname
          * @var string
          */
-        protected $name = 's3_bucket_readable';
+        protected $name = 'rcf_container_readable';
         
         /**
          * The error template
          * @var string
          */
-        protected $error_message = 'Your bucket doesn\'t appear to be readable...';
+        protected $error_message = 'Your container doesn\'t appear to be readable...';
         
         /**
          * (non-PHPdoc)
@@ -53,15 +53,16 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\S3\\Buckets\\Readable') )
                 }
                 
                 $params = $params['0'];
-                if( empty($params['s3_access_key']) || empty($params['s3_secret_key']) || empty($params['s3_bucket']) )
+                if( empty($params['rcf_username']) || empty($params['rcf_api']) || empty($params['rcf_container']) )
                 {
                     return false;
                 }
             
-                $client = m62S3::getRemoteClient($params['s3_access_key'], $params['s3_secret_key']);
-                if( $client->doesBucketExist($params['s3_bucket']) )
+                $client = Rcf::getRemoteClient($params, true);
+                
+                if( $client instanceof \OpenCloud\ObjectStore\Resource\Container )
                 {
-                    $filesystem = new Remote(new m62S3($client, $params['s3_bucket']));
+                    $filesystem = new Remote(new Rcf($client, $params['rcf_container']));
                     $filesystem->getAdapter()->listContents();
                     return true;
                 }
