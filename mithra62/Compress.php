@@ -126,41 +126,6 @@ class Compress
     }
     
     /**
-     * Compresses a directory and all its contents
-     * @param array $dirs An array of directories to compress
-     * @param string $desination Where to save the archive
-     * @return \mithra62\Compress
-     */
-    public function archiveDirs(array $dirs, $desination = false)
-    {
-        foreach($dirs AS $dir)
-        {
-            $dir = trim($dir);
-            $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($dir),
-                \RecursiveIteratorIterator::LEAVES_ONLY
-            );
-            
-            $rel_dir = basename($dir);
-            foreach ($files as $name => $file)
-            {
-                if (!$file->isDir())
-                {
-                    // Get real and relative path for current file
-                    $filePath = $file->getRealPath();
-                    
-                    // Add current file to archive
-                    $relative = str_replace($dir, '', $filePath);
-                    $this->add($filePath, $rel_dir.DIRECTORY_SEPARATOR.$relative);
-                }
-            }
-        }
-        
-        return $this;
-        
-    }
-    
-    /**
      * Compresses a single file
      * @param string $file the full path to the file to compress
      * @param string $desination optional the full path to the destination. If none is given then $file is used with the extension appended
