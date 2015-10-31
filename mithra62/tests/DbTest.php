@@ -22,9 +22,7 @@ use mithra62\Db;
  * @author		Eric Lamb <eric@mithra62.com>
  */
 class DbTest extends TestFixture
-{
-    protected $test_table_name = 'm62_test_table';
-    
+{   
     public function testInit()
     {
         $db = new Db;

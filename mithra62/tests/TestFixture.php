@@ -20,6 +20,8 @@ namespace mithra62\tests;
  */
 class TestFixture extends \PHPUnit_Framework_TestCase
 {
+    protected $test_table_name = 'm62_test_table';
+    
     protected function getWorkingDir()
     {
         return rtrim(realpath(dirname(__FILE__).'/working_dir'), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;

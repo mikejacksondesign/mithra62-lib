@@ -9,3 +9,4 @@
 /.project
 /mithra62/docs
 /mithra62/tests/data/s3creds.config.php
+/mithra62/tests/data/ftpcreds.config.php

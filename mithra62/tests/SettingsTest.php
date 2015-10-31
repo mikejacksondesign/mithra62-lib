@@ -63,7 +63,9 @@ class SettingsTest extends TestFixture
         $this->assertClassHasAttribute('lang', '\mithra62\tests\_settings');
         $this->assertClassHasAttribute('db', '\mithra62\tests\_settings');
 
-        $settings = new _settings(new Db, new Language );
+        $db = new Db;
+        $db->setCredentials($this->getDbCreds());
+        $settings = new _settings($db, new Language );
         $this->assertObjectHasAttribute('settings', $settings);
         $this->assertObjectHasAttribute('table', $settings);
         $this->assertObjectHasAttribute('_global_defaults', $settings);
@@ -76,9 +78,6 @@ class SettingsTest extends TestFixture
         $this->assertObjectHasAttribute('encrypt', $settings);
         $this->assertObjectHasAttribute('lang', $settings);
         $this->assertObjectHasAttribute('db', $settings);
-        
-        $this->assertTrue(is_array($settings->getDefaults()));
-        $this->assertCount(0, $settings->getDefaults());
 
         $this->assertTrue(is_array($settings->getCustomOptions()));
         $this->assertCount(0, $settings->getCustomOptions());
@@ -88,11 +87,17 @@ class SettingsTest extends TestFixture
 
         $this->assertTrue(is_array($settings->getEncrypted()));
         $this->assertCount(0, $settings->getEncrypted());
-
-        $this->assertTrue(is_array($settings->getEncrypted()));
-        $this->assertCount(0, $settings->getEncrypted());
         
         $this->assertEmpty($settings->getTable());
+    }
+    
+    public function testDefaultEncryption()
+    {
+        $db = new Db;
+        $db->setCredentials($this->getDbCreds());
+        $settings = new _settings($db, new Language );
+        $this->assertTrue(is_array($settings->getEncrypted()));
+        $this->assertCount(0, $settings->getEncrypted());
     }
     
     /**
@@ -100,9 +105,44 @@ class SettingsTest extends TestFixture
      */
     public function testSetTable()
     {
-        $settings = new _settings(new Db, new Language );
-        $settings->setTable('test_table');
-        $this->assertEquals('test_table', $settings->getTable());
+        $db = new Db;
+        $db->setCredentials($this->getDbCreds());
+        $settings = new _settings($db, new Language );
+        $settings->setTable($this->test_table_name);
+        $this->assertEquals($this->test_table_name, $settings->getTable());
+    }
+    
+    public function testDefaultSettings()
+    {
+        $db = new Db;
+        $db->setCredentials($this->getDbCreds());
+        $settings = new _settings($db, new Language );
+        $defaults = $settings->getDefaults();
         
+        $this->assertTrue(is_array($settings->getDefaults()));
+        $this->assertCount(0, $settings->getDefaults());
+    }
+    
+    public function testGetSettings()
+    {
+        $db = new Db;
+        $db->setCredentials($this->getDbCreds());
+        $settings = new _settings($db, new Language );
+        $data = $settings->setDefaults(array())->setTable($this->test_table_name)->get();
+        
+        $this->assertCount(5, $data);
+        $this->assertArrayHasKey('date_format', $data);
+        
+        return $settings;
+    }
+    
+    /**
+     * @depends testGetSettings
+     */
+    public function testUpdateSettings($settings)
+    {
+        $settings->update(array('relative_time' => '1'));
+        
+        return $settings;
     }
 }
