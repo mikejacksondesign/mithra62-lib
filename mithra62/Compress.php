@@ -184,9 +184,10 @@ class Compress
         
         //work out path stuff
         $old_cwd = getcwd();
-        chdir(dirname($file));
+        $path = dirname($file);
+        chdir($path);
         
-        $name = $file.'.zip';
+        $name = $this->getArchiveName();
         $zip = $this->getArchiver();
         $zip->open($name, \ZipArchive::CREATE);
         if( file_exists($file) )
@@ -204,7 +205,14 @@ class Compress
         if( !$this->getKeepOriginal() && file_exists($file) )
         {
             unlink($file);
-        }            
+        }  
+        
+        if( $desination )
+        {
+            $desination = realpath($desination).DIRECTORY_SEPARATOR.$name;
+            copy($name, $desination);
+            unlink($name);
+        }
         
         //reset path
         chdir($old_cwd);
