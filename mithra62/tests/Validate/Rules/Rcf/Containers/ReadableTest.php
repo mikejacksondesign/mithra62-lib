@@ -30,7 +30,7 @@ class ReadableTest extends TestFixture
     public function testName()
     {
         $dir = new Readable; 
-        $this->assertEquals($dir->getName(), 'rcf_bucket_readable');
+        $this->assertEquals($dir->getName(), 'rcf_container_readable');
     }
     
     /**
@@ -38,11 +38,10 @@ class ReadableTest extends TestFixture
      */
     public function testRuleFail()
     {
-        return;
         $val = new Validate();
-        $creds = $this->getS3Creds();
-        $creds['s3_bucket'] = 'ffdsafdsafdsafd';
-        $val->rule('s3_bucket_readable', 'connection_field', $creds)->val(array('connection_field' => __FILE__));
+        $creds = $this->getRcfCreds();
+        $creds['rcf_container'] = 'ffdsafdsafdsafd';
+        $val->rule('rcf_container_readable', 'connection_field', $creds)->val(array('connection_field' => __FILE__));
         $this->assertTrue($val->hasErrors());
     }
     
@@ -51,9 +50,8 @@ class ReadableTest extends TestFixture
      */
     public function testRuleSuccess()
     {
-        return;
         $val = new Validate();
-        $val->rule('s3_bucket_readable', 'connection_field', $this->getS3Creds())->val(array('connection_field' => 'Foo'));
+        $val->rule('rcf_container_readable', 'connection_field', $this->getRcfCreds())->val(array('connection_field' => 'Foo'));
         $this->assertFALSE($val->hasErrors());
     }
 }

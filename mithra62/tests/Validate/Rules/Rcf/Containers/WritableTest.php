@@ -30,7 +30,7 @@ class WritableTest extends TestFixture
     public function testName()
     {
         $dir = new Writable;
-        $this->assertEquals($dir->getName(), 'rcf_bucket_writable');
+        $this->assertEquals($dir->getName(), 'rcf_container_writable');
     }
     
     /**
@@ -40,9 +40,9 @@ class WritableTest extends TestFixture
     {
         return;
         $val = new Validate();
-        $creds = $this->getS3Creds();
-        $creds['s3_bucket'] = 'ffdsafdsafdsafd';
-        $val->rule('rcf_bucket_writable', 'connection_field', $creds)->val(array('connection_field' => __FILE__));
+        $creds = $this->getRcfCreds();
+        $creds['rcf_container'] = 'ffdsafdsafdsafd';
+        $val->rule('rcf_container_writable', 'connection_field', $creds)->val(array('connection_field' => __FILE__));
         $this->assertTrue($val->hasErrors());
     }
     
@@ -53,7 +53,7 @@ class WritableTest extends TestFixture
     {
         return;
         $val = new Validate();
-        $val->rule('rcf_bucket_writable', 'connection_field', $this->getS3Creds())->val(array('connection_field' => 'Foo'));
+        $val->rule('rcf_container_writable', 'connection_field', $this->getRcfCreds())->val(array('connection_field' => 'Foo'));
         $this->assertFALSE($val->hasErrors());
     }
 }
