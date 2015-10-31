@@ -60,8 +60,6 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\Rcf\\Connect') )
             }
             catch (\Exception $e)
             {
-                echo $e->getMessage();
-                exit;
                 return false;
             }        
         }

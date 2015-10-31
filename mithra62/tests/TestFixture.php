@@ -89,9 +89,20 @@ class TestFixture extends \PHPUnit_Framework_TestCase
         return include 'data/ftpcreds.config.php';
     }
     
+    /**
+     * The Google Cloud Storage Test Credentials
+     */
     protected function getGcsCreds()
     {
         return include 'data/gcscreds.config.php';
+    }
+    
+    /**
+     * The Google Cloud Storage Test Credentials
+     */
+    protected function getRcfCreds()
+    {
+        return include 'data/rcfcreds.config.php';
     }
     
     /**
