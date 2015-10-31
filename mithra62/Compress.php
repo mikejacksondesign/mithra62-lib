@@ -177,6 +177,12 @@ class Compress
             $desination = realpath($desination).DIRECTORY_SEPARATOR.$name;
             copy($name, $desination);
             unlink($name);
+            
+            $name = $desination;
+        }
+        else
+        {
+            $name = $path.DIRECTORY_SEPARATOR.$name;
         }
         
         //reset path

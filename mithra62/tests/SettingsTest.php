@@ -126,7 +126,7 @@ class SettingsTest extends TestFixture
     public function testGetSettings()
     {
         $db = new Db;
-        $db->setCredentials($this->getDbCreds());
+        $db->setCredentials($this->getDbCreds())->emptyTable($this->test_table_name);
         $settings = new _settings($db, new Language );
         $data = $settings->setDefaults(array())->setTable($this->test_table_name)->get();
         
@@ -141,8 +141,42 @@ class SettingsTest extends TestFixture
      */
     public function testUpdateSettings($settings)
     {
-        $settings->update(array('relative_time' => '1'));
+        $data = $settings->get(true);
+        $this->assertEquals(1, $data['relative_time']);
+        
+        $settings->update(array('relative_time' => '0'));
+        
+        $data = $settings->get(true);
+        $this->assertEquals(0, $data['relative_time']);
         
         return $settings;
+    }
+    
+    /**
+     * @depends testUpdateSettings
+     */
+    public function testUpdateSettingsBadKey($settings)
+    {   
+        $settings->update(array('my_bad_key' => '0'));
+        
+        $data = $settings->get(true);
+        $this->assertArrayNotHasKey('my_bad_key', $data);
+        
+        return $settings;
+    }
+    
+    public function testUpdateSetting()
+    {
+        $db = new Db;
+        $db->setCredentials($this->getDbCreds())->emptyTable($this->test_table_name);
+        $settings = new _settings($db, new Language );
+
+        $data = $settings->setDefaults(array())->setTable($this->test_table_name)->get(true);
+        $this->assertEquals(1, $data['relative_time']);
+        
+        $settings->updateSetting('relative_time', '0');
+        $data = $settings->get(true);
+        $this->assertEquals(0, $data['relative_time']);
+        
     }
 }

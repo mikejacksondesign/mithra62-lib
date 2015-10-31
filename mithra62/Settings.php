@@ -346,9 +346,9 @@ abstract class Settings
      * Returns the system settings
      * @return \mithra62\array
      */
-    public function get()
+    public function get($force = false)
     {
-        if( is_null($this->settings) )
+        if( is_null($this->settings) || $force )
         {
             $_settings = $this->db->select()->from($this->getTable())->get();
             $settings = array();
@@ -440,5 +440,5 @@ abstract class Settings
         }
     
         return $this->db->insert($this->getTable(), $data);
-    }    
+    }  
 }

@@ -74,7 +74,7 @@ class CompressTest extends TestFixture
         $compressed_path = $compress->setKeepOriginal(true)->setArchiveName($this->test_file_name)->archiveSingle($backup_file);
         
         //check we have a zip in the same lcoation as original
-        $compress_file_path = $backup_file_path.DIRECTORY_SEPARATOR.$compressed_path;
+        $compress_file_path = $compressed_path;
         $this->assertTrue(file_exists($compress_file_path));
         
         //ensure we can extract the single file
@@ -82,10 +82,10 @@ class CompressTest extends TestFixture
         $this->assertTrue(file_exists($destination.DIRECTORY_SEPARATOR.$this->test_file_name));
         unlink($destination.DIRECTORY_SEPARATOR.$this->test_file_name);
         unlink($compress_file_path);
-
+        
         //check we can save the zip elsewhere
         $compressed_path = $compress->setKeepOriginal(true)->setArchiveName($this->test_file_name)->archiveSingle($backup_file, $destination);
-        $compress_file_path = $destination.DIRECTORY_SEPARATOR.$compressed_path;
+        $compress_file_path = $compressed_path;
         $this->assertTrue(file_exists($compress_file_path));
         unlink($compress_file_path);
     }
