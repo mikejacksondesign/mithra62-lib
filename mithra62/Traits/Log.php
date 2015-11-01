@@ -109,9 +109,36 @@ trait Log
     {
         if( is_null($this->log_path) )
         {
-            $this->log_path = realpath(dirname(__FILE__).'/../logs').'/'.$name.'.log';
+            $this->log_path = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'logs').DIRECTORY_SEPARATOR.$name.'.log';
         }
         
         return $this->log_path;
+    }
+    
+    /**
+     * Sets the path to the log file to use
+     * @param string $path The full path to the log file
+     * @return \mithra62\Traits\Log
+     */
+    public function setPathToLogFile($path)
+    {
+        $this->log_path = $path;
+        $this->logger = null;
+        return $this;
+    }
+    
+    /**
+     * Removes the logging file
+     * @return \mithra62\Traits\Log
+     */
+    public function removeLogFile()
+    {
+        if( file_exists($this->log_path) )
+        {
+            $this->logger = null;
+            unlink($this->log_path);
+        }
+        
+        return $this;
     }
 }

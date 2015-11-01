@@ -122,4 +122,9 @@ class TestFixture extends \PHPUnit_Framework_TestCase
     {
         return include 'data/db.sql.php';
     }
+    
+    protected function getPathToLogFile()
+    {
+        return $this->dataPath().DIRECTORY_SEPARATOR.'m62.ut.log';
+    }
 }
