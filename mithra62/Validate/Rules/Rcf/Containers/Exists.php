@@ -57,7 +57,7 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\Rcf\\Containers\\Exists') )
                     return false;
                 }
             
-                return m62Rcf::getRemoteClient($params);
+                return @m62Rcf::getRemoteClient($params);
             }
             catch (\Exception $e)
             {

@@ -8,7 +8,7 @@
  * @filesource 	./mithra62/tests/Validate/Rules/Rcf/ExistsTest.php
  */
  
-namespace mithra62\tests\Validate\Rules\Rcf\Buckets;
+namespace mithra62\tests\Validate\Rules\Rcf\Containers;
 
 use mithra62\tests\TestFixture;
 use mithra62\Validate;
@@ -51,7 +51,6 @@ class WritableTest extends TestFixture
      */
     public function testRuleSuccess()
     {
-        return;
         $val = new Validate();
         $val->rule('rcf_container_writable', 'connection_field', $this->getRcfCreds())->val(array('connection_field' => 'Foo'));
         $this->assertFALSE($val->hasErrors());

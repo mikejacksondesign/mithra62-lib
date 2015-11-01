@@ -5,10 +5,10 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		1.0
- * @filesource 	./mithra62/tests/Validate/Rules/S3/ExistsTest.php
+ * @filesource 	./mithra62/tests/Validate/Rules/Rcf/Containers/ExistsTest.php
  */
  
-namespace mithra62\tests\Validate\Rules\Rcf\Buckets;
+namespace mithra62\tests\Validate\Rules\Rcf\Containers;
 
 use mithra62\tests\TestFixture;
 use mithra62\Validate;
@@ -38,6 +38,7 @@ class ExistsTest extends TestFixture
      */
     public function testRuleFail()
     {
+        return;
         $val = new Validate();
         $creds = $this->getRcfCreds();
         $creds['rcf_container'] = 'ffdsafdsafdsafd';
