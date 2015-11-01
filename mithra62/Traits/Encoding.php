@@ -30,6 +30,6 @@ trait Encoding
      */
     public function toUtf8($string)
     {
-        return ForceUtf8::toUTF8($string);
+        return ForceUtf8::fixUTF8($string);
     }
 }
