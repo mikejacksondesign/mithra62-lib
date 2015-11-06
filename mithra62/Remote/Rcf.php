@@ -31,7 +31,7 @@ class Rcf extends Adapter
      */
     public static function getRemoteClient(array $params, $include_container = true)
     {
-        $url = ( strtolower($params['rcf_location']) == 'uk' ? Rackspace::UK_IDENTITY_ENDPOINT : Rackspace::US_IDENTITY_ENDPOINT );
+        $url = ( isset($params['rcf_location']) && strtolower($params['rcf_location']) == 'uk' ? Rackspace::UK_IDENTITY_ENDPOINT : Rackspace::US_IDENTITY_ENDPOINT );
         $client = new Rackspace($url, [
             'username' => $params['rcf_username'],
             'apiKey' => $params['rcf_api'],

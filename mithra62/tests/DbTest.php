@@ -120,7 +120,7 @@ class DbTest extends TestFixture
     public function testEscape()
     {
         $db = new Db;
-        $string = $db->escape("My String isn't really here. \"I hope this works!\"");
+        $string = $db->setCredentials( $this->getDbCreds() )->escape("My String isn't really here. \"I hope this works!\"");
         $this->assertEquals($string, "My String isn\'t really here. \\\"I hope this works!\\\"");
     }
     
