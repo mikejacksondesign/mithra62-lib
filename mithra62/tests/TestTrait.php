@@ -74,6 +74,15 @@ trait TestTrait
     }
     
     /**
+     * The FTP Test Credentials
+     * @return array
+     */
+    protected function getSftpCreds()
+    {
+        return include 'data/sftpcreds.config.php';
+    }
+    
+    /**
      * The Google Cloud Storage Test Credentials
      */
     protected function getGcsCreds()
