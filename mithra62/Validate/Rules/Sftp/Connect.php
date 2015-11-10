@@ -53,7 +53,7 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\Sftp\\Connect') )
                 }
                 
                 $params = $params['0'];
-                if( empty($params['sftp_hostname']) || empty($params['sftp_port']) || empty($params['sftp_root']) )
+                if( empty($params['sftp_host']) || empty($params['sftp_port']) || empty($params['sftp_root']) )
                 {
                     return false;
                 }

@@ -1,6 +1,6 @@
 <?php
 return array(
-    'sftp_hostname' => '',
+    'sftp_host' => '',
     'sftp_username' => '',
     'sftp_password' => '',
     'sftp_port' => '',

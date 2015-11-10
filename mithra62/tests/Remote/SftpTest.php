@@ -27,7 +27,7 @@ class SftpTest extends TestFixture
     {
         $settings = $this->getSftpCreds();
         $sftp = new Sftp([
-            'host' => $settings['sftp_hostname'],
+            'host' => $settings['sftp_host'],
             'username' => $settings['sftp_username'],
             'password' => $settings['sftp_password'],
             'port' => $settings['sftp_port'],
