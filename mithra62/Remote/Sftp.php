@@ -56,7 +56,7 @@ class Sftp extends Adapter
     public static function getRemoteClient(array $params)
     {
         return new m62Sftp([
-            'host' => $params['sftp_hostname'],
+            'host' => $params['sftp_host'],
             'username' => $params['sftp_username'],
             'password' => $params['sftp_password'],
             'port' => $params['sftp_port'],

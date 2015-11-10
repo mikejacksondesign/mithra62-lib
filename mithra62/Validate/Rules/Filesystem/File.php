@@ -35,6 +35,7 @@ if( !class_exists('\\mithra62\\Validate\\Filesystem\\File') )
          * @var string
          */
         protected $error_message = '{field} has to be a file';
+        
         /**
          * (non-PHPdoc)
          * @see \mithra62\Validate\RuleInterface::validate()

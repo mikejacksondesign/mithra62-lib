@@ -53,7 +53,13 @@ if( !class_exists('\\mithra62\\Validate\\Rules\\Sftp\\Connect') )
                 }
                 
                 $params = $params['0'];
-                if( empty($params['sftp_hostname']) || empty($params['sftp_password']) || empty($params['sftp_username']) || empty($params['sftp_port']) )
+                if( empty($params['sftp_hostname']) || empty($params['sftp_port']) || empty($params['sftp_root']) )
+                {
+                    return false;
+                }
+                
+                //we require either a private key file OR a username and password
+                if( (empty($params['sftp_password']) && empty($params['sftp_username'])) && empty($params['sftp_private_key']) )
                 {
                     return false;
                 }
