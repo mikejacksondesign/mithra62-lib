@@ -12,7 +12,7 @@ namespace mithra62\Remote;
 
 use League\Flysystem\Dropbox\DropboxAdapter as Adapter;
 use RuntimeException;
-use mithra62\Remote\Dropbox AS m62Dropbox;
+use Dropbox\Client;
 
 /**
  * mithra62 - FTP Transfer Abstraction
@@ -55,6 +55,6 @@ class Dropbox extends Adapter
      */
     public static function getRemoteClient($client, $prefix = false)
     {
-        return new m62Dropbox($client, $prefix);
+        return new Client($client, $prefix);
     }    
 }
