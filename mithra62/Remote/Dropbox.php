@@ -53,8 +53,8 @@ class Dropbox extends Adapter
      * @param array $params An array of the connection details 
      * @return \mithra62\Remote\Ftp
      */
-    public static function getRemoteClient($client, $prefix = false)
+    public static function getRemoteClient($client, $app_secret)
     {
-        return new Client($client, $prefix);
+        return new Client($client, $app_secret);
     }    
 }

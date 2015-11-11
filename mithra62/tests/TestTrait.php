@@ -116,6 +116,19 @@ trait TestTrait
         return include 'data/db.sql.php';
     }
     
+    /**
+     * The Dropbox API testing detalis
+     * @return array
+     */
+    protected function getDropboxCreds()
+    {
+        return include 'data/dropboxcreds.config.php';
+    }
+    
+    /**
+     * Returns the path to the log file for testing Log oject
+     * @return string
+     */
     protected function getPathToLogFile()
     {
         return $this->dataPath().DIRECTORY_SEPARATOR.'m62.ut.log';
