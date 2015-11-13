@@ -91,7 +91,7 @@ class Prestashop extends AbstractPlatform
      */
     public function getSiteName()
     {
-        return get_bloginfo( 'name', 'raw' );
+        return Configuration::get("PS_SHOP_NAME");
     }
     
     /**
