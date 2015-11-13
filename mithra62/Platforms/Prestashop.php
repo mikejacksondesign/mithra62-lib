@@ -5,7 +5,7 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/Platforms/Wordpress.php
+ * @filesource 	./mithra62/Platforms/Prestashop.php
  */
  
 namespace mithra62\Platforms;
@@ -13,14 +13,14 @@ namespace mithra62\Platforms;
 use mithra62\Platforms\AbstractPlatform;
 
 /**
- * mithra62 - Wordpress Platform Object
+ * mithra62 - Prestashop Platform Object
  *
- * The bridge between mithra62 code and Wordpress specific logic
+ * The bridge between mithra62 code and Prestashop specific logic
  *
- * @package 	Platforms\Wordpress
+ * @package 	Platforms\Prestashop
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class Wordpress extends AbstractPlatform
+class Prestashop extends AbstractPlatform
 {
     /**
      * The Eecms config array
@@ -43,14 +43,13 @@ class Wordpress extends AbstractPlatform
      */
     public function getDbCredentials()
     {
-        global $wpdb;
         return array(
-            'user' => DB_USER,
-            'password' => DB_PASSWORD,
-            'database' => DB_NAME,
-            'host' => DB_HOST,
-            'prefix' => $wpdb->prefix,
-            'settings_table_name' => $wpdb->prefix.'backup_pro_settings'
+            'user' => _DB_USER_,
+            'password' => _DB_PASSWD_,
+            'database' => _DB_NAME_,
+            'host' => _DB_SERVER_,
+            'prefix' => _DB_PREFIX_,
+            'settings_table_name' => _DB_PREFIX_.'backup_pro_settings'
         );
     }
     
