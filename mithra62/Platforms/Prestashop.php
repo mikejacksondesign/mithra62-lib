@@ -100,7 +100,7 @@ class Prestashop extends AbstractPlatform
      */
     public function getTimezone() 
     {
-        $tz = get_option('timezone_string');
+        $tz = '';//get_option('timezone_string');
         if( !empty($tz) )
         {
             return $tz;
