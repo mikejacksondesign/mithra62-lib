@@ -91,7 +91,7 @@ class Prestashop extends AbstractPlatform
      */
     public function getSiteName()
     {
-        return Configuration::get("PS_SHOP_NAME");
+        return \Configuration::get("PS_SHOP_NAME");
     }
     
     /**
@@ -113,7 +113,7 @@ class Prestashop extends AbstractPlatform
      */
     public function getSiteUrl()
     {
-        return get_bloginfo( 'wpurl', 'raw' );
+        return \Configuration::get("PS_SHOP_DOMAIN");
     }
     
     /**
