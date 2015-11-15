@@ -22,6 +22,7 @@ use mithra62\Email;
 use mithra62\View;
 use mithra62\Regex;
 use mithra62\Shell;
+use mithra62\Console;
 
 /**
  * mithra62 - Bootstrap Object
@@ -233,6 +234,12 @@ class Bootstrap
         $this->container['shell'] = function($c) {
             $shell = new Shell();
             return $shell;
+        };
+        
+        $this->container['console'] = function($c) {
+            $console = new Console();
+            $console->setLang($c['lang']);
+            return $console;
         };
         
         return $this->container;

@@ -100,7 +100,7 @@ class Console extends AbstractPlatform
      */
     public function getEncryptionKey()
     {
-        
+        return $this->config['encryption_key'];
     }
     
     /**
