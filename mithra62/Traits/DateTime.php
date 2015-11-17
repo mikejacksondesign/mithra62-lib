@@ -37,10 +37,12 @@ trait DateTime
     
    /**
     * Returns the current time in Unix format
+    * @param string $format
+    * @return string
     */
-    public function getNow()
+    public function getNow($format = 'U')
     {
-        return $this->getDt()->now()->format('U');
+        return $this->getDt()->now()->format($format);
     }
     
     /**
