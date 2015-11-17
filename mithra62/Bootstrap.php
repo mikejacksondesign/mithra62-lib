@@ -214,6 +214,9 @@ class Bootstrap
                 'date_time' => function($text, $html = true) {
                     return $this->container['view_helpers']->m62DateTime($text, $html = true);
                 },
+                'relative_time' => function($date) {
+                    return $this->container['view_helpers']->m62RelativeDateTime($date);
+                },
                 'encode' => function($text) {
                     return $this->container['view_helpers']->m62Encode($text);
                 },

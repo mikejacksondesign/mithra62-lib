@@ -149,4 +149,15 @@ abstract class AbstractView implements ViewInterface
     {
         return $this->encrypt->decode($string);
     }
+    
+    /**
+     * Creates a date in human readable format (1 hour, 7 years, etc...)
+     * @param unknown $date
+     * @return string
+     */
+    public function m62RelativeDateTime($date)
+    {
+        return $this->getRelativeDateTime($date);
+    }
+
 }
