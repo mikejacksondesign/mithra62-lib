@@ -157,7 +157,7 @@ abstract class AbstractView implements ViewInterface
      */
     public function m62RelativeDateTime($date)
     {
-        return $this->getRelativeDateTime($date);
+        return $this->getRelativeDateTime($date, false);
     }
 
 }

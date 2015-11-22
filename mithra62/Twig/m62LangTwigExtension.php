@@ -105,7 +105,8 @@ class m62LangTwigExtension extends \Twig_Extension
             'm62FileSize' => new Twig_Filter_Method($this, 'm62FileSize'),
             'm62DateTime' => new Twig_Filter_Method($this, 'm62DateTime'),
             'm62Encode' => new Twig_Filter_Method($this, 'm62Encode'),
-            'm62Decode' => new Twig_Filter_Method($this, 'm62Decode')
+            'm62Decode' => new Twig_Filter_Method($this, 'm62Decode'),
+            'm62RelativeDateTime' => new Twig_Filter_Method($this, 'm62RelativeDateTime'),
         );
     }
     
@@ -174,5 +175,15 @@ class m62LangTwigExtension extends \Twig_Extension
     public function m62Decode($string)
     {
         return $this->encrypt->decode($string);
+    }
+    
+    /**
+     * Creates a date in human readable format (1 hour, 7 years, etc...)
+     * @param unknown $date
+     * @return string
+     */
+    public function m62RelativeDateTime($date)
+    {
+        return $this->getRelativeDateTime($date, false);
     }
 }
