@@ -74,7 +74,7 @@ trait TestTrait
     }
     
     /**
-     * The FTP Test Credentials
+     * The SFTP Test Credentials
      * @return array
      */
     protected function getSftpCreds()
