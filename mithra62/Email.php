@@ -11,7 +11,11 @@
  
 namespace mithra62;
 
-use PHPMailer;
+use Swift_SmtpTransport;
+use Swift_MailTransport;
+use Swift_Message;
+use Swift_Attachment;
+use Swift_mailer;
 use mithra62\Exceptions\EmailException;
 
 /**
@@ -298,7 +302,18 @@ class Email
     {
         if( is_null($this->mailer) )
         {
-            $this->mailer = new PHPMailer;
+            if( $this->config['type'] == 'smtp' )
+            {
+                $transport = Swift_SmtpTransport::newInstance($this->config['smtp_options']['host'], $this->config['smtp_options']['port']);
+                $transport->setUsername($this->config['smtp_options']['connection_config']['username']);
+                $transport->setPassword($this->config['smtp_options']['connection_config']['password']);
+            }
+            else
+            {
+                $transport = Swift_MailTransport::newInstance();
+            }
+                
+            $this->mailer = Swift_Mailer::newInstance($transport);
         }
         
         return $this->mailer;
@@ -338,21 +353,22 @@ class Email
             throw new \InvalidArgumentException('__exception_missing_message');
         }
         
-        $valid_email = false;
+        $valid_emails = array();
         foreach( $this->getTo() AS $to )
         {
             if( filter_var($to, FILTER_VALIDATE_EMAIL) )
             {
-                $this->getMailer()->addAddress($to);
-                $valid_email = true;
+                $valid_emails = $to;
             }
         }
         
-        if(!$valid_email)
+        if(!$valid_emails)
         {
             return;
         }
         
+        $message = Swift_Message::newInstance();
+        $message->setTo($valid_emails);
         if( $this->getAttachments() )
         {
             foreach($this->getAttachments() AS $attachment)
@@ -371,26 +387,18 @@ class Email
             }
         }
         
-        $this->getMailer()->From = $this->config['from_email'];
-        $this->getMailer()->FromName = $this->config['sender_name'];
-        $this->getMailer()->Subject = $this->getView()->render($this->getSubject(), $vars);
-        $this->getMailer()->Body = $this->getView()->render($this->getMessage(), $vars);
+        $message->setFrom( $this->config['from_email'], $this->config['sender_name'] );
+        $message->setSubject( $this->getView()->render($this->getSubject(), $vars) );
         if( $this->getMailtype() == 'html' )
         {
-            $this->getMailer()->isHTML(true);
+            $message->setBody( $this->getView()->render($this->getMessage(), $vars), 'text/html' );
         }
-        
-        if( $this->config['type'] == 'smtp' )
+        else
         {
-            $this->getMailer()->isSMTP();
-            $this->getMailer()->Host = $this->config['smtp_options']['host'];
-            $this->getMailer()->SMTPAuth = true;
-            $this->getMailer()->Username = $this->config['smtp_options']['connection_config']['username'];
-            $this->getMailer()->Password = $this->config['smtp_options']['connection_config']['password'];
-            $this->getMailer()->Port = $this->config['smtp_options']['port'];
+            $message->setBody( $this->getView()->render($this->getMessage(), $vars) );
         }
         
-        if( !$this->getMailer()->send() )
+        if( !$this->getMailer()->send($message) )
         {
             throw new EmailException($this->getMailer()->ErrorInfo);
         }
