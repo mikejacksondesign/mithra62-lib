@@ -11,6 +11,7 @@
 namespace mithra62\Platforms\View;
 
 use mithra62\Traits\DateTime;
+use RelativeTime\RelativeTime;
 
 /**
  * Backup Pro - Eecms View Object
@@ -160,4 +161,15 @@ abstract class AbstractView implements ViewInterface
         return $this->getRelativeDateTime($date, false);
     }
 
+    public function m62TimeFormat($time)
+    {
+        $config = array(
+            'separator' => ', ',
+            'suffix' => false,
+            'truncate' => 2,
+        );
+        $relativeTime = new \RelativeTime\RelativeTime($config);
+        return $relativeTime->convert(time(), time()+round($time));
+        return number_format($time, 2, '.', ',');
+    }
 }

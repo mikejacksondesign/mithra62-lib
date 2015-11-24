@@ -12,6 +12,7 @@
 namespace mithra62\Traits;
 
 use Carbon\Carbon;
+use RelativeTime\RelativeTime;
 
 /**
  * mithra62 - DateTime Trait
@@ -34,6 +35,8 @@ trait DateTime
      * @var string
      */
     private $tz = 'UTC';
+    
+    private $relative_config = array('truncate' => 1);
     
    /**
     * Returns the current time in Unix format
@@ -118,38 +121,12 @@ trait DateTime
             return 'N/A';
         }
     
-        $difference = time() - $timestamp;
-        $periods = array("sec", "min", "hour", "day", "week","month", "year", "decade");
-        $lengths = array("60","60","24","7","4.35","12","10");
-        $total_lengths = count($lengths);
-    
-        if($ending)
+        if( !$ending )
         {
-            if ($difference > 0)
-            {
-                // this was in the past
-                $ending = "ago";
-            }
-            else
-            {
-                // this was in the future
-                $difference = -$difference;
-                $ending = " from now";
-            }
-        }
-    
-        for($j = 0; $difference > $lengths[$j] && $total_lengths > $j; $j++)
-        {
-            $difference /= $lengths[$j];
+             $this->relative_config['suffix'] = false;
         }
         
-        $difference = round($difference);
-        if($difference != 1)
-        {
-            $periods[$j].= "s";
-        }
-        
-        $text = "$difference $periods[$j] $ending";
-        return trim($text);
+        $relative = new RelativeTime($this->relative_config);
+        return $relative->timeAgo($timestamp);
     }
 }
