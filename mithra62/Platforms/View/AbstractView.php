@@ -161,15 +161,36 @@ abstract class AbstractView implements ViewInterface
         return $this->getRelativeDateTime($date, false);
     }
 
-    public function m62TimeFormat($time)
+    /**
+     * Formats a time string into a human friendly format
+     * @param number $time
+     * @param string $html
+     * @param number $truncate
+     * @return string
+     */
+    public function m62TimeFormat($time, $html = true, $truncate = 1)
     {
         $config = array(
             'separator' => ', ',
             'suffix' => false,
-            'truncate' => 2,
+            'truncate' => $truncate,
         );
         $relativeTime = new \RelativeTime\RelativeTime($config);
-        return $relativeTime->convert(time(), time()+round($time));
-        return number_format($time, 2, '.', ',');
+        $formatted_time = $relativeTime->convert(time(), time()+round($time));
+        
+        $config = array(
+            'separator' => ', ',
+            'suffix' => false,
+            'truncate' => 3,
+        );
+        $relativeTime = new \RelativeTime\RelativeTime($config);
+        $formatted_time_tip = $relativeTime->convert(time(), time()+round($time));
+        
+        if( $html )
+        {
+            return '<span class="backup_pro_timeago" title="'.$formatted_time_tip.'">'.$formatted_time.'</span>';
+        }
+        
+        return $formatted_time;
     }
 }
