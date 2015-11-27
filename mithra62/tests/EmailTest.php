@@ -11,7 +11,6 @@
 namespace mithra62\tests;
 
 use mithra62\tests\TestFixture;
-
 use mithra62\Email;
 
 /**
@@ -65,7 +64,7 @@ class EmailTest extends TestFixture
         
         $this->assertTrue( is_array( $email->getTo() ) );
         
-        $this->assertInstanceOf('PHPMailer', $email->getMailer());
+        $this->assertInstanceOf('Swift_Mailer', $email->getMailer());
     }
     
     public function testSetSubject()
