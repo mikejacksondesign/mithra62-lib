@@ -302,7 +302,7 @@ class Email
     {
         if( is_null($this->mailer) )
         {
-            if( $this->config['type'] == 'smtp' )
+            if( isset($this->config['type']) && $this->config['type'] == 'smtp' )
             {
                 $transport = Swift_SmtpTransport::newInstance($this->config['smtp_options']['host'], $this->config['smtp_options']['port']);
                 $transport->setUsername($this->config['smtp_options']['connection_config']['username']);
