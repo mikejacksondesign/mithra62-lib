@@ -64,7 +64,7 @@ class Console extends AbstractPlatform
      */
     public function getCurrentUrl()
     {
-        
+        return $this->config['site_url'];
     }
     
     /**
@@ -73,7 +73,7 @@ class Console extends AbstractPlatform
      */
     public function getSiteName()
     {
-        
+        return $this->config['site_name'];
     }
     
     /**
@@ -82,7 +82,7 @@ class Console extends AbstractPlatform
      */
     public function getTimezone()
     {
-        
+        return date_default_timezone_get();
     }
     
     /**
@@ -91,7 +91,7 @@ class Console extends AbstractPlatform
      */
     public function getSiteUrl()
     {
-        
+        return $this->config['site_url'];
     }
     
     /**

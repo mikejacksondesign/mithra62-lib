@@ -16,6 +16,8 @@ use Swift_MailTransport;
 use Swift_Message;
 use Swift_Attachment;
 use Swift_mailer;
+use Swift_Plugins_Loggers_ArrayLogger;
+use Swift_Plugins_LoggerPlugin;
 use mithra62\Exceptions\EmailException;
 
 /**
@@ -72,9 +74,15 @@ class Email
     
     /**
      * The mailer object
-     * @var PHPMailer
+     * @var Swift_mailer
      */
     protected $mailer = null;
+    
+    /**
+     * The mailer logging object
+     * @var Swift_Plugins_Loggers_ArrayLogger
+     */
+    protected $mailer_logger = null;
     
     /**
      * The email configuration
@@ -314,6 +322,8 @@ class Email
             }
                 
             $this->mailer = Swift_Mailer::newInstance($transport);
+            $this->mailer_logger = new Swift_Plugins_Loggers_ArrayLogger();
+            $this->mailer->registerPlugin(new Swift_Plugins_LoggerPlugin($this->mailer_logger));
         }
         
         return $this->mailer;
@@ -325,6 +335,7 @@ class Email
      */
     public function clear()
     {
+        $this->mailer = null;
         $this->to = $this->attachemnts = array();
         $this->subject = $this->message = false;
         return $this;
@@ -377,11 +388,11 @@ class Email
                 {
                     if( $alt_name == '')
                     {
-                        $this->getMailer()->addAttachment($file);
+                        $message->attach( Swift_Attachment::fromPath($file) );
                     }
                     else
                     {
-                        $this->getMailer()->addAttachment($file, $alt_name);
+                        $message->attach( Swift_Attachment::fromPath($file)->setFilename($alt_name) );
                     }
                 }
             }
@@ -400,7 +411,11 @@ class Email
         
         if( !$this->getMailer()->send($message) )
         {
+            print_r($this->mailer_logger->dump());
+            exit;
             throw new EmailException($this->getMailer()->ErrorInfo);
         }
+        
+        $this->clear();
     }
 }

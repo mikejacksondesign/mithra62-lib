@@ -61,9 +61,9 @@ class Ee3 extends AbstractPlatform
     public function getEmailConfig()
     {
         $this->email_config['type'] = ee()->config->config['mail_protocol'];
-        $this->email_config['port'] = ee()->config->config['smtp_port'];
         if( $this->email_config['type'] == 'smtp' )
         {
+            $this->email_config['port'] = ee()->config->config['smtp_port'];
             $this->email_config['smtp_options']['host'] = ee()->config->config['smtp_server'];
             $this->email_config['smtp_options']['connection_config']['username'] = ee()->config->config['smtp_username'];
             $this->email_config['smtp_options']['connection_config']['password'] = ee()->config->config['smtp_password'];
