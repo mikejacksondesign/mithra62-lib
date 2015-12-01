@@ -20,5 +20,28 @@ namespace mithra62\Platforms\View;
  */
 class Smarty extends AbstractView
 {
+    /**
+     * Returns a string to use for the form field errors
+     * @return string
+     */
+    public function m62FormErrors($errors)
+    {
+        if( is_string($errors) && $errors != '')
+        {
+            //$errors = array($errors);
+        }
     
+        $return = '';
+        if( is_array($errors) && count($errors) >= 1)
+        {
+            $return = '<ul style="padding-top:5px; color:red;">';
+            foreach($errors AS $error)
+            {
+                $return .= '<li class="notice">'.$error.'</li>';
+            }
+            $return .= '</ul>';
+        }
+    
+        echo $return;
+    }
 }
