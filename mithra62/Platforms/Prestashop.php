@@ -60,18 +60,18 @@ class Prestashop extends AbstractPlatform
      */
     public function getEmailConfig()
     {
-        $this->email_config['type'] = 'php';//ee()->config->config['mail_protocol'];
-        $this->email_config['port'] = '';//ee()->config->config['smtp_port'];
-        if( $this->email_config['type'] == 'smtp' )
+        $this->email_config['type'] = (\Configuration::get("PS_MAIL_METHOD") == '2' ? 'smtp' : 'php');
+        $this->email_config['port'] = \Configuration::get("PS_MAIL_SMTP_PORT");
+        if( \Configuration::get("PS_MAIL_METHOD") == '2' )
         {
-            $this->email_config['smtp_options']['host'] = ee()->config->config['smtp_server'];
-            $this->email_config['smtp_options']['connection_config']['username'] = ee()->config->config['smtp_username'];
-            $this->email_config['smtp_options']['connection_config']['password'] = ee()->config->config['smtp_password'];
-            $this->email_config['smtp_options']['port'] = $this->email_config['port'];
+            $this->email_config['smtp_options']['host'] = \Configuration::get("PS_MAIL_SERVER");
+            $this->email_config['smtp_options']['connection_config']['username'] = \Configuration::get("PS_MAIL_USER");
+            $this->email_config['smtp_options']['connection_config']['password'] = \Configuration::get("PS_MAIL_PASSWD");
+            $this->email_config['smtp_options']['port'] = \Configuration::get("PS_MAIL_SMTP_PORT");
         }
         
-        $this->email_config['sender_name'] = get_bloginfo( 'name', 'raw' );
-        $this->email_config['from_email'] = get_bloginfo( 'admin_email', 'raw' );
+        $this->email_config['sender_name'] = $this->getSiteName();
+        $this->email_config['from_email'] = \Configuration::get("PS_SHOP_EMAIL");
         
         return $this->email_config;
     }
@@ -100,11 +100,7 @@ class Prestashop extends AbstractPlatform
      */
     public function getTimezone() 
     {
-        $tz = '';//get_option('timezone_string');
-        if( !empty($tz) )
-        {
-            return $tz;
-        }
+        $tz = \Configuration::get("PS_TIMEZONE");
     }
     
     /**
@@ -122,9 +118,9 @@ class Prestashop extends AbstractPlatform
      */
     public function getEncryptionKey()
     {
-        if( defined('NONCE_SALT') )
+        if( defined('_RIJNDAEL_KEY_') )
         {
-            return NONCE_SALT;
+            return _RIJNDAEL_KEY_;
         }
     }
     
