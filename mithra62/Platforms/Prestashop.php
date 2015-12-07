@@ -26,7 +26,13 @@ class Prestashop extends AbstractPlatform
      * The Eecms config array
      * @var array
      */
-    private $config = null;
+    protected $config = null;
+    
+    /**
+     * The Prestashop context object
+     * @var \Context
+     */
+    protected $presta_context = null;
     
     /**
      * Sets the Eecms config array
@@ -138,5 +144,16 @@ class Prestashop extends AbstractPlatform
         }
         
         return array();
+    }
+    
+    /**
+     * Sets the Prestashop context object
+     * @param \Context $context
+     * @return \mithra62\Platforms\Prestashop
+     */
+    public function setPrestaContext(\Context $context)
+    {
+        $this->presta_context = $context;
+        return $this;
     }
 }
