@@ -156,4 +156,22 @@ class Prestashop extends AbstractPlatform
         $this->presta_context = $context;
         return $this;
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::redirect()
+     */
+    public function redirect($url)
+    {
+        
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getPost()
+     */
+    public function getPost($key, $default = false)
+    {
+        return \Tools::getValue($key, $default); 
+    }
 }

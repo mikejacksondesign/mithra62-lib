@@ -78,4 +78,18 @@ abstract class AbstractPlatform
      * Returns an array of the configuration overrides to use (if any)
      */
     abstract public function getConfigOverrides();
+    
+    /**
+     * Platform based abstraction to redirect a user's browser session to a given $url
+     * @param string $url
+     */
+    abstract public function redirect($url);
+    
+    /**
+     * Platform based abstraction to handle HTTP get/post request variables
+     * @param string $key
+     * @param string $default
+     * @return mixed
+     */
+    abstract public function getPost($key, $default);
 }
