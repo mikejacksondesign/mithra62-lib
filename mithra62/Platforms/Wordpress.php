@@ -144,4 +144,32 @@ class Wordpress extends AbstractPlatform
         
         return array();
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::redirect()
+     */
+    public function redirect($url)
+    {
+        wp_redirect($url);
+        exit;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getPost()
+     */
+    public function getPost($key, $default = false)
+    {
+        if ( isset($_POST[$key]) )
+        {
+            return $_POST[$key];
+        }
+        elseif( isset( $_GET[$key]) )
+        {
+            return $_GET[$key];
+        }
+        
+        return $default;
+    }  
 }

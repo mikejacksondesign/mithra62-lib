@@ -147,4 +147,29 @@ class Ee3 extends AbstractPlatform
         
         return array();
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::redirect()
+     */
+    public function redirect($url)
+    {
+        ee()->functions->redirect($url);
+        exit;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getPost()
+     */
+    public function getPost($key, $default = false)
+    {
+        $value = ee()->input->get_post($key);
+        if( !$value )
+        {
+            $value = $default;
+        }
+        
+        return $value;
+    }  
 }
