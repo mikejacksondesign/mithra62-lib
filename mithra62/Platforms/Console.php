@@ -111,4 +111,21 @@ class Console extends AbstractPlatform
     {
         return array();
     }
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::redirect()
+     */
+    public function redirect($url)
+    {
+        
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getPost()
+     */
+    public function getPost($key, $default = false)
+    {
+        
+    }
 }
