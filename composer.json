@@ -1,8 +1,19 @@
 {
+    "name": "mithra62/jaeger",
+    "homepage": "https://mithra62.com",
+    "description": "Base libraries for abstracting CMS plugin development",
+    "keywords": ["wordpress","eecms","prestashop","craftcms"],
+    "authors": [
+        {
+            "name": "Eric Lamb",
+            "homepage": "https://mithra62.com"
+        }
+    ],
+    "license": "proprietary",
 	"require": {
 		"pimple/pimple": "3.*",
 		"monolog/monolog": "^1.13",
-		"voku/simple-mysqli": "dev-master",
+		"voku/simple-mysqli": "^1.8",
 		"phpseclib/phpseclib": "~2.0",
 		"vlucas/valitron": "dev-master",
 		"neitanod/forceutf8": "dev-master",
