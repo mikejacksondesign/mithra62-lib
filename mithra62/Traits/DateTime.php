@@ -120,7 +120,8 @@ trait DateTime
         {
             return 'N/A';
         }
-    
+
+        $this->relative_config['suffix'] = true;
         if( !$ending )
         {
              $this->relative_config['suffix'] = false;
