@@ -107,6 +107,7 @@ class m62LangTwigExtension extends \Twig_Extension
             'm62Encode' => new Twig_Filter_Method($this, 'm62Encode'),
             'm62Decode' => new Twig_Filter_Method($this, 'm62Decode'),
             'm62RelativeDateTime' => new Twig_Filter_Method($this, 'm62RelativeDateTime'),
+            'm62TimeFormat' => new Twig_Filter_Method($this, 'm62TimeFormat'),
         );
     }
     
@@ -185,5 +186,48 @@ class m62LangTwigExtension extends \Twig_Extension
     public function m62RelativeDateTime($date)
     {
         return $this->getRelativeDateTime($date, false);
+    }
+
+    /**
+     * Formats a time string into a human friendly format
+     * @param number $time
+     * @param string $html
+     * @param number $truncate
+     * @return string
+     */
+    public function m62TimeFormat($time, $html = true, $truncate = 1)
+    {
+        $config = array(
+            'separator' => ', ',
+            'suffix' => false,
+            'truncate' => $truncate,
+        );
+        
+        if( round($time) == '0' )
+        {
+            $time = time()+ceil($time);
+        }
+        else
+        {
+            $time = time()+round($time);
+        }
+        
+        $relativeTime = new \RelativeTime\RelativeTime($config);
+        $formatted_time = $relativeTime->convert(time(), $time);
+        
+        $config = array(
+            'separator' => ', ',
+            'suffix' => false,
+            'truncate' => 3,
+        );
+        $relativeTime = new \RelativeTime\RelativeTime($config);
+        $formatted_time_tip = $relativeTime->convert(time(), $time);
+        
+        if( $html )
+        {
+            return '<span class="backup_pro_timeago" title="'.$formatted_time_tip.'">'.$formatted_time.'</span>';
+        }
+        
+        return $formatted_time;
     }
 }

@@ -175,8 +175,18 @@ abstract class AbstractView implements ViewInterface
             'suffix' => false,
             'truncate' => $truncate,
         );
+        
+        if( round($time) == '0' )
+        {
+            $time = time()+ceil($time);
+        }
+        else
+        {
+            $time = time()+round($time);
+        }
+        
         $relativeTime = new \RelativeTime\RelativeTime($config);
-        $formatted_time = $relativeTime->convert(time(), time()+round($time));
+        $formatted_time = $relativeTime->convert(time(), $time);
         
         $config = array(
             'separator' => ', ',
@@ -184,7 +194,7 @@ abstract class AbstractView implements ViewInterface
             'truncate' => 3,
         );
         $relativeTime = new \RelativeTime\RelativeTime($config);
-        $formatted_time_tip = $relativeTime->convert(time(), time()+round($time));
+        $formatted_time_tip = $relativeTime->convert(time(), $time);
         
         if( $html )
         {
