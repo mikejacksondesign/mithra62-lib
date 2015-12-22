@@ -106,7 +106,7 @@ class Prestashop extends AbstractPlatform
      */
     public function getTimezone() 
     {
-        $tz = \Configuration::get("PS_TIMEZONE");
+        return \Configuration::get("PS_TIMEZONE");
     }
     
     /**
