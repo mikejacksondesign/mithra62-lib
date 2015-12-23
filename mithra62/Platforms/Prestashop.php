@@ -163,7 +163,7 @@ class Prestashop extends AbstractPlatform
      */
     public function redirect($url)
     {
-        
+        \Tools::redirectAdmin($url);
     }
     
     /**
