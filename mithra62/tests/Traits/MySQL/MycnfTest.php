@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/ErrorsTest.php
  */
- 
 namespace mithra62\tests\Traits\MySQL;
 
 use mithra62\Traits\MySQL\Mycnf;
@@ -15,18 +14,19 @@ use mithra62\tests\TestFixture;
 
 /**
  * Mock for testing the Mycnf Trait
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * 
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class _my
 {
-    use Mycnf;    
-    
+    use Mycnf;
+
     public function checkCreateMyCnf(array $data, $path)
     {
         return $this->createMyCnf($data, $path);
-    }  
-    
+    }
+
     public function checkRemoveMyCnf($path)
     {
         return $this->removeMyCnf($path);
@@ -38,17 +38,18 @@ class _my
  *
  * Contains all the unit tests for the \mithra62\Trait\Log Trait
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class MycnfTest extends TestFixture
 {
+
     protected $test_cnf_data = array(
         'user' => 'test',
         'password' => 'test',
         'host' => 'test'
     );
-    
+
     public function testCreateMyCnf()
     {
         $my = new _my();
@@ -58,13 +59,13 @@ class MycnfTest extends TestFixture
         
         return $path;
     }
-    
+
     /**
      * @depends testCreateMyCnf
      */
     public function testRemoveMyCnf($path)
     {
         $my = new _my();
-        $this->assertTrue( $my->checkRemoveMyCnf($path) );
+        $this->assertTrue($my->checkRemoveMyCnf($path));
     }
 }

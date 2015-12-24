@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/WordpressTest.php
  */
- 
 namespace mithra62\tests\Platforms;
 
 use mithra62\tests\TestFixture;
@@ -18,14 +17,15 @@ use mithra62\Platforms\Wordpress;
  *
  * Contains all the unit tests for the \mithra62\Platforms\Craft object
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class WordpressTest extends TestFixture
 {
+
     public function testInit()
     {
-        $wp = new Wordpress;
+        $wp = new Wordpress();
         $this->assertTrue(method_exists($wp, 'getDbCredentials'));
         $this->assertTrue(method_exists($wp, 'getEmailConfig'));
         $this->assertTrue(method_exists($wp, 'getCurrentUrl'));

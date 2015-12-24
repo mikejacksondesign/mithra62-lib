@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/Remote/Local.php
  */
- 
 namespace mithra62\Remote;
 
 use League\Flysystem\Adapter\Local as Adapter;
@@ -17,10 +16,9 @@ use League\Flysystem\Adapter\Local as Adapter;
  *
  * Simple intermediary between Flysystem and mithra62
  *
- * @package 	Remote
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Remote
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Local extends Adapter
 {
-    
 }

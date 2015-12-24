@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/Validate/Rules/Rcf/Containers/ExistsTest.php
  */
- 
 namespace mithra62\tests\Validate\Rules\Rcf\Containers;
 
 use mithra62\tests\TestFixture;
@@ -19,20 +18,21 @@ use mithra62\Validate\Rules\Rcf\Containers\Readable;
  *
  * Contains all the unit tests for the \mithra62\Valiate object
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class ReadableTest extends TestFixture
 {
+
     /**
      * Tests the name of the rule
      */
     public function testName()
     {
-        $dir = new Readable; 
+        $dir = new Readable();
         $this->assertEquals($dir->getName(), 'rcf_container_readable');
     }
-    
+
     /**
      * Tests that a file can be determined false
      */
@@ -42,10 +42,12 @@ class ReadableTest extends TestFixture
         $val = new Validate();
         $creds = $this->getRcfCreds();
         $creds['rcf_container'] = 'ffdsafdsafdsafd';
-        $val->rule('rcf_container_readable', 'connection_field', $creds)->val(array('connection_field' => __FILE__));
+        $val->rule('rcf_container_readable', 'connection_field', $creds)->val(array(
+            'connection_field' => __FILE__
+        ));
         $this->assertTrue($val->hasErrors());
     }
-    
+
     /**
      * Tests that a directory can be determined true
      */
@@ -53,7 +55,10 @@ class ReadableTest extends TestFixture
     {
         return;
         $val = new Validate();
-        $val->rule('rcf_container_readable', 'connection_field', $this->getRcfCreds())->val(array('connection_field' => 'Foo'));
+        $val->rule('rcf_container_readable', 'connection_field', $this->getRcfCreds())
+            ->val(array(
+            'connection_field' => 'Foo'
+        ));
         $this->assertFALSE($val->hasErrors());
     }
 }

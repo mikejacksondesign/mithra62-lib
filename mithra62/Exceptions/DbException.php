@@ -8,8 +8,7 @@
  * @version		1.0
  * @filesource 	./mithra62/Exceptions/DbException.php
  */
- 
-namespace mithra62\Exceptions; 
+namespace mithra62\Exceptions;
 
 use mithra62\Exception;
 
@@ -18,10 +17,9 @@ use mithra62\Exception;
  *
  * Handles exceptions from the Database object
  *
- * @package 	Exceptions
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Exceptions
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class DbException extends Exception
-{ 
-    
+{
 }

@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/ValiateTest.php
  */
- 
 namespace mithra62\tests;
 
 use mithra62\tests\TestFixture;
@@ -18,26 +17,27 @@ use mithra62\Validate;
  *
  * Contains all the unit tests for the \mithra62\Valiate object
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class ValidateTest extends TestFixture
 {
+
     /**
      * Tests the base Validate object state
      */
     public function testInit()
     {
-        $val = new Validate;
+        $val = new Validate();
         $this->assertInstanceOf('\Valitron\Validator', $val);
     }
-    
+
     /**
      * Test that we have all the custom rules we need loaded up
      */
     public function testCustomRules()
     {
-        $val = new Validate;
+        $val = new Validate();
         $rules = $val->getCustomRules();
         $this->assertArrayHasKey('dir', $rules);
         $this->assertArrayHasKey('file', $rules);

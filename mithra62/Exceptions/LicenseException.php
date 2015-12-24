@@ -8,8 +8,7 @@
  * @version		1.0
  * @filesource 	./mithra62/Exceptions/LicenseException.php
  */
- 
-namespace mithra62\Exceptions; 
+namespace mithra62\Exceptions;
 
 use mithra62\Exception;
 
@@ -18,10 +17,9 @@ use mithra62\Exception;
  *
  * Handles exceptions from the License object
  *
- * @package 	Exceptions
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Exceptions
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class LicenseException extends Exception
-{ 
-    
+{
 }

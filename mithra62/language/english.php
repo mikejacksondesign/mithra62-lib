@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * mithra62
  *
@@ -12,6 +12,7 @@
 /**
  * Language Array
  * Language translation array
+ * 
  * @var array
  */
 $lang = array(
@@ -71,7 +72,7 @@ $lang = array(
     'rcf_connect_fail' => 'The Rackspace Cloud Files credentials aren\'t correct.',
     'rcf_location' => 'Account Location',
     'rcf_location_instructions' => 'You can determine the location to use based on the Rackspace retail site which was used to create your account. <a href="http://www.rackspacecloud.com">US</a> or <a href="http://www.rackspace.co.uk">UK</a>.',
-
+    
     'configure_gcs' => 'Configure Google Cloud Storage',
     'gcs_access_key' => 'Access Key ID',
     'gcs_access_key_instructions' => 'Your Access Key ID identifies you as the party responsible for your Google Cloud Storage service requests. You can find this by signing into your <a href="http://aws.amazon.com" target="_blank">Amazon Web Services account</a>',
@@ -92,7 +93,7 @@ $lang = array(
     'size' => 'Size',
     'na' => 'N/A',
     
-    //general settings
+    // general settings
     'relative_time' => 'Relative Time',
     'note' => 'Note',
     
@@ -102,5 +103,5 @@ $lang = array(
     
     'total_items' => 'Total Items',
     'raw_file_size' => 'Raw File Size',
-    ''=>''	
+    '' => ''
 );

@@ -7,19 +7,16 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Platforms/View/Wordpress.php
  */
- 
 namespace mithra62\Platforms\View;
-
 
 /**
  * Backup Pro - Wordpress View Object
  *
  * Contains the view helpers for Wordpress
  *
- * @package 	BackupPro\View
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package BackupPro\View
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Wordpress extends AbstractView
 {
-
 }

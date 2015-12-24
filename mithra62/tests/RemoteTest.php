@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/Remote.php
  */
- 
 namespace mithra62\tests\Traits;
 
 use League\Flysystem\Adapter\NullAdapter as Adapter;
@@ -19,14 +18,15 @@ use mithra62\Remote;
  *
  * Contains all the unit tests for the \mithra62\Remote object
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class RemoteTest extends TestFixture
 {
+
     public function testInstance()
     {
-        $remote = new Remote( new Adapter );
+        $remote = new Remote(new Adapter());
         $this->assertInstanceOf('\League\Flysystem\FilesystemInterface', $remote);
     }
 }

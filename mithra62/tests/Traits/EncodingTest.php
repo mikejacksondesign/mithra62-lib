@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/Traits/EncodingTest.php
  */
- 
 namespace mithra62\tests\Traits;
 
 use mithra62\Traits\Encoding;
@@ -15,12 +14,13 @@ use mithra62\tests\TestFixture;
 
 /**
  * Mock for testing the Encoding Trait
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * 
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class _encoding
 {
-    use Encoding;        
+    use Encoding;
 }
 
 /**
@@ -28,8 +28,8 @@ class _encoding
  *
  * Contains all the unit tests for the \mithra62\Trait\Encoding Trait
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class EncodingTest extends TestFixture
 {

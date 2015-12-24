@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/Remote.php
  */
- 
 namespace mithra62;
 
 use League\Flysystem\Filesystem;
@@ -17,10 +16,9 @@ use League\Flysystem\Filesystem;
  *
  * Sits between Flysystem and mithra62
  *
- * @package 	Remote
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Remote
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Remote extends Filesystem
 {
-
 }

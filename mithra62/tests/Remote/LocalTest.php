@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/Remote/LocalTest.php
  */
- 
 namespace mithra62\tests\Remote;
 
 use mithra62\tests\TestFixture;
@@ -18,14 +17,15 @@ use mithra62\Remote\Local;
  *
  * Contains all the unit tests for the \mithra62\Remote\Local object
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class LocalTest extends TestFixture
 {
+
     public function testInstance()
     {
         $local = new Local(dirname(__FILE__));
-        $this->assertInstanceOf('\League\Flysystem\AdapterInterface', $local);   
+        $this->assertInstanceOf('\League\Flysystem\AdapterInterface', $local);
     }
 }

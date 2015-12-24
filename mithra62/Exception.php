@@ -8,10 +8,9 @@
  * @version		1.0
  * @filesource 	./mithra62/Exception.php
  */
- 
-namespace mithra62; 
+namespace mithra62;
 
-use Phine\Exception\Exception AS Phine;
+use Phine\Exception\Exception as Phine;
 use mithra62\Traits\Log;
 
 /**
@@ -19,21 +18,22 @@ use mithra62\Traits\Log;
  *
  * Handles exceptions within the mithra62 system
  *
- * @package 	Exceptions
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Exceptions
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Exception extends Phine
-{ 
+{
     use Log;
-    
+
     /**
-     * Logs an exeption 
-     * @param \Exception $e
+     * Logs an exeption
+     * 
+     * @param \Exception $e            
      * @return bool
      */
     public function logException(\Exception $e)
     {
-        $error = $e->getMessage().$e->getTraceAsString();
+        $error = $e->getMessage() . $e->getTraceAsString();
         return $this->logEmergency($error);
     }
 }

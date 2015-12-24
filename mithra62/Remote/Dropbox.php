@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/Remote/Dropbox.php
  */
- 
 namespace mithra62\Remote;
 
 use League\Flysystem\Dropbox\DropboxAdapter as Adapter;
@@ -19,42 +18,47 @@ use Dropbox\Client;
  *
  * Simple intermediary between Flysystem and mithra62
  *
- * @package 	Remote
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Remote
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Dropbox extends Adapter
-{   
+{
+
     /**
      * (non-PHPdoc)
+     * 
      * @see \League\Flysystem\Adapter\Ftp::connect()
      */
     public function connect()
     {
         @parent::connect();
     }
-    
+
     /**
      * (non-PHPdoc)
+     * 
      * @see \League\Flysystem\Adapter\Ftp::getMetadata()
      */
     
     /**
-     * @ignore
-     * (non-PHPdoc)
+     *
+     * @ignore (non-PHPdoc)
      * @see \League\Flysystem\Adapter\Ftp::getMetadata()
      */
     public function getMetadata($path)
     {
         return @parent::getMetadata($path);
     }
-    
+
     /**
      * Returns the remote transport client
-     * @param array $params An array of the connection details 
+     * 
+     * @param array $params
+     *            An array of the connection details
      * @return \mithra62\Remote\Ftp
      */
     public static function getRemoteClient($client, $app_secret)
     {
         return new Client($client, $app_secret);
-    }    
+    }
 }

@@ -8,7 +8,6 @@
  * @version		1.0
  * @filesource 	./mithra62/View.php
  */
- 
 namespace mithra62;
 
 use Mustache_Engine;
@@ -18,10 +17,9 @@ use Mustache_Engine;
  *
  * Simple View abstraction object
  *
- * @package 	View
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package View
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class View extends Mustache_Engine
 {
-
 }

@@ -7,5 +7,5 @@ return array(
     'ftp_store_location' => '',
     'ftp_ssl' => '0',
     'ftp_timeout' => '10',
-    'ftp_passive' => '1',
+    'ftp_passive' => '1'
 );

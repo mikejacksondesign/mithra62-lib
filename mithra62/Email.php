@@ -8,7 +8,6 @@
  * @version		1.0
  * @filesource 	./mithra62/Email.php
  */
- 
 namespace mithra62;
 
 use Swift_SmtpTransport;
@@ -25,128 +24,149 @@ use mithra62\Exceptions\EmailException;
  *
  * Wrapper to send email
  *
- * @package 	Email
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Email
+ * @author Eric Lamb <eric@mithra62.com>
  */
-class Email 
+class Email
 {
+
     /**
      * The email addresses we're sending to
+     * 
      * @var array
      */
     protected $to = array();
-    
+
     /**
      * The email subect language key
+     * 
      * @var string
      */
     protected $subject = false;
-    
+
     /**
      * The email message language key
+     * 
      * @var string
      */
     protected $message = false;
-    
+
     /**
      * What type of email to send (html or text)
+     * 
      * @var string
      */
     protected $mailtype = 'html';
-    
+
     /**
      * The mailtype values we allow
+     * 
      * @var array
      */
-    protected $allowed_mailtypes = array('html', 'txt');
-    
+    protected $allowed_mailtypes = array(
+        'html',
+        'txt'
+    );
+
     /**
      * The View object
+     * 
      * @var \mithra62\View
      */
     protected $view = null;
-    
+
     /**
      * The Language object
+     * 
      * @var \mithra62\Language
      */
     protected $lang = null;
-    
+
     /**
      * The mailer object
+     * 
      * @var Swift_mailer
      */
     protected $mailer = null;
-    
+
     /**
      * The mailer logging object
+     * 
      * @var Swift_Plugins_Loggers_ArrayLogger
      */
     protected $mailer_logger = null;
-    
+
     /**
      * The email configuration
+     * 
      * @var array
      */
     protected $config = array();
-    
+
     /**
      * The view options
+     * 
      * @var array
      */
-    protected $view_options= array();
-    
+    protected $view_options = array();
+
     /**
      * The tmeplate to use for view output
+     * 
      * @var string
      */
     protected $view_template = '';
-    
+
     /**
      * An array of files to add as attachments to emails
-     * @var array A key => value pair of file path => new name 
+     * 
+     * @var array A key => value pair of file path => new name
      */
     protected $attachemnts = array();
-    
+
     /**
      * The format the configuration is expected in
+     * 
      * @var array
      */
     private $config_prototype = array(
-        'type' => 'smtp', //choose between `php` and `smtp`
-        'smtp_options' => array( //if `smtp` chosen above, this must be completed and accurate
+        'type' => 'smtp', // choose between `php` and `smtp`
+        'smtp_options' => array( // if `smtp` chosen above, this must be completed and accurate
             'host' => '',
             'connection_config' => array(
                 'username' => '',
-                'password' => '',
+                'password' => ''
             ),
-            'port' => '',
+            'port' => ''
         )
     );
-    
+
     /**
      * Sets the Language object
-     * @param \mithra62\Language $lang
+     * 
+     * @param \mithra62\Language $lang            
      * @return \mithra62\Email
      */
     public function setLang(\mithra62\Language $lang)
     {
         $this->lang = $lang;
         return $this;
-    }    
-    
+    }
+
     /**
      * Returns an instance of the Language object
+     * 
      * @return \mithra62\Language
      */
     public function getLang()
     {
         return $this->lang;
     }
-    
+
     /**
      * Sets the View object
-     * @param \mithra62\View $view
+     * 
+     * @param \mithra62\View $view            
      * @return \mithra62\Email
      */
     public function setView(\mithra62\View $view)
@@ -154,19 +174,21 @@ class Email
         $this->view = $view;
         return $this;
     }
-    
+
     /**
      * Returns an instance of the View object
+     * 
      * @return \mithra62\View
      */
     public function getView()
     {
         return $this->view;
     }
-    
+
     /**
      * Sets the email config
-     * @param array $config
+     * 
+     * @param array $config            
      * @return \mithra62\Email
      */
     public function setConfig(array $config)
@@ -174,11 +196,12 @@ class Email
         $this->config = $config;
         return $this;
     }
-    
+
     /**
      * Compiles the options to use for the view
-     * @param string $template
-     * @param array $view_data
+     * 
+     * @param string $template            
+     * @param array $view_data            
      * @return \mithra62\Email
      */
     public function setViewOptions($template, array $view_data = array())
@@ -187,23 +210,28 @@ class Email
         $this->view_template = $template;
         return $this;
     }
-    
+
     /**
      * Sets the TO email address
-     * 
+     *
      * Note that this method resets any previously added email addresses
-     * @param string $to
+     * 
+     * @param string $to            
      * @return \mithra62\Email
      */
     public function setTo($to)
     {
-        $this->to = ( is_array($to) ? $to : array($to) );
+        $this->to = (is_array($to) ? $to : array(
+            $to
+        ));
         return $this;
     }
-    
+
     /**
      * Sets the email addresses to send to
-     * @param string $to The Email address to send to
+     * 
+     * @param string $to
+     *            The Email address to send to
      * @return \mithra62\Email
      */
     public function addTo($to)
@@ -211,31 +239,36 @@ class Email
         $this->to[] = $to;
         return $this;
     }
-    
+
     /**
      * Adds an attachment to an email
-     * @param string $file The full path to the attachment
-     * @param string $name An alternative name to use for the attachment file
+     * 
+     * @param string $file
+     *            The full path to the attachment
+     * @param string $name
+     *            An alternative name to use for the attachment file
      */
     public function addAttachment($file, $name = false)
     {
-        if( file_exists($file) )
-        {
-            $this->attachemnts[] = array($file => $name);
+        if (file_exists($file)) {
+            $this->attachemnts[] = array(
+                $file => $name
+            );
         }
         
         return $this;
     }
-    
+
     /**
      * Returns an array of attachments
+     * 
      * @return string
      */
     public function getAttachments()
     {
         return $this->attachemnts;
     }
-    
+
     /**
      * Returns the email addresses to send to
      */
@@ -243,17 +276,19 @@ class Email
     {
         return $this->to;
     }
-    
+
     /**
      * Sets the email subject language key
-     * @param string $subject The language key for the email subject
+     * 
+     * @param string $subject
+     *            The language key for the email subject
      */
     public function setSubject($subject)
     {
         $this->subject = $subject;
         return $this;
     }
-    
+
     /**
      * Returns the email addresses to send to
      */
@@ -261,19 +296,22 @@ class Email
     {
         return $this->subject;
     }
-    
+
     /**
      * Returns the message language key
+     * 
      * @return string
      */
     public function getMessage()
     {
         return $this->message;
     }
-    
+
     /**
      * Set the email message language key
-     * @param string $message Should be a language file key 
+     * 
+     * @param string $message
+     *            Should be a language file key
      * @return \mithra62\Email
      */
     public function setMessage($message)
@@ -281,19 +319,21 @@ class Email
         $this->message = $message;
         return $this;
     }
-    
+
     /**
      * Returns the mailtype
+     * 
      * @return string
      */
     public function getMailtype()
     {
         return $this->mailtype;
     }
-    
+
     /**
      * Sets the mailtype
-     * @param string $mailtype
+     * 
+     * @param string $mailtype            
      * @return \mithra62\Email
      */
     public function setMailtype($mailtype)
@@ -301,26 +341,23 @@ class Email
         $this->mailtype = $mailtype;
         return $this;
     }
-    
+
     /**
      * Returns an instance of the mail object
+     * 
      * @return PHPMailer
      */
     public function getMailer()
     {
-        if( is_null($this->mailer) )
-        {
-            if( isset($this->config['type']) && $this->config['type'] == 'smtp' )
-            {
+        if (is_null($this->mailer)) {
+            if (isset($this->config['type']) && $this->config['type'] == 'smtp') {
                 $transport = Swift_SmtpTransport::newInstance($this->config['smtp_options']['host'], $this->config['smtp_options']['port']);
                 $transport->setUsername($this->config['smtp_options']['connection_config']['username']);
                 $transport->setPassword($this->config['smtp_options']['connection_config']['password']);
-            }
-            else
-            {
+            } else {
                 $transport = Swift_MailTransport::newInstance();
             }
-                
+            
             $this->mailer = Swift_Mailer::newInstance($transport);
             $this->mailer_logger = new Swift_Plugins_Loggers_ArrayLogger();
             $this->mailer->registerPlugin(new Swift_Plugins_LoggerPlugin($this->mailer_logger));
@@ -331,6 +368,7 @@ class Email
 
     /**
      * Resets the email object
+     * 
      * @return \mithra62\Email
      */
     public function clear()
@@ -340,79 +378,67 @@ class Email
         $this->subject = $this->message = false;
         return $this;
     }
-    
+
     /**
      * Sends the email
-     * @param array $vars
+     * 
+     * @param array $vars            
      * @throws \InvalidArgumentException
      * @throws EmailException
      */
     public function send(array $vars = array())
     {
-        if( count($this->getTo()) == 0 )
-        {
+        if (count($this->getTo()) == 0) {
             throw new \InvalidArgumentException('__exception_missing_email');
         }
         
-        if( $this->getSubject() == '' )
-        {
+        if ($this->getSubject() == '') {
             throw new \InvalidArgumentException('__exception_missing_subject');
         }
         
-        if( $this->getMessage() == '' )
-        {
+        if ($this->getMessage() == '') {
             throw new \InvalidArgumentException('__exception_missing_message');
         }
         
         $valid_emails = array();
-        foreach( $this->getTo() AS $to )
-        {
-            if( filter_var($to, FILTER_VALIDATE_EMAIL) )
-            {
+        foreach ($this->getTo() as $to) {
+            if (filter_var($to, FILTER_VALIDATE_EMAIL)) {
                 $valid_emails = $to;
             }
         }
         
-        if(!$valid_emails)
-        {
+        if (! $valid_emails) {
             return;
         }
         
         $message = Swift_Message::newInstance();
         $message->setTo($valid_emails);
-        if( $this->getAttachments() )
-        {
-            foreach($this->getAttachments() AS $attachment)
-            {
-                foreach($attachment AS $file => $alt_name)
-                {
-                    if( $alt_name == '')
-                    {
-                        $message->attach( Swift_Attachment::fromPath($file) );
-                    }
-                    else
-                    {
-                        $message->attach( Swift_Attachment::fromPath($file)->setFilename($alt_name) );
+        if ($this->getAttachments()) {
+            foreach ($this->getAttachments() as $attachment) {
+                foreach ($attachment as $file => $alt_name) {
+                    if ($alt_name == '') {
+                        $message->attach(Swift_Attachment::fromPath($file));
+                    } else {
+                        $message->attach(Swift_Attachment::fromPath($file)->setFilename($alt_name));
                     }
                 }
             }
         }
         
-        $message->setFrom( $this->config['from_email'], $this->config['sender_name'] );
-        $message->setSubject( $this->getView()->render($this->getSubject(), $vars) );
-        if( $this->getMailtype() == 'html' )
-        {
-            $message->setBody( $this->getView()->render($this->getMessage(), $vars), 'text/html' );
-        }
-        else
-        {
-            $message->setBody( $this->getView()->render($this->getMessage(), $vars) );
+        $message->setFrom($this->config['from_email'], $this->config['sender_name']);
+        $message->setSubject($this->getView()
+            ->render($this->getSubject(), $vars));
+        if ($this->getMailtype() == 'html') {
+            $message->setBody($this->getView()
+                ->render($this->getMessage(), $vars), 'text/html');
+        } else {
+            $message->setBody($this->getView()
+                ->render($this->getMessage(), $vars));
         }
         
-        if( !$this->getMailer()->send($message) )
-        {
+        if (! $this->getMailer()->send($message)) {
             print_r($this->mailer_logger->dump());
-            exit;
+            exit();
             throw new EmailException($this->getMailer()->ErrorInfo);
         }
         

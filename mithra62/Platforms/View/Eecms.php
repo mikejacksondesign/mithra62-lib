@@ -7,19 +7,16 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Platforms/View/Eecms.php
  */
- 
 namespace mithra62\Platforms\View;
-
 
 /**
  * Backup Pro - Eecms View Object
  *
  * Contains the view helpers for ExpressionEngine
  *
- * @package 	BackupPro\View
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package BackupPro\View
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Eecms extends AbstractView
 {
-
 }

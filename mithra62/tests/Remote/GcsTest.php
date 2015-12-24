@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/Remote/GcsTest.php
  */
- 
 namespace mithra62\tests\Remote;
 
 use mithra62\tests\TestFixture;
@@ -18,25 +17,25 @@ use mithra62\Remote\Gcs;
  *
  * Contains all the unit tests for the \mithra62\Remote\Gcs object
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class GcsTest extends TestFixture
 {
+
     private function getGcsInstance()
     {
         $settings = $this->getGcsCreds();
-        $gcs = new Gcs( Gcs::getRemoteClient($settings['gcs_access_key'], $settings['gcs_secret_key']), $settings['gcs_bucket'] );
+        $gcs = new Gcs(Gcs::getRemoteClient($settings['gcs_access_key'], $settings['gcs_secret_key']), $settings['gcs_bucket']);
         return $gcs;
     }
-    
+
     public function testInstance()
     {
         $gcs = $this->getGcsInstance();
         $this->assertInstanceOf('\League\Flysystem\AdapterInterface', $gcs);
-        
     }
-    
+
     public function testGetRemoteClient()
     {
         $settings = $this->getGcsCreds();

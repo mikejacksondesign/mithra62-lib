@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/Platforms/Craft/Records.php
  */
- 
 namespace mithra62\Platforms\Craft;
 
 use Craft\BaseRecord;
@@ -17,10 +16,9 @@ use Craft\BaseRecord;
  *
  * Container for any future global Record methods
  *
- * @package 	Platforms\Craft
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Platforms\Craft
+ * @author Eric Lamb <eric@mithra62.com>
  */
 abstract class Records extends BaseRecord
 {
-    
 }
