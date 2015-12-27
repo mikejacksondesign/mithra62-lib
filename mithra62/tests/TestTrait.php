@@ -18,7 +18,7 @@ trait TestTrait
      */
     protected function getWorkingDir()
     {
-        return rtrim(realpath(dirname(__FILE__) . '/working_dir'), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return $this->dataPath().DIRECTORY_SEPARATOR.'working_dir';
     }
 
     /**
@@ -28,7 +28,7 @@ trait TestTrait
      */
     protected function dataPath()
     {
-        return realpath(dirname(__FILE__) . '/data');
+        return realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR.'data');
     }
 
     /**
