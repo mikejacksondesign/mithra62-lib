@@ -68,6 +68,8 @@ if (! class_exists('\\mithra62\\Validate\\Rules\\Dropbox\\Connect')) {
                 
                 return true;
             } catch (\Exception $e) {
+                
+                $this->setErrorMessage($e->getMessage());
                 return false;
             }
         }
