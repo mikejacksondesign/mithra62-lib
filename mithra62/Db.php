@@ -11,6 +11,8 @@ namespace mithra62;
 
 use voku\db\DB as vDb;
 use \mithra62\Exceptions\DbException;
+use Aura\Sql\ExtendedPdo;
+use Aura\SqlQuery\QueryFactory;
 
 /**
  * mithra62 - Database Object
@@ -57,6 +59,33 @@ class Db
      * @var string
      */
     protected $table = false;
+    
+    /**
+     * How we want to access the database engine
+     * mysqli is the default
+     * @var string
+     */
+    protected $access_type = 'mysqli';
+    
+    /**
+     * Sets the method of accessing the database
+     * @param string $type
+     * @return \mithra62\Db
+     */
+    public function setAccessType($type)
+    {
+        $this->access_type = $type;
+        return $this;
+    }
+    
+    /**
+     * Returns the access type for how we're interacting with the database
+     * @return string
+     */
+    public function getAccessType()
+    {
+        return $this->access_type;
+    }
 
     /**
      * Set the columns we want to return
@@ -117,15 +146,52 @@ class Db
     }
 
     /**
+     * Set the credentials for accessing the database
+     * 
+     * @param array $credentials            
+     * @return \mithra62\Db
+     */
+    public function setCredentials(array $credentials)
+    {
+        $this->credentials = $credentials;
+        return $this;
+    }
+
+    /**
+     * Returns the credentials
+     * 
+     * @return \mithra62\array
+     */
+    public function getCredentials()
+    {
+        return $this->credentials;
+    }
+
+    /**
      * Executes and performs a query
      * 
      * @return \voku\db\array
      */
     public function get()
     {
-        return $this->getDb()
-            ->select($this->getTable(), $this->getWhere())
-            ->fetchAllArray();
+        if( $this->getDb() instanceof \voku\db\DB )
+        {
+            return $this->getDb()
+                ->select($this->getTable(), $this->getWhere())
+                ->fetchAllArray();
+        }
+        else
+        {
+            $query_factory = new QueryFactory('mysql');
+            $select = $query_factory->newSelect();
+            $select->cols(array('*'))->from($this->getTable())->where($this->getWhere());
+            $sql = $select->getStatement();
+            if( $this->getDb() instanceof \Aura\Sql\ExtendedPdo )
+            {
+                return $this->getDb()->fetchAll($sql);
+            }
+            
+        }
     }
 
     /**
@@ -182,28 +248,6 @@ class Db
     }
 
     /**
-     * Set the credentials for accessing the database
-     * 
-     * @param array $credentials            
-     * @return \mithra62\Db
-     */
-    public function setCredentials(array $credentials)
-    {
-        $this->credentials = $credentials;
-        return $this;
-    }
-
-    /**
-     * Returns the credentials
-     * 
-     * @return \mithra62\array
-     */
-    public function getCredentials()
-    {
-        return $this->credentials;
-    }
-
-    /**
      * Returns an instance of the database object
      * 
      * @return \voku\db\DB
@@ -212,7 +256,26 @@ class Db
     {
         if (is_null($this->db)) {
             $creds = $this->getCredentials();
-            $this->db = vDb::getInstance($this->credentials['host'], $this->credentials['user'], $this->credentials['password'], $this->credentials['database']);
+            
+            if( $this->getAccessType() == 'mysqli')
+            {
+                $this->db = vDb::getInstance($this->credentials['host'], $this->credentials['user'], $this->credentials['password'], $this->credentials['database']);
+            }
+            elseif( $this->getAccessType() == 'pdo')
+            {
+                $this->db = new ExtendedPdo(
+                    'mysql:host='.$this->credentials['host'].';dbname='.$this->credentials['database'],
+                    $this->credentials['user'],
+                    $this->credentials['password'],
+                    array(), // driver options as key-value pairs
+                    array()  // attributes as key-value pairs
+                );
+            }
+            else 
+            {
+                throw new DbException('Database engine not selected! Must be either PDO or mysqli');
+            }
+            
         }
         
         return $this->db;
@@ -225,7 +288,19 @@ class Db
      */
     public function getTables()
     {
-        $tables = $this->getDb()->getAllTables();
+        if( $this->getDb() instanceof \voku\db\DB )
+        {
+            $tables = $this->getDb()->getAllTables();
+        }
+        else 
+        {
+            if( $this->getDb() instanceof \Aura\Sql\ExtendedPdo )
+            {
+                $sql = 'SHOW TABLES';
+                $tables = $this->getDb()->fetchAll($sql);
+            }
+        }
+        
         $return = array();
         foreach ($tables as $name => $table) {
             foreach ($table as $key => $value) {

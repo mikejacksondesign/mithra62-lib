@@ -14,7 +14,7 @@ use Swift_SmtpTransport;
 use Swift_MailTransport;
 use Swift_Message;
 use Swift_Attachment;
-use Swift_mailer;
+use Swift_Mailer;
 use Swift_Plugins_Loggers_ArrayLogger;
 use Swift_Plugins_LoggerPlugin;
 use mithra62\Exceptions\EmailException;
