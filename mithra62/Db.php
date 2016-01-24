@@ -9,10 +9,7 @@
  */
 namespace mithra62;
 
-use voku\db\DB as vDb;
 use \mithra62\Exceptions\DbException;
-use Aura\Sql\ExtendedPdo;
-use Aura\SqlQuery\QueryFactory;
 
 /**
  * mithra62 - Database Object
@@ -174,24 +171,7 @@ class Db
      */
     public function get()
     {
-        if( $this->getDb() instanceof \voku\db\DB )
-        {
-            return $this->getDb()
-                ->select($this->getTable(), $this->getWhere())
-                ->fetchAllArray();
-        }
-        else
-        {
-            $query_factory = new QueryFactory('mysql');
-            $select = $query_factory->newSelect();
-            $select->cols(array('*'))->from($this->getTable())->where($this->getWhere());
-            $sql = $select->getStatement();
-            if( $this->getDb() instanceof \Aura\Sql\ExtendedPdo )
-            {
-                return $this->getDb()->fetchAll($sql);
-            }
-            
-        }
+        return $this->getDb()->select($this->getTable(), $this->getWhere())->fetchAllArray();
     }
 
     /**
@@ -259,11 +239,11 @@ class Db
             
             if( $this->getAccessType() == 'mysqli')
             {
-                $this->db = vDb::getInstance($this->credentials['host'], $this->credentials['user'], $this->credentials['password'], $this->credentials['database']);
+                $this->db = Db\Mysqli::getInstance($this->credentials['host'], $this->credentials['user'], $this->credentials['password'], $this->credentials['database']);
             }
             elseif( $this->getAccessType() == 'pdo')
             {
-                $this->db = new ExtendedPdo(
+                $this->db = new Db\Pdo(
                     'mysql:host='.$this->credentials['host'].';dbname='.$this->credentials['database'],
                     $this->credentials['user'],
                     $this->credentials['password'],
@@ -288,19 +268,7 @@ class Db
      */
     public function getTables()
     {
-        if( $this->getDb() instanceof \voku\db\DB )
-        {
-            $tables = $this->getDb()->getAllTables();
-        }
-        else 
-        {
-            if( $this->getDb() instanceof \Aura\Sql\ExtendedPdo )
-            {
-                $sql = 'SHOW TABLES';
-                $tables = $this->getDb()->fetchAll($sql);
-            }
-        }
-        
+        $tables = $this->getDb()->getAllTables();
         $return = array();
         foreach ($tables as $name => $table) {
             foreach ($table as $key => $value) {
@@ -318,7 +286,8 @@ class Db
      */
     public function getTableStatus()
     {
-        $tables = $this->query("SHOW TABLE STATUS", true);
+        $tables = $this->getDb()->getTableStatus();
+        //query("SHOW TABLE STATUS", true);
         return $tables;
     }
 
@@ -334,7 +303,7 @@ class Db
     public function getCreateTable($table, $if_not_exists = false)
     {
         $sql = sprintf('SHOW CREATE TABLE `%s` ;', $table);
-        $statement = $this->query($sql, true);
+        $statement = $this->getDb()->query($sql, true);
         $string = false;
         if (! empty($statement['0']['Create Table'])) {
             $string = $statement['0']['Create Table'];
@@ -370,7 +339,8 @@ class Db
      */
     public function setDbName($db_name)
     {
-        @mysqli_select_db($this->getDb()->getLink(), $db_name);
+        $this->getDb()->setDbName($db_name);
         return $this;
     }
+    
 }
