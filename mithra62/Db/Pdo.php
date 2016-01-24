@@ -10,7 +10,7 @@
  
 namespace mithra62\Db;
 
-use Aura\Sql\ExtendedPdo;
+use Aura\Sql\ExtendedPdo; 
 use Aura\SqlQuery\QueryFactory;
 
 /**
@@ -21,13 +21,31 @@ use Aura\SqlQuery\QueryFactory;
  * @package Database
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Pdo extends ExtendedPdo implements DbInterface
+class Pdo implements DbInterface
 {
     /**
-     * The SQL string to execute
+     * The primary table we're working with
      * @var string
      */
-    protected $sql = null; 
+    protected $table = null;
+    
+    /**
+     * Any filtering for a WHERE SQL clause
+     * @var mixed
+     */
+    protected $where = false;
+    
+    /**
+     * The database connection credentials
+     * @var array
+     */
+    protected $credentials = array();
+    
+    /**
+     * The database object we're piggybacking on
+     * @var \voku\db\DB
+     */
+    protected $db = null;
     
     /**
      * (non-PHPdoc)
@@ -57,11 +75,11 @@ class Pdo extends ExtendedPdo implements DbInterface
         }
         
         $insert->cols($cols)->bindValues($bind);
-        $sth = $this->prepare($insert->getStatement());
+        $sth = $this->getDb()->prepare($insert->getStatement());
         $sth->execute($insert->getBindValues());
         
         $name = $insert->getLastInsertIdName('id');
-        return $this->lastInsertId($name);
+        return $this->getDb()->lastInsertId($name);
     }
     
     /**
@@ -87,33 +105,52 @@ class Pdo extends ExtendedPdo implements DbInterface
         }        
         
         $update->cols($cols)->where($where)->bindValues($bind);
-        $sth = $this->prepare($update->getStatement());
+        $sth = $this->getDb()->prepare($update->getStatement());
         return $sth->execute($update->getBindValues());
     }
     
-    
+    /**
+     * (non-PHPdoc)
+     * @see \Aura\Sql\ExtendedPdo::query()
+     */
     public function query($sql = '', $params = false)
     {
-        return $this->fetchAll($sql);
+        return $this->getDb()->fetchAll($sql);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::escape()
+     */
     public function escape($string)
     {
-        return $this->quote($string);
+        return $this->getDb()->quote($string);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::getAllTables()
+     */
     public function getAllTables()
     {
         $sql = 'SHOW TABLES';
-        return $this->fetchAll($sql);
+        return $this->getDb()->fetchAll($sql);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::getTableStatus()
+     */
     public function getTableStatus()
     {
         $sql = 'SHOW TABLE STATUS';
-        return $this->fetchAll($sql);  
+        return $this->getDb()->fetchAll($sql);  
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::getCreateTable()
+     */
     public function getCreateTable($table, $if_not_exists = false)
     {
         $sql = sprintf('SHOW CREATE TABLE `%s` ;', $table);
@@ -133,11 +170,21 @@ class Pdo extends ExtendedPdo implements DbInterface
         return $string;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::clear()
+     */
     public function clear()
     {
-        
+        $this->table = null;
+        $this->where = null;
+        return $this;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::totalRows()
+     */
     public function totalRows($table)
     {
         $sql = sprintf('SELECT COUNT(*) AS count FROM `%s`', $table);
@@ -151,6 +198,10 @@ class Pdo extends ExtendedPdo implements DbInterface
         return '0';
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::getColumns()
+     */
     public function getColumns($table)
     {
         $sql = sprintf('SHOW COLUMNS FROM `%s`', $table);
@@ -182,12 +233,39 @@ class Pdo extends ExtendedPdo implements DbInterface
         $select->where($where);
         
         $sql = $select->getStatement();
-        $return = $this->fetchAll($sql);
+        $return = $this->getDb()->fetchAll($sql);
         if($return)
         {
             return $return;
         }
         return array();    
+    }
+    
+    /**
+     * 
+     * @param array $credentials
+     * @return \mithra62\Db\Mysqli
+     */
+    public function setCredentials(array $credentials)
+    {
+        $this->credentials = $credentials;
+        return $this;
+    }
+    
+    public function getDb($force = false)
+    {
+        if (is_null($this->db) || $force) {
+        
+            $this->db = new ExtendedPdo(
+                'mysql:host='.$this->credentials['host'].';dbname='.$this->credentials['database'],
+                $this->credentials['user'],
+                $this->credentials['password'],
+                array(), // driver options as key-value pairs
+                array()  // attributes as key-value pairs
+            );
+        }
+        
+        return $this->db;
     }
     
     /**

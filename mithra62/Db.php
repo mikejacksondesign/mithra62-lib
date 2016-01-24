@@ -244,13 +244,8 @@ class Db
             }
             elseif( $this->getAccessType() == 'pdo')
             {
-                $this->db = new Db\Pdo(
-                    'mysql:host='.$this->credentials['host'].';dbname='.$this->credentials['database'],
-                    $this->credentials['user'],
-                    $this->credentials['password'],
-                    array(), // driver options as key-value pairs
-                    array()  // attributes as key-value pairs
-                );
+                $this->db = new Db\Pdo();
+                $this->db->setCredentials($this->credentials);
             }
             else 
             {
