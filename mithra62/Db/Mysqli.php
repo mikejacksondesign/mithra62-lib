@@ -140,11 +140,10 @@ class Mysqli implements DbInterface
     public function totalRows($table)
     {
         $sql = sprintf('SELECT COUNT(*) AS count FROM `%s`', $table);
-        $statement = $this->query($sql);
-        if ($statement instanceof \voku\db\Result) {
-            $result = $statement->fetchAllArray();
-            if (isset($result['0']['count'])) {
-                return $result['0']['count'];
+        $statement = $this->query($sql, true);
+        if ($statement) {
+            if (isset($statement['0']['count'])) {
+                return $statement['0']['count'];
             }
         }
         
@@ -155,12 +154,12 @@ class Mysqli implements DbInterface
      * (non-PHPdoc)
      * @see \mithra62\Db\DbInterface::getColumnns()
      */
-    public function getColumnns($table)
+    public function getColumns($table)
     {
         $sql = sprintf('SHOW COLUMNS FROM `%s`', $table);
-        $statement = $this->query($sql);
-        if ($statement instanceof \voku\db\Result) {
-            return $statement->fetchAllArray();
+        $statement = $this->query($sql, true);
+        if ($statement) {
+            return $statement;
         }
         return array();
     }  

@@ -97,7 +97,7 @@ interface DbInterface
      * @param string $table
      * @return array
      */
-    public function getColumnns($table);
+    public function getColumns($table);
     
     /**
      * Executes the setup SELECT query and returns the result as an array

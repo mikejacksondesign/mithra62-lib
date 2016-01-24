@@ -29,34 +29,22 @@ class Pdo extends ExtendedPdo implements DbInterface
      */
     protected $sql = null; 
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::select()
+     */
     public function select($table, $where)
     {
-        $query_factory = new QueryFactory('mysql');
-        $select = $query_factory->newSelect();
-        $select->cols(array('*'))->from($table);
-
-        if (is_string($where)) {
-            $where = $this->escape($where, false, false);
-        } elseif (is_array($where)) {
-            $where = $this->parseArrayPair($where, 'AND');
-        } else {
-            $where = '';
-        }
-    
-        $select->where($where);
-        $this->sql = $select->getStatement();
-        
+        $this->table = $table;
+        $this->where = $where;
         return $this;
     }
     
-    public function fetchAllArray()
-    {
-        $return = $this->fetchAll($this->sql);
-        $this->sql = null;
-        return $return;
-    }
-    
-    public function insert($table, $data = array())
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::insert()
+     */
+    public function insert($table, array $data = array())
     {
         $query_factory = new QueryFactory('mysql');
         $insert = $query_factory->newInsert();
@@ -76,6 +64,10 @@ class Pdo extends ExtendedPdo implements DbInterface
         return $this->lastInsertId($name);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::update()
+     */
     public function update($table, $data, $where)
     {
         $query_factory = new QueryFactory('mysql');
@@ -100,9 +92,9 @@ class Pdo extends ExtendedPdo implements DbInterface
     }
     
     
-    public function query($sql)
+    public function query($sql = '', $params = false)
     {
-        
+        return $this->fetchAll($sql);
     }
     
     public function escape($string)
@@ -122,6 +114,87 @@ class Pdo extends ExtendedPdo implements DbInterface
         return $this->fetchAll($sql);  
     }
     
+    public function getCreateTable($table, $if_not_exists = false)
+    {
+        $sql = sprintf('SHOW CREATE TABLE `%s` ;', $table);
+        $statement = $this->query($sql, true);
+        $string = false;
+        if (! empty($statement['0']['Create Table'])) {
+            $string = $statement['0']['Create Table'];
+        }
+        
+        if ($if_not_exists) {
+            $replace = substr($string, 0, 12);
+            if ($replace == 'CREATE TABLE') {
+                $string = str_replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS ', $string);
+            }
+        }
+        
+        return $string;
+    }
+    
+    public function clear()
+    {
+        
+    }
+    
+    public function totalRows($table)
+    {
+        $sql = sprintf('SELECT COUNT(*) AS count FROM `%s`', $table);
+        $statement = $this->query($sql, true);
+        if ($statement) {
+            if (isset($statement['0']['count'])) {
+                return $statement['0']['count'];
+            }
+        }
+        
+        return '0';
+    }
+    
+    public function getColumns($table)
+    {
+        $sql = sprintf('SHOW COLUMNS FROM `%s`', $table);
+        $statement = $this->query($sql, true);
+        if ($statement) {
+            return $statement;
+        }
+        return array();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::get()
+     */
+    public function get()
+    {
+        $query_factory = new QueryFactory('mysql');
+        $select = $query_factory->newSelect();
+        $select->cols(array('*'))->from($this->table);
+        
+        if (is_string($this->where)) {
+            $where = $this->escape($this->where, false, false);
+        } elseif (is_array($this->where)) {
+            $where = $this->parseArrayPair($this->where, 'AND');
+        } else {
+            $where = '';
+        }
+        
+        $select->where($where);
+        
+        $sql = $select->getStatement();
+        $return = $this->fetchAll($sql);
+        if($return)
+        {
+            return $return;
+        }
+        return array();    
+    }
+    
+    /**
+     * Takes the WHERE array clause and prepairs it for use
+     * @param array $arrayPair
+     * @param string $glue
+     */
     protected function parseArrayPair($arrayPair, $glue = ',')
     {
         // init

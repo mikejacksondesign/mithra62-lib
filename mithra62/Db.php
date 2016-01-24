@@ -221,7 +221,7 @@ class Db
      */
     public function query($sql, $return = false)
     {
-        $query = $this->getDb()->query($sql);
+        $query = $this->getDb()->query($sql, true);
         if ($return) {
             return $query;
         }
@@ -357,9 +357,9 @@ class Db
      * @param string $table
      * @return array
      */
-    public function getColumnns($table)
+    public function getColumns($table)
     {
-        return $this->getDb()->getColumnns($table);
+        return $this->getDb()->getColumns($table);
     }
     
 }
