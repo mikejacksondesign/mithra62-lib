@@ -167,11 +167,11 @@ class Db
     /**
      * Executes and performs a query
      * 
-     * @return \voku\db\array
+     * @return array
      */
     public function get()
     {
-        return $this->getDb()->select($this->getTable(), $this->getWhere())->fetchAllArray();
+        return $this->getDb()->select($this->getTable(), $this->getWhere())->get();
     }
 
     /**
@@ -179,7 +179,7 @@ class Db
      * 
      * @param string $table            
      * @param data $data            
-     * @return Ambigous <\voku\db\bool, \voku\db\int, \voku\db\Result>
+     * @return bool
      */
     public function insert($table, $data = array())
     {
@@ -223,7 +223,7 @@ class Db
     {
         $query = $this->getDb()->query($sql);
         if ($return) {
-            return $query->fetchAllArray();
+            return $query;
         }
     }
 
@@ -239,7 +239,8 @@ class Db
             
             if( $this->getAccessType() == 'mysqli')
             {
-                $this->db = Db\Mysqli::getInstance($this->credentials['host'], $this->credentials['user'], $this->credentials['password'], $this->credentials['database']);
+                $this->db = new Db\Mysqli();
+                $this->db->setCredentials($this->credentials);
             }
             elseif( $this->getAccessType() == 'pdo')
             {
@@ -301,22 +302,8 @@ class Db
      * @return Ambigous <boolean, mixed>
      */
     public function getCreateTable($table, $if_not_exists = false)
-    {
-        $sql = sprintf('SHOW CREATE TABLE `%s` ;', $table);
-        $statement = $this->getDb()->query($sql, true);
-        $string = false;
-        if (! empty($statement['0']['Create Table'])) {
-            $string = $statement['0']['Create Table'];
-        }
-        
-        if ($if_not_exists) {
-            $replace = substr($string, 0, 12);
-            if ($replace == 'CREATE TABLE') {
-                $string = str_replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS ', $string);
-            }
-        }
-        
-        return $string;
+    {        
+        return $this->getDb()->getCreateTable($table, $if_not_exists);
     }
 
     /**
@@ -341,6 +328,38 @@ class Db
     {
         $this->getDb()->setDbName($db_name);
         return $this;
+    }
+    
+    /**
+     * Clears any records in memory associated with a result set.
+     * It allows calling with no select query having occurred.
+     *
+     * @param resource $result
+     * @access public
+     */
+    public function clear()
+    {
+        $this->getDb()->clear();
+    }
+    
+    /**
+     * Returns the total number of rows in a given table without filtering
+     * @param string $table The name of the table
+     * @return number
+     */
+    public function totalRows($table)
+    {
+        return $this->getDb()->totalRows($table);
+    }
+    
+    /**
+     * Returns the columns on a given table
+     * @param string $table
+     * @return array
+     */
+    public function getColumnns($table)
+    {
+        return $this->getDb()->getColumnns($table);
     }
     
 }

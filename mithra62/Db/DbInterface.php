@@ -19,19 +19,13 @@ namespace mithra62\Db;
  * @author Eric Lamb <eric@mithra62.com>
  */
 interface DbInterface
-{
+{   
     /**
      * Sets the table and where clauses
      * @param string $table The name of the primary table we're querying
      * @param mixed $where Either a string or array of key => value for the WHERE clause
      */
     public function select($table, $where);
-    
-    /**
-     * Returns an array of results from any queries
-     * @return array
-     */
-    public function fetchAllArray();
     
     /**
      * Cleans a string for use in a query
@@ -46,12 +40,69 @@ interface DbInterface
      */
     public function getAllTables();
     
-    public function insert($table, $data = array());
+    /**
+     * Inserts a row into a table
+     * @param string $table
+     * @param array $data
+     * @return bool
+     */
+    public function insert($table, array $data = array());
     
+    /**
+     * Updates a database row
+     * @param string $table
+     * @param array $data
+     * @param mixed $where
+     */
     public function update($table, $data, $where);
     
-    public function query($sql);
+    /**
+     * Executes a SQL query
+     * @param string $sql
+     * @param string $params
+     */
+    public function query($sql = '', $params = false);
     
+    /**
+     * Returns the table status query
+     * @return array
+     */
     public function getTableStatus();
+    
+    /**
+     * Returns the CREATE TABLE statement for the given $table
+     *
+     * @param string $table
+     *            The name of the table to create a statement for
+     * @param bool $if_not_exists
+     *            If set to true, the statement will append IF NOT EXISTS
+     * @return Ambigous <boolean, mixed>
+     */
+    public function getCreateTable($table, $if_not_exists = false);
+    
+    /**
+     * Clears up any properties back to defaults
+     * @return void
+     */
+    public function clear();
+    
+    /**
+     * Returns how many rows are in the given table
+     * @param string $table
+     */
+    public function totalRows($table);
+    
+    /**
+     * Returns the columns for a given table
+     * @param string $table
+     * @return array
+     */
+    public function getColumnns($table);
+    
+    /**
+     * Executes the setup SELECT query and returns the result as an array
+     * @return array
+     */
+    public function get();
     
 }
