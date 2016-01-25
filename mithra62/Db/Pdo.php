@@ -48,6 +48,15 @@ class Pdo implements DbInterface
     protected $db = null;
     
     /**
+     * A matched array of "bad" characters our string manipulation hates
+     * @var array
+     */
+    protected $escape_chars = array(
+        'search' => array("\\", "\0", "\n", "\r", "\x1a", "'", '"'),
+        'replace' => array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"')
+    );
+    
+    /**
      * (non-PHPdoc)
      * @see \mithra62\Db\DbInterface::select()
      */
@@ -115,7 +124,16 @@ class Pdo implements DbInterface
      */
     public function query($sql = '', $params = false)
     {
-        return $this->getDb()->fetchAll($sql);
+        if( strtolower(substr($sql,0, 6)) == 'select' || strtolower(substr($sql,0, 4)) == 'show' ){
+            return $this->getDb()->fetchAll($sql);
+        } else {
+            
+            echo $sql;
+            echo '<br />';
+            
+            return $this->getDb()->exec($sql);
+        }
+        
     }
     
     /**
@@ -124,7 +142,8 @@ class Pdo implements DbInterface
      */
     public function escape($string)
     {
-        return $this->getDb()->quote($string);
+        return str_replace($this->escape_chars['search'], $this->escape_chars['replace'], $string);        
+        //return ltrim(rtrim($this->getDb()->quote($string), "'"), "'");
     }
     
     /**
@@ -223,7 +242,7 @@ class Pdo implements DbInterface
         $select->cols(array('*'))->from($this->table);
         
         if (is_string($this->where)) {
-            $where = $this->escape($this->where, false, false);
+            $where = $this->escape($this->where);
         } elseif (is_array($this->where)) {
             $where = $this->parseArrayPair($this->where, 'AND');
         } else {
@@ -233,6 +252,7 @@ class Pdo implements DbInterface
         $select->where($where);
         
         $sql = $select->getStatement();
+        
         $return = $this->getDb()->fetchAll($sql);
         if($return)
         {
@@ -266,6 +286,12 @@ class Pdo implements DbInterface
         }
         
         return $this->db;
+    }
+    
+    public function setDbName($db_name)
+    {
+        $this->credentials['database'] = $db_name;
+        $this->getDb(true);
     }
     
     /**
@@ -370,10 +396,10 @@ class Pdo implements DbInterface
                     }
                     $_value = '(' . implode(' AND ', $_value) . ')';
                 } else {
-                    $_value = $this->escape($_value);
+                    $_value = $this->getDb()->quote($_value);
                 }
     
-                $quoteString = $_key;//$this->escape(trim(str_ireplace($_connector, '', $_key)));
+                $quoteString = '`'.$_key.'`';//$this->escape(trim(str_ireplace($_connector, '', $_key)));
                 $pairs[] = ' ' . $quoteString . ' ' . $_connector . ' ' . $_value . " \n";
             }
     

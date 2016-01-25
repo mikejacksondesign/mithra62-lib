@@ -249,7 +249,7 @@ class Db
             }
             else 
             {
-                throw new DbException('Database engine not selected! Must be either PDO or mysqli');
+                throw new DbException('Database engine not available! Must be either PDO or mysqli');
             }
             
         }
