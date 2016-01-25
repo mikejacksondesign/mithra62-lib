@@ -127,13 +127,8 @@ class Pdo implements DbInterface
         if( strtolower(substr($sql,0, 6)) == 'select' || strtolower(substr($sql,0, 4)) == 'show' ){
             return $this->getDb()->fetchAll($sql);
         } else {
-            
-            echo $sql;
-            echo '<br />';
-            
             return $this->getDb()->exec($sql);
         }
-        
     }
     
     /**
