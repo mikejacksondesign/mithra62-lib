@@ -52,7 +52,7 @@ class Mysqli implements DbInterface
      */
     public function setDbName($db_name)
     {
-        @mysqli_select_db($this->getLink(), $db_name);
+        @mysqli_select_db($this->getDb()->getLink(), $db_name);
     }
     
     /**

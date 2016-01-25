@@ -230,6 +230,8 @@ class Db
     /**
      * Returns an instance of the database object
      * 
+     * @todo Update engine selection to be 
+     *          polymorphic instead of conditional
      * @return \voku\db\DB
      */
     public function getDb()
