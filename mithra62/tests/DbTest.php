@@ -64,7 +64,7 @@ class DbTest extends TestFixture
     {
         $db = new Db();
         $db->setCredentials($this->getDbCreds());
-        $this->assertInstanceOf('voku\db\DB', $db->getDb());
+        $this->assertInstanceOf('mithra62\Db\DbInterface', $db->getDb());
     }
 
     public function testGetCreateTable()
