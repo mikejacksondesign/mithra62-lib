@@ -212,10 +212,10 @@ class Mysqli implements DbInterface
     }
     
     /**
-     * Returns the database object
-     * @return \voku\db\DB
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::getDb()
      */
-    public function getDb()
+    public function getDb($force = false)
     {
         if (is_null($this->db)) {
             

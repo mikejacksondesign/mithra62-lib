@@ -103,9 +103,20 @@ abstract class AbstractView implements ViewInterface
      * @param string $string            
      * @return \mithra62\string
      */
-    public function m62FileSize($string)
+    public function m62FileSize($string, $html = true)
     {
-        return $this->file->filesizeFormat($string);
+        $formatted_size = $this->file->filesizeFormat($string);
+        $return = '';
+        if( $html )
+        {
+            $return = '<span class="backup_pro_filesize" title="' . number_format($string) . ' bytes">' . $formatted_size . '</span>';
+        }
+        else
+        {
+            $return = $formatted_size;
+        }
+        
+        return $return;
     }
 
     /**
@@ -201,5 +212,34 @@ abstract class AbstractView implements ViewInterface
         }
         
         return $formatted_time;
+    }
+    
+    /**
+     * Returns a string to use for the form field errors
+     *
+     * @return string
+     */
+    public function m62FormErrors($errors)
+    {
+        $return = '';
+        if (is_array($errors) && count($errors) >= 1) {
+            $return = '<ul style="padding-top:5px; color:red;">';
+            foreach ($errors as $error) {
+                $return .= '<li class="notice">' . $this->m62Escape($error) . '</li>';
+            }
+            $return .= '</ul>';
+        }
+    
+        return $return;
+    }   
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\View\ViewInterface::m62Escape()
+     */
+    public function m62Escape($string)
+    {
+        $escaper = new \Zend\Escaper\Escaper('utf-8');
+        return $escaper->escapeHtml($string);
     }
 }

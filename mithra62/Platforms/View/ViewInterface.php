@@ -61,4 +61,36 @@ interface ViewInterface
      * @return string
      */
     public function m62Decode($string);
+    
+    /**
+     * Creates a date in human readable format (1 hour, 7 years, etc...)
+     *
+     * @param unknown $date
+     * @return string
+     */
+    public function m62RelativeDateTime($date);
+    
+    /**
+     * Formats a time string into a human friendly format
+     *
+     * @param number $time
+     * @param string $html
+     * @param number $truncate
+     * @return string
+     */
+    public function m62TimeFormat($time, $html = true, $truncate = 1);
+    
+    /**
+     * Returns a string to use for the form field errors
+     *
+     * @return string
+     */
+    public function m62FormErrors($errors);
+    
+    /**
+     * Should escape a string for use in a webpage
+     * @param string $string
+     * @return string
+     */
+    public function m62Escape($string);
 }

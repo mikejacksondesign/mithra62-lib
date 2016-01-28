@@ -105,4 +105,11 @@ interface DbInterface
      */
     public function get();
     
+    /**
+     * Returns the database object we're using
+     * @param bool $force Whether to get a new instance of the db object
+     * @return mixed
+     */
+    public function getDb($force = false);
+    
 }

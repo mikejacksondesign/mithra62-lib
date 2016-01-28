@@ -33,7 +33,8 @@
 		"mpratt/relativetime": "^1.5",
         "league/event": "^2.1",
         "aura/sql": "^2.4",
-        "aura/sqlquery": "^2.6"
+        "aura/sqlquery": "^2.6",
+        "zendframework/zend-escaper": "^2.5"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "4.*",

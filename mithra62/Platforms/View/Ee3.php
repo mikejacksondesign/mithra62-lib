@@ -19,4 +19,24 @@ namespace mithra62\Platforms\View;
  */
 class Ee3 extends AbstractView
 {
+    /**
+     * Returns a string to use for the form field errors
+     *
+     * @return string
+     */
+    public function m62FormErrors($errors)
+    {
+        $return = '';
+        if( is_array($errors) && count($errors) >= 1)
+        {
+            $return = '<em>';
+            foreach($errors AS $error)
+            {
+                $return .= $this->m62Escape($error).'<br />';
+            }
+            $return .= '</em>';
+        }
+        
+        return $return;
+    }    
 }

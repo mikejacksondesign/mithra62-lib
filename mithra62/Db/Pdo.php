@@ -267,6 +267,10 @@ class Pdo implements DbInterface
         return $this;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Db\DbInterface::getDb()
+     */
     public function getDb($force = false)
     {
         if (is_null($this->db) || $force) {
@@ -283,10 +287,15 @@ class Pdo implements DbInterface
         return $this->db;
     }
     
+    /**
+     * 
+     * @param unknown $db_name
+     */
     public function setDbName($db_name)
     {
         $this->credentials['database'] = $db_name;
         $this->getDb(true);
+        return $this;
     }
     
     /**
