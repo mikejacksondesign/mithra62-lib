@@ -2,79 +2,79 @@
 /**
  * mithra62
  *
+ * @author		Eric Lamb <eric@mithra62.com>
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		1.0
- * @filesource 	mithra62/Twig/m62LangTwigExtension.php
+ * @filesource 	./mithra62/Traits/View/Helpers.php
  */
-namespace mithra62\Twig;
+namespace mithra62\Traits\View;
 
-use Twig_Extension;
-use Twig_Filter_Method;
 use mithra62\Traits\DateTime;
+use RelativeTime\RelativeTime;
 
 /**
- * mithra62 - Twig View Helpers
+ * mithra62 - View Helper Trait
  *
- * Contains all the view helpers for Twig
+ * Contains all the view helper methods we use
  *
- * @package Twig
+ * @package View
  * @author Eric Lamb <eric@mithra62.com>
  */
-class m62LangTwigExtension extends \Twig_Extension
+trait Helpers
 {
     use DateTime;
-
+    
     /**
      * Whether to
-     * 
+     *
      * @var unknown
      */
     public $autoescape = false;
-
+    
     /**
      * The Language object
-     * 
+     *
      * @var \mithra62\Language
      */
     private $lang = null;
-
+    
     /**
      * The File object
-     * 
+     *
      * @var \mithra62\Files
      */
     private $file = null;
-
+    
     /**
      * The File object
-     * 
+     *
      * @var \mithra62\Settings
      */
     private $settings = null;
-
+    
     /**
      * The File object
-     * 
+     *
      * @var \mithra62\Encrypt
      */
     private $encrypt = null;
-
+    
     /**
      * The Platform object
-     * 
+     *
      * @var \mithra62\Platforms
      */
     private $platform = null;
-
+    
     /**
      * Set it up
-     * 
-     * @param \mithra62\Language $lang            
-     * @param \mithra62\Files $file            
-     * @param \mithra62\Settings $setting            
-     * @param \mithra62\Encrypt $encrypt            
-     * @param \mithra62\Platforms\AbstractPlatform $platform            
+     *
+     * @param \mithra62\Language $lang
+     * @param \mithra62\Files $file
+     * @param \mithra62\Settings $setting
+     * @param \mithra62\Encrypt $encrypt
+     * @param \mithra62\AbstractPlatform $platform
      */
     public function __construct(\mithra62\Language $lang, \mithra62\Files $file, \mithra62\Settings $setting, \mithra62\Encrypt $encrypt, \mithra62\Platforms\AbstractPlatform $platform)
     {
@@ -85,38 +85,10 @@ class m62LangTwigExtension extends \Twig_Extension
         $this->platform = $platform;
         $this->setTz($this->platform->getTimezone());
     }
-
-    /**
-     * (non-PHPdoc)
-     * 
-     * @see Twig_ExtensionInterface::getName()
-     */
-    public function getName()
-    {
-        return 'm62Lang';
-    }
-
-    /**
-     * (non-PHPdoc)
-     * 
-     * @see Twig_Extension::getFilters()
-     */
-    public function getFilters()
-    {
-        return array(
-            'm62Lang' => new Twig_Filter_Method($this, 'm62Lang'),
-            'm62FileSize' => new Twig_Filter_Method($this, 'm62FileSize'),
-            'm62DateTime' => new Twig_Filter_Method($this, 'm62DateTime'),
-            'm62Encode' => new Twig_Filter_Method($this, 'm62Encode'),
-            'm62Decode' => new Twig_Filter_Method($this, 'm62Decode'),
-            'm62RelativeDateTime' => new Twig_Filter_Method($this, 'm62RelativeDateTime'),
-            'm62TimeFormat' => new Twig_Filter_Method($this, 'm62TimeFormat')
-        );
-    }
-
+    
     /**
      * Just passes to the Language object for translation
-     * 
+     *
      * @param string $string
      *            The language key to translate
      * @return \mithra62\string
@@ -125,23 +97,34 @@ class m62LangTwigExtension extends \Twig_Extension
     {
         return $this->lang->__($string);
     }
-
+    
     /**
      * Formats a file value into a human readable format
-     * 
-     * @param string $string            
+     *
+     * @param string $string
      * @return \mithra62\string
      */
-    public function m62FileSize($string)
+    public function m62FileSize($string, $html = true)
     {
-        return $this->file->filesizeFormat($string);
+        $formatted_size = $this->file->filesizeFormat($string);
+        $return = '';
+        if( $html )
+        {
+            $return = '<span class="backup_pro_filesize" title="' . number_format($string) . ' bytes">' . $formatted_size . '</span>';
+        }
+        else
+        {
+            $return = $formatted_size;
+        }
+    
+        return $return;
     }
-
+    
     /**
      * Formats a date
-     * 
-     * @param string $date            
-     * @param string $html            
+     *
+     * @param string $date
+     * @param string $html
      * @return string
      */
     public function m62DateTime($date, $html = true)
@@ -155,49 +138,49 @@ class m62LangTwigExtension extends \Twig_Extension
         } else {
             $date = $this->convertTimestamp($date, $this->settings['date_format']);
         }
-        
+    
         return $date;
     }
-
+    
     /**
      * Encodes a string securely
-     * 
-     * @param string $string            
+     *
+     * @param string $string
      * @return string
      */
     public function m62Encode($string)
     {
         return $this->encrypt->encode($string);
     }
-
+    
     /**
      * Decodes a string securely
-     * 
-     * @param string $string            
+     *
+     * @param string $string
      * @return string
      */
     public function m62Decode($string)
     {
         return $this->encrypt->decode($string);
     }
-
+    
     /**
      * Creates a date in human readable format (1 hour, 7 years, etc...)
-     * 
-     * @param unknown $date            
+     *
+     * @param unknown $date
      * @return string
      */
     public function m62RelativeDateTime($date)
     {
         return $this->getRelativeDateTime($date, false);
     }
-
+    
     /**
      * Formats a time string into a human friendly format
-     * 
-     * @param number $time            
-     * @param string $html            
-     * @param number $truncate            
+     *
+     * @param number $time
+     * @param string $html
+     * @param number $truncate
      * @return string
      */
     public function m62TimeFormat($time, $html = true, $truncate = 1)
@@ -207,16 +190,16 @@ class m62LangTwigExtension extends \Twig_Extension
             'suffix' => false,
             'truncate' => $truncate
         );
-        
+    
         if (round($time) == '0') {
             $time = time() + ceil($time);
         } else {
             $time = time() + round($time);
         }
-        
+    
         $relativeTime = new \RelativeTime\RelativeTime($config);
         $formatted_time = $relativeTime->convert(time(), $time);
-        
+    
         $config = array(
             'separator' => ', ',
             'suffix' => false,
@@ -224,11 +207,40 @@ class m62LangTwigExtension extends \Twig_Extension
         );
         $relativeTime = new \RelativeTime\RelativeTime($config);
         $formatted_time_tip = $relativeTime->convert(time(), $time);
-        
+    
         if ($html) {
             return '<span class="backup_pro_timeago" title="' . $formatted_time_tip . '">' . $formatted_time . '</span>';
         }
-        
+    
         return $formatted_time;
+    }
+    
+    /**
+     * Returns a string to use for the form field errors
+     *
+     * @return string
+     */
+    public function m62FormErrors($errors)
+    {
+        $return = '';
+        if (is_array($errors) && count($errors) >= 1) {
+            $return = '<ul style="padding-top:5px; color:red;">';
+            foreach ($errors as $error) {
+                $return .= '<li class="notice">' . $this->m62Escape($error) . '</li>';
+            }
+            $return .= '</ul>';
+        }
+    
+        return $return;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\View\ViewInterface::m62Escape()
+     */
+    public function m62Escape($string)
+    {
+        $escaper = new \Zend\Escaper\Escaper('utf-8');
+        return $escaper->escapeHtml($string);
     }
 }
