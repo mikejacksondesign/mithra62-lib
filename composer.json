@@ -25,7 +25,6 @@
 		"league/flysystem-aws-s3-v2": "^1.0",
 		"league/flysystem-rackspace": "^1.0",
 		"mustache/mustache": "~2.5",
-		"league/flysystem-copy": "^1.0",
 		"league/flysystem-dropbox": "^1.0",
 		"league/flysystem-sftp": "^1.0",
 		"wp-cli/php-cli-tools": "^0.10.5",

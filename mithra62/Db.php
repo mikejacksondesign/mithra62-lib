@@ -239,21 +239,31 @@ class Db
         if (is_null($this->db)) {
             $creds = $this->getCredentials();
             
-            if( $this->getAccessType() == 'mysqli')
-            {
+            //try explicit type setting
+            if( $this->getAccessType() == 'mysqli' && function_exists('mysqli_select_db') ){
                 $this->db = new Db\Mysqli();
-                $this->db->setCredentials($this->credentials);
-            }
-            elseif( $this->getAccessType() == 'pdo')
-            {
-                $this->db = new Db\Pdo();
-                $this->db->setCredentials($this->credentials);
             }
             else 
             {
-                throw new DbException('Database engine not available! Must be either PDO or mysqli');
+                if ( $this->getAccessType() == 'pdo' && class_exists('PDO') ){
+                    $this->db = new Db\Pdo();
+                }
             }
             
+            //fuck it; we're just gonna choose one then
+            if(is_null($this->db)){
+                if( class_exists('PDO') ){
+                    $this->db = new Db\Pdo();
+                }
+                elseif ( function_exists('mysqli_select_db') ) {
+                    $this->db = new Db\Mysqli();
+                }
+                else {
+                    throw new DbException('Database engine not available! Must be either PDO or mysqli');
+                }
+            }
+            
+            $this->db->setCredentials($this->credentials);
         }
         
         return $this->db;
@@ -357,6 +367,22 @@ class Db
     public function getColumns($table)
     {
         return $this->getDb()->getColumns($table);
+    }
+    
+    /**
+     * Determines whether a given database exists
+     * @param string $name
+     * @return boolean
+     */
+    public function checkDbExists($name)
+    {
+        $data = $this->query("SELECT COUNT(*) AS total FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '".$this->escape($name)."'", true);
+        if( isset($data['0']['total']) && $data['0']['total'] == '1' )
+        {
+            return true;    
+        }
+        
+        return false;
     }
     
 }
