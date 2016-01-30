@@ -50,7 +50,8 @@ class m62TwigExtension extends \Twig_Extension implements ViewInterface
             'm62Encode' => new Twig_Filter_Method($this, 'm62Encode'),
             'm62Decode' => new Twig_Filter_Method($this, 'm62Decode'),
             'm62RelativeDateTime' => new Twig_Filter_Method($this, 'm62RelativeDateTime'),
-            'm62TimeFormat' => new Twig_Filter_Method($this, 'm62TimeFormat')
+            'm62TimeFormat' => new Twig_Filter_Method($this, 'm62TimeFormat'),
+            'm62Options' => new Twig_Filter_Method($this, 'm62Options')
         );
     }
 }
