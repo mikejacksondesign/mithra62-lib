@@ -252,6 +252,10 @@ trait Helpers
         return $escaper->escapeHtml($string);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\View\ViewInterface::m62Options()
+     */
     public function m62Options($type)
     {
         return $this->options[$type];
