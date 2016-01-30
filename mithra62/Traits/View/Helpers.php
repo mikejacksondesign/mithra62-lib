@@ -256,8 +256,21 @@ trait Helpers
      * (non-PHPdoc)
      * @see \mithra62\Platforms\View\ViewInterface::m62Options()
      */
-    public function m62Options($type)
+    public function m62Options($type, $translate = true)
     {
-        return $this->options[$type];
+        if( !isset($this->options[$type]) )
+        {
+            return array(); //@todo add exception
+        }
+        
+        $options = $this->options[$type];
+        if( $translate )
+        {
+            foreach($options As $key => $value)
+            {
+                $options[$key] = $this->m62Lang($value);
+            }
+        }
+        return $options;
     }
 }

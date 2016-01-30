@@ -60,7 +60,8 @@ if (! class_exists('\\mithra62\\Validate\\Rules\\S3\\Buckets\\Writable')) {
                 }
                 
                 $local = new Remote(new Local(dirname($this->getTestFilePath())));
-                $client = m62S3::getRemoteClient($params['s3_access_key'], $params['s3_secret_key']);
+                $region = ($params['s3_region'] ? $params['s3_region'] : '');
+                $client = m62S3::getRemoteClient($params['s3_access_key'], $params['s3_secret_key'], $region);
                 if ($client->doesBucketExist($params['s3_bucket'])) {
                     $contents = $local->read($this->test_file);
                     $filesystem = new Remote(new m62S3($client, $params['s3_bucket']));

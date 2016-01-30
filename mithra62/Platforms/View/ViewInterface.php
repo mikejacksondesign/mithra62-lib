@@ -99,5 +99,5 @@ interface ViewInterface
      * @param string $type
      * @return array
      */
-    public function m62Options($type);
+    public function m62Options($type, $translate = true);
 }
