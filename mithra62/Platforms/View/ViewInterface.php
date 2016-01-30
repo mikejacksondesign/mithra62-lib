@@ -93,4 +93,11 @@ interface ViewInterface
      * @return string
      */
     public function m62Escape($string);
+    
+    /**
+     * Should return an array for select dropdowns based on the $type
+     * @param string $type
+     * @return array
+     */
+    public function m62Options($type);
 }

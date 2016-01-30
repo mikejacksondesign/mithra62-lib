@@ -37,35 +37,43 @@ trait Helpers
      *
      * @var \mithra62\Language
      */
-    private $lang = null;
+    protected $lang = null;
     
     /**
      * The File object
      *
      * @var \mithra62\Files
      */
-    private $file = null;
+    protected $file = null;
     
     /**
      * The File object
      *
      * @var \mithra62\Settings
      */
-    private $settings = null;
+    protected $settings = null;
     
     /**
      * The File object
      *
      * @var \mithra62\Encrypt
      */
-    private $encrypt = null;
+    protected $encrypt = null;
     
     /**
      * The Platform object
      *
      * @var \mithra62\Platforms
      */
-    private $platform = null;
+    protected $platform = null;
+    
+    /**
+     * A key value pairing mostly for select dropdown form fields
+     * @var array
+     */
+    protected $options = array(
+        'email_type' => array('html' => 'html', 'text' => 'text')
+    );
     
     /**
      * Set it up
@@ -242,5 +250,10 @@ trait Helpers
     {
         $escaper = new \Zend\Escaper\Escaper('utf-8');
         return $escaper->escapeHtml($string);
+    }
+    
+    public function m62Options($type)
+    {
+        return $this->options[$type];
     }
 }
