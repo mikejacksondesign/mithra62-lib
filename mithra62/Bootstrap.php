@@ -225,13 +225,13 @@ class Bootstrap
             $view = new View();
             $helpers = array(
                 'file_size' => function ($text) {
-                    return $this->container['view_helpers']->m62FileSize($text);
+                    return $this->container['view_helpers']->m62FileSize($text, false);
                 },
                 'lang' => function ($text) {
                     return $this->container['view_helpers']->m62Lang($text);
                 },
                 'date_time' => function ($text, $html = true) {
-                    return $this->container['view_helpers']->m62DateTime($text, $html = true);
+                    return $this->container['view_helpers']->m62DateTime($text, false);
                 },
                 'relative_time' => function ($date) {
                     return $this->container['view_helpers']->m62RelativeDateTime($date);

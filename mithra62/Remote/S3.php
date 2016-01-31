@@ -26,7 +26,8 @@ class S3 extends Adapter
      * Returns the remote transport client
      * 
      * @param string $access_key            
-     * @param string $secret_key            
+     * @param string $secret_key   
+     * @param string $region         
      * @return \Aws\S3\S3Client
      */
     public static function getRemoteClient($access_key, $secret_key, $region = '')

@@ -114,6 +114,10 @@ trait Helpers
      */
     public function m62FileSize($string, $html = true)
     {
+        if( $string == '' )
+        {
+            return $this->m62Lang('na');
+        }
         $formatted_size = $this->file->filesizeFormat($string);
         $return = '';
         if( $html )

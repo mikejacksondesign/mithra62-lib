@@ -49,19 +49,7 @@ $lang = array(
     'time' => 'Time',
     'active' => 'Active',
     'inactive' => 'Inactive',
-    
-    'configure_s3' => 'Configure Amazon S3 Sync',
-    's3_access_key' => 'Access Key ID',
-    's3_access_key_instructions' => 'Your Access Key ID identifies you as the party responsible for your S3 service requests. You can find this by signing into your <a href="http://aws.amazon.com" target="_blank">Amazon Web Services account</a>',
-    's3_secret_key' => 'Secret Access Key',
-    's3_secret_key_instructions' => 'This key is just a long string of characters (and not a file) that you use to calculate the digital signature that you include in the request. For security, both your Access key and Secret key are encrypted before storage.',
-    's3_bucket' => 'Bucket Name',
-    's3_bucket_instructions' => 'This is basically the master folder name your files will be stored in. If it doesn\'t exist it\'ll  be created. If you don\'t enter a bucket name one will be created for you.',
-    's3_optional_prefix' => 'Optional Prefix',
-    's3_optional_prefix_instructions' => 'If you want to store your files in a sub directory within your bucket just enter that here.',
-    's3_reduced_redundancy' => 'Reduced Redundancy',
-    's3_reduced_redundancy_instructions' => 'Reduced Redundancy Storage (<a href="http://aws.amazon.com/s3/details/#RRS" target="_blank">RRS</a>) is an Amazon S3 storage option that enables customers to reduce their costs by storing noncritical, reproducible data at lower levels of redundancy than Amazon S3\'s standard storage.',
-    
+   
     'configure_rcf' => 'Configure Rackspace Cloud Files',
     'rcf_username' => 'Rackspace Username',
     'rcf_username_instructions' => 'Use your Rackspace Cloud username as the username for the API. For security, both your Access key and Secret key are encrypted before storage.',
