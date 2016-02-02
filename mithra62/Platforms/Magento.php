@@ -23,19 +23,35 @@ class Magento extends AbstractPlatform
 {
     public function getDbCredentials()
     {
-        echo \Mage::getStoreConfig('crypt/key', \Mage::app()->getStore());
-        exit;
-        $config = \Mage::getConfig();
-        print_r($config->getTablePrefix());
-        exit;
-        return array(
-            'user' => ee()->db->username,
-            'password' => ee()->db->password,
-            'database' => ee()->db->database,
-            'host' => ee()->db->hostname,
-            'prefix' => ee()->db->dbprefix,
-            'settings_table_name' => ee()->db->dbprefix . 'backup_pro_settings'
-        );        
+        //$encryptedData = \Mage::helper('core')->encrypt("This will be encrypted");
+        $resources = \Mage::getConfig()->getNode('global/resources');
+        if( $resources instanceof \Mage_Core_Model_Config_Element )
+        {
+            //we only want to use the writable table since we use our own everything
+            $write = \Mage::getConfig()->getNode('global/resources/default_write/connection');
+            $db_node = 'default_setup';
+            if( $write instanceof \Mage_Core_Model_Config_Element )
+            {
+                $db_node = $write->use;
+            }
+            
+            $db_data = \Mage::getConfig()->getNode('global/resources/'.$db_node.'/connection');
+            $prefix = \Mage::getConfig()->getNode('global/resources/db/table_prefix');
+            
+            if( $db_data instanceof \Mage_Core_Model_Config_Element )
+            {
+                return array(
+                    'user' => $db_data->username,
+                    'password' => $db_data->password,
+                    'database' => $db_data->dbname,
+                    'host' => $db_data->host,
+                    'prefix' => (string)$prefix,
+                    'settings_table_name' => (string)$prefix . 'backup_pro_settings'
+                );
+            }
+        }
+        
+        throw new \Exception('Can\'t access databse credentiasl!');
     }
     
     public function getEmailConfig()
@@ -65,7 +81,7 @@ class Magento extends AbstractPlatform
     
     public function getEncryptionKey()
     {
-        
+        return (string)\Mage::getConfig()->getNode('global/crypt/key');
     }
     
     public function getConfigOverrides()
