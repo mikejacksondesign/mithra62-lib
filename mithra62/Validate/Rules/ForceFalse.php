@@ -10,7 +10,7 @@
 namespace mithra62\Validate\Rules;
 
 use mithra62\Validate\AbstractRule;
-if (! class_exists('\\mithra62\\Validate\\Rules\\False')) {
+if (! class_exists('\\mithra62\\Validate\\Rules\\ForceFalse')) {
 
     /**
      * mithra62 - Force False Rule
@@ -20,7 +20,7 @@ if (! class_exists('\\mithra62\\Validate\\Rules\\False')) {
      * @package Validate\Rules
      * @author Eric Lamb <eric@mithra62.com>
      */
-    class False extends AbstractRule
+    class ForceFalse extends AbstractRule
     {
 
         /**

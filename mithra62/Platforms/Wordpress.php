@@ -70,7 +70,12 @@ class Wordpress extends AbstractPlatform
         $this->email_config['type'] = 'php'; // ee()->config->config['mail_protocol'];
         $this->email_config['port'] = ''; // ee()->config->config['smtp_port'];
         
-        if(is_plugin_active('wp-mail-smtp/wp_mail_smtp.php'))
+        /**
+         * Detect plugin. For use on Front End only.
+         */
+        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        
+        if(\is_plugin_active('wp-mail-smtp/wp_mail_smtp.php'))
         {
             $this->email_config['type'] = 'smtp';
             $this->email_config['smtp_options']['host'] = get_option('smtp_host');
@@ -102,7 +107,7 @@ class Wordpress extends AbstractPlatform
      */
     public function getSiteName()
     {
-        return get_bloginfo('name', 'raw');
+        return \get_bloginfo('name', 'raw');
     }
 
     /**
@@ -112,7 +117,7 @@ class Wordpress extends AbstractPlatform
      */
     public function getTimezone()
     {
-        $tz = get_option('timezone_string');
+        $tz = \get_option('timezone_string');
         if (! empty($tz)) {
             return $tz;
         }
@@ -125,7 +130,7 @@ class Wordpress extends AbstractPlatform
      */
     public function getSiteUrl()
     {
-        return get_bloginfo('wpurl', 'raw');
+        return \get_bloginfo('wpurl', 'raw');
     }
 
     /**
@@ -163,7 +168,7 @@ class Wordpress extends AbstractPlatform
      */
     public function redirect($url)
     {
-        wp_redirect($url);
+        \wp_redirect($url);
         exit();
     }
 
