@@ -10,7 +10,6 @@
 namespace mithra62\Platforms;
 
 use mithra62\Platforms\AbstractPlatform;
-use mithra62\Exceptions\PlatformsException;
 
 /**
  * mithra62 - Concrete5 Platform Object
@@ -24,8 +23,9 @@ class Concrete5 extends AbstractPlatform
 {
     public function getDbCredentials()
     {
-        $database_config = \Config::get('concrete.site');
+        $database_config = \Config::get('database');
         $database_config = $database_config['connections'][$database_config['default-connection']];
+        
         return array(
             'user' => $database_config['username'],
             'password' => $database_config['password'],
@@ -76,7 +76,7 @@ class Concrete5 extends AbstractPlatform
         
     }
     
-    public function getPost($key, $default)
+    public function getPost($key, $default = false)
     {
         
     }
