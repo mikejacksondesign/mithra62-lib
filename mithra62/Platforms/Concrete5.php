@@ -22,5 +22,63 @@ use mithra62\Exceptions\PlatformsException;
  */
 class Concrete5 extends AbstractPlatform
 {
+    public function getDbCredentials()
+    {
+        $database_config = \Config::get('concrete.site');
+        $database_config = $database_config['connections'][$database_config['default-connection']];
+        return array(
+            'user' => $database_config['username'],
+            'password' => $database_config['password'],
+            'database' => $database_config['database'],
+            'host' => $database_config['server'],
+            'prefix' => '',
+            'settings_table_name' => 'backup_pro_settings'
+        );
+    }
+    
+    public function getEmailConfig()
+    {
+        \Config::get('concrete.mail');
+    }
+    
+    public function getCurrentUrl()
+    {
+        
+    }
+    
+    public function getSiteName()
+    {
+        return \Config::get('concrete.site');
+    }
+    
+    public function getTimezone()
+    {
+        return \Config::get('app.timezone');
+    }
+    
+    public function getSiteUrl()
+    {
+        
+    }
+    
+    public function getEncryptionKey()
+    {
+        
+    }
+    
+    public function getConfigOverrides()
+    {
+        return array();
+    }
+    
+    public function redirect($url)
+    {
+        
+    }
+    
+    public function getPost($key, $default)
+    {
+        
+    }
     
 }
