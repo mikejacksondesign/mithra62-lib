@@ -43,7 +43,7 @@ class Concrete5 extends AbstractPlatform
     
     public function getCurrentUrl()
     {
-        
+        return $_SERVER["REQUEST_URI"];
     }
     
     public function getSiteName()
@@ -73,7 +73,7 @@ class Concrete5 extends AbstractPlatform
     
     public function redirect($url)
     {
-        
+        return \Concrete\Core\Routing\Redirect::url($url);
     }
     
     public function getPost($key, $default = false)
