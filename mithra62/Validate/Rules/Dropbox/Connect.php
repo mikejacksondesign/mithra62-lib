@@ -15,11 +15,11 @@ use mithra62\Remote\Dropbox as m62Dropbox;
 if (! class_exists('\\mithra62\\Validate\\Rules\\Dropbox\\Connect')) {
 
     /**
-     * mithra62 - FTP Connection Validation Rule
+     * mithra62 - Dropbox Connection Validation Rule
      *
-     * Validates that a given credential set is accurate and working for connecting to an FTP site
+     * Validates that a given credential set is accurate and working for connecting to an Dropbox account
      *
-     * @package Validate\Rules\Ftp
+     * @package Validate\Rules\Dropbox
      * @author Eric Lamb <eric@mithra62.com>
      */
     class Connect extends AbstractRule
@@ -42,6 +42,7 @@ if (! class_exists('\\mithra62\\Validate\\Rules\\Dropbox\\Connect')) {
         /**
          * (non-PHPdoc)
          * 
+         * @todo implement if (preg_match('@[\x00-\x1f\x7f]@', $s) === 1) matching on token
          * @see \mithra62\Validate\RuleInterface::validate()
          * @ignore
          *

@@ -95,5 +95,14 @@ abstract class AbstractPlatform
      * @param string $default            
      * @return mixed
      */
-    abstract public function getPost($key, $default);
+    public function getPost($key, $default = false)
+    {
+        if (isset($_POST[$key])) {
+            return $_POST[$key];
+        } elseif (isset($_GET[$key])) {
+            return $_GET[$key];
+        }
+        
+        return $default;
+    }
 }

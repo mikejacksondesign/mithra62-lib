@@ -43,7 +43,7 @@ class Pdo implements DbInterface
     
     /**
      * The database object we're piggybacking on
-     * @var \voku\db\DB
+     * @var \Aura\Sql\ExtendedPdo
      */
     protected $db = null;
     
@@ -282,6 +282,8 @@ class Pdo implements DbInterface
                 array(), // driver options as key-value pairs
                 array()  // attributes as key-value pairs
             );
+            
+            $this->db->setAttribute(ExtendedPdo::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
         }
         
         return $this->db;
