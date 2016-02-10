@@ -38,7 +38,24 @@ class Concrete5 extends AbstractPlatform
     
     public function getEmailConfig()
     {
-        \Config::get('concrete.mail');
+        if(!\Config::get('concrete.email.enabled')) {
+            throw new Exception('Concrete5 email is disabled... you have to enable that for email to function');
+        }
+        
+        $email = \Config::get('concrete.mail');
+        $this->email_config = array();
+        $this->email_config['type'] = $email['method'];
+        $this->email_config['port'] = $email['methods']['smtp']['port'];
+        if ($email['method'] == 'smtp') {
+            $this->email_config['smtp_options']['host'] = $email['methods']['smtp']['server'];
+            $this->email_config['smtp_options']['connection_config']['username'] = $email['methods']['smtp']['username'];
+            $this->email_config['smtp_options']['connection_config']['password'] = $email['methods']['smtp']['password'];
+            $this->email_config['smtp_options']['port'] = $email['methods']['smtp']['port'];
+        }
+        
+        $this->email_config['sender_name'] = $this->getSiteName();
+        $this->email_config['from_email'] = \Config::get('concrete.email.default.address');
+        return $this->email_config;        
     }
     
     public function getCurrentUrl()
