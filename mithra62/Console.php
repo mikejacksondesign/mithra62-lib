@@ -19,7 +19,6 @@ namespace mithra62;
  */
 class Console
 {
-
     /**
      * The arguments object
      * 
@@ -57,7 +56,9 @@ class Console
     /**
      * Outputs a new line
      * 
-     * @param string $string            
+     * @param string $string The output we want to display to the console out
+     * @param bool $translate Whether the string should be sent through the mithra62\Language object
+     * @return void
      */
     public function outputLine($string = '', $translate = true)
     {
@@ -99,6 +100,13 @@ class Console
         return $this;
     }
 
+    /**
+     * Returns the available commands the Console provides
+     * @see \cli\Arguments
+     * @param string $strict
+     * @param string $force
+     * @return \cli\Arguments
+     */
     public function getArgs($strict = false, $force = false)
     {
         if (is_null($this->args) || $force) {

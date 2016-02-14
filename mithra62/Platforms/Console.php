@@ -124,7 +124,7 @@ class Console extends AbstractPlatform
 
     /**
      * (non-PHPdoc)
-     * 
+     * @param string $url
      * @see \mithra62\Platforms\AbstractPlatform::redirect()
      */
     public function redirect($url)
@@ -132,7 +132,8 @@ class Console extends AbstractPlatform
 
     /**
      * (non-PHPdoc)
-     * 
+     * @param string $key
+     * @param string $default
      * @see \mithra62\Platforms\AbstractPlatform::getPost()
      */
     public function getPost($key, $default = false)

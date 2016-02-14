@@ -82,7 +82,7 @@ interface ViewInterface
     
     /**
      * Returns a string to use for the form field errors
-     *
+     * @param array $errors
      * @return string
      */
     public function m62FormErrors($errors);
@@ -96,7 +96,8 @@ interface ViewInterface
     
     /**
      * Should return an array for select dropdowns based on the $type
-     * @param string $type
+     * @param string $type The key to use for selecting which option set
+     * @param bool $translate Whether to translate the options 
      * @return array
      */
     public function m62Options($type, $translate = true);
