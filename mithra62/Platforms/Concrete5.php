@@ -80,7 +80,7 @@ class Concrete5 extends AbstractPlatform
     
     public function getEncryptionKey()
     {
-        
+        return \Config::get('concrete.security.token.encryption');
     }
     
     public function getConfigOverrides()
