@@ -65,4 +65,10 @@ abstract class SwiftAbstract
      * @param string $mail_type
      */
     abstract public function getMessage(array $to, $from_email, $from_name, $subject, $message_body, array $attachments, $mail_type='html');
+    
+    /**
+     * Wrapper to send the message
+     * @param object $message
+     */
+    abstract public function send($message, $extra = null);
 }

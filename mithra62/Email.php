@@ -353,8 +353,6 @@ class Email
                 else {
                     $mailer = new Email\Swift5($this->config);
                 }
-                    
-                exit;
             }
             else {
                 $mailer = new Email\Swift5($this->config); 
@@ -416,8 +414,8 @@ class Email
         $body_message = $this->getView()->render($this->getMessage(), $vars);
         $message = $mailer->getMessage($valid_emails, $this->config['from_email'], $this->config['sender_name'], $subject, $body_message, $this->getAttachments(), $this->getMailtype());
         
-        if (! $mailer->getMailer()->send($message)) {
-            print_r($mailer->mailer_logger->dump());
+        if (! $mailer->send($message)) {
+            print_r($mailer->getMailer()->mailer_logger->dump());
             exit();
             throw new EmailException($this->getMailer()->ErrorInfo);
         }

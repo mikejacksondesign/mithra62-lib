@@ -11,12 +11,22 @@ use Swift_Plugins_LoggerPlugin;
 
 class Swift5 extends SwiftAbstract
 {
+    /**
+     * Set it up
+     * @param unknown $config
+     */
     public function __construct($config = array())
     {
         $this->config = $config;
-        require_once dirname(__FILE__).'../../../vendor/swiftmailer/swiftmailer/lib/swift_required.php';
+        if( !class_exists('\Swift_Mailer') ) {
+            require_once dirname(__FILE__).'../../../vendor/swiftmailer/swiftmailer/lib/swift_required.php';
+        }
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Email\SwiftAbstract::getMailer()
+     */
     public function getMailer()
     {
         if(is_null($this->mailer))
@@ -37,6 +47,10 @@ class Swift5 extends SwiftAbstract
         return $this->mailer;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Email\SwiftAbstract::getMessage()
+     */
     public function getMessage(array $to, $from_email, $from_name, $subject, $message_body, array $attachments, $mail_type='html')
     {
         $message = \Swift_Message::newInstance();
@@ -62,5 +76,10 @@ class Swift5 extends SwiftAbstract
         }
         
         return $message;
+    }
+    
+    public function send($message, $extra = null)
+    {
+        return $this->getMailer()->send($message);
     }
 }
