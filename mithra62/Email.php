@@ -10,13 +10,6 @@
  */
 namespace mithra62;
 
-use Swift_SmtpTransport;
-use Swift_MailTransport;
-use Swift_Message;
-use Swift_Attachment;
-use Swift_Mailer;
-use Swift_Plugins_Loggers_ArrayLogger;
-use Swift_Plugins_LoggerPlugin;
 use mithra62\Exceptions\EmailException;
 
 /**
@@ -350,17 +343,24 @@ class Email
     public function getMailer()
     {
         if (is_null($this->mailer)) {
-            if (isset($this->config['type']) && $this->config['type'] == 'smtp') {
-                $transport = Swift_SmtpTransport::newInstance($this->config['smtp_options']['host'], $this->config['smtp_options']['port']);
-                $transport->setUsername($this->config['smtp_options']['connection_config']['username']);
-                $transport->setPassword($this->config['smtp_options']['connection_config']['password']);
-            } else {
-                $transport = Swift_MailTransport::newInstance();
+            //@todo test for existance and then version of Swiftmailer
+            if(class_exists('\Swift'))
+            {
+                if(version_compare(\Swift::VERSION, 4, '<=') && version_compare(\Swift::VERSION, 3, '>='))
+                {
+                    $mailer = new Email\Swift3($this->config);
+                }
+                else {
+                    $mailer = new Email\Swift5($this->config);
+                }
+                    
+                exit;
+            }
+            else {
+                $mailer = new Email\Swift5($this->config); 
             }
             
-            $this->mailer = Swift_Mailer::newInstance($transport);
-            $this->mailer_logger = new Swift_Plugins_Loggers_ArrayLogger();
-            $this->mailer->registerPlugin(new Swift_Plugins_LoggerPlugin($this->mailer_logger));
+            $this->mailer = $mailer;
         }
         
         return $this->mailer;
@@ -389,21 +389,21 @@ class Email
     public function send(array $vars = array())
     {
         if (count($this->getTo()) == 0) {
-            throw new \InvalidArgumentException('__exception_missing_email');
+            throw new \InvalidArgumentException('A "To" email address is requried');
         }
         
         if ($this->getSubject() == '') {
-            throw new \InvalidArgumentException('__exception_missing_subject');
+            throw new \InvalidArgumentException('A subject for the email must be set');
         }
         
         if ($this->getMessage() == '') {
-            throw new \InvalidArgumentException('__exception_missing_message');
+            throw new \InvalidArgumentException('There isn\'t a message set');
         }
         
         $valid_emails = array();
         foreach ($this->getTo() as $to) {
-            if (filter_var($to, FILTER_VALIDATE_EMAIL)) {
-                $valid_emails = $to;
+            if (filter_var(trim($to), FILTER_VALIDATE_EMAIL)) {
+                $valid_emails[] = trim($to);
             }
         }
         
@@ -411,33 +411,13 @@ class Email
             return;
         }
         
-        $message = Swift_Message::newInstance();
-        $message->setTo($valid_emails);
-        if ($this->getAttachments()) {
-            foreach ($this->getAttachments() as $attachment) {
-                foreach ($attachment as $file => $alt_name) {
-                    if ($alt_name == '') {
-                        $message->attach(Swift_Attachment::fromPath($file));
-                    } else {
-                        $message->attach(Swift_Attachment::fromPath($file)->setFilename($alt_name));
-                    }
-                }
-            }
-        }
+        $mailer = $this->getMailer();
+        $subject = $this->getView()->render($this->getSubject(), $vars);
+        $body_message = $this->getView()->render($this->getMessage(), $vars);
+        $message = $mailer->getMessage($valid_emails, $this->config['from_email'], $this->config['sender_name'], $subject, $body_message, $this->getAttachments(), $this->getMailtype());
         
-        $message->setFrom($this->config['from_email'], $this->config['sender_name']);
-        $message->setSubject($this->getView()
-            ->render($this->getSubject(), $vars));
-        if ($this->getMailtype() == 'html') {
-            $message->setBody($this->getView()
-                ->render($this->getMessage(), $vars), 'text/html');
-        } else {
-            $message->setBody($this->getView()
-                ->render($this->getMessage(), $vars));
-        }
-        
-        if (! $this->getMailer()->send($message)) {
-            print_r($this->mailer_logger->dump());
+        if (! $mailer->getMailer()->send($message)) {
+            print_r($mailer->mailer_logger->dump());
             exit();
             throw new EmailException($this->getMailer()->ErrorInfo);
         }
