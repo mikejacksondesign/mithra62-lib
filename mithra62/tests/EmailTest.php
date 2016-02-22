@@ -65,7 +65,7 @@ class EmailTest extends TestFixture
         
         $this->assertTrue(is_array($email->getTo()));
         
-        $this->assertInstanceOf('Swift_Mailer', $email->getMailer());
+        $this->assertInstanceOf('mithra62\Email\Swift5', $email->getMailer());
     }
 
     public function testSetSubject()

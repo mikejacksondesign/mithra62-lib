@@ -338,12 +338,11 @@ class Email
     /**
      * Returns an instance of the mail object
      * 
-     * @return PHPMailer
+     * @return Email\SwiftAbstract
      */
     public function getMailer()
     {
         if (is_null($this->mailer)) {
-            //@todo test for existance and then version of Swiftmailer
             if(class_exists('\Swift'))
             {
                 if(version_compare(\Swift::VERSION, 4, '<=') && version_compare(\Swift::VERSION, 3, '>='))
