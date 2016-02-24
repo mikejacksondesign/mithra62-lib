@@ -9,6 +9,8 @@
  */
 namespace mithra62\Platforms\View;
 
+use Nocarrier\Hal;
+
 /**
  * Backup Pro - Rest View Object
  *
@@ -17,7 +19,17 @@ namespace mithra62\Platforms\View;
  * @package BackupPro\View
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Rest
+class Rest extends AbstractView
 {
+    
+    /**
+     * Returns an instance of the Hal object for use
+     * @param string $route
+     * @return Hal
+     */
+    public function getHal($route, array $item = array())
+    {
+        return new Hal($route, $item);
+    }
     
 }
