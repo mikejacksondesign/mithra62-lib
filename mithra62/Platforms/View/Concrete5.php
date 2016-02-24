@@ -54,12 +54,20 @@ class Concrete5 extends AbstractView
         }
     }
     
+    /**
+     * Sets the base path to the partials directory
+     * @param string $path The complete parth to the partials directory
+     * @return \mithra62\Platforms\View\Concrete5
+     */
     public function setPartialsPath($path)
     {
         $this->partials_path = $path;
         return $this;
     }
     
+    /**
+     * Returns the path to the partials directory
+     */
     public function getPartialsPath()
     {
         return rtrim($this->partials_path, DIRECTORY_SEPARATOR).
@@ -69,12 +77,21 @@ class Concrete5 extends AbstractView
                 
     }
     
+    /**
+     * Sets the static asset URL base
+     * @param string $url_base
+     * @return \mithra62\Platforms\View\Concrete5
+     */
     public function setStaticAssetsUrlBase($url_base)
     {
         $this->static_assets_url_base = $url_base;
         return $this;
     }
     
+    /**
+     * Returns the static asset URL base
+     * @return string
+     */
     public function getStaticAssetsUrlBase()
     {
         return $this->static_assets_url_base;
