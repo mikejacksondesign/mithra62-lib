@@ -10,6 +10,7 @@
 namespace mithra62\Platforms\View;
 
 use Nocarrier\Hal;
+use Crell\ApiProblem\ApiProblem;
 
 /**
  * Backup Pro - Rest View Object
@@ -30,6 +31,11 @@ class Rest extends AbstractView
     public function getHal($route, array $item = array())
     {
         return new Hal($route, $item);
+    }
+    
+    public function getApiProblem($title, $type)
+    {
+        return new ApiProblem($this->m62Lang($title), $type);
     }
     
 }
