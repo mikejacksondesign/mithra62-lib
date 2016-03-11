@@ -44,6 +44,15 @@ abstract class AbstractServer
     }
     
     /**
+     * Returns an instance of the Hmac object
+     * @return \mithra62\Rest\Hmac
+     */
+    public function getHmac()
+    {
+        return new Hmac();
+    }
+    
+    /**
      * Outlines the Server routes
      * @return void
      */
