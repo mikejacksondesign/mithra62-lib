@@ -42,6 +42,9 @@ abstract class Settings
     protected $_global_defaults = array(
         'date_format' => 'M d, Y, h:i:sA',
         'relative_time' => '1',
+        'enable_rest_api' => '0',
+        'api_key' => '',
+        'api_secret' => '',        
         'license_number' => '',
         'license_check' => 0,
         'license_status' => ''
