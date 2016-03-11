@@ -1,8 +1,8 @@
 <?php
 /**
- * mithra62 - Backup Pro
+ * mithra62
  *
- * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @copyright	Copyright (c) 2016, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
  * @filesource 	./mithra62/Rest/AbstractServer.php
@@ -11,11 +11,11 @@
 namespace mithra62\Rest;
 
 /**
- * Backup Pro - Abstract REST Server
+ * Abstract REST Server
  *
  * Sets up and fires off the REST Server
  *
- * @package mithra62\BackupPro
+ * @package Rest
  * @author Eric Lamb <eric@mithra62.com>
  */
 abstract class AbstractServer
