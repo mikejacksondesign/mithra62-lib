@@ -22,6 +22,11 @@ use Crell\ApiProblem\ApiProblem;
  */
 class Rest extends AbstractView
 {
+    /**
+     * The Platform object
+     * @var \mithra62\Platforms\AbstractPlatform
+     */
+    protected $platform = null;
     
     /**
      * Returns an instance of the Hal object for use
