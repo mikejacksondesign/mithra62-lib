@@ -29,6 +29,12 @@ use PhilipBrown\Signature\Exceptions\SignatureException;
 class Hmac
 {
     /**
+     * The prefix authentication keys will be named after
+     * @var string
+     */
+    private $prefix = 'bp_auth_';
+    
+    /**
      * The REQUEST method we're working with
      * @var string
      */
@@ -62,7 +68,7 @@ class Hmac
         $token = new Token($key, $secret);
         
         try {
-            return $auth->attempt($token);
+            return $auth->attempt($token, $this->prefix);
         }
         
         catch (SignatureException $e) {
