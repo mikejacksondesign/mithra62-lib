@@ -44,7 +44,8 @@ abstract class Settings
         'relative_time' => '1',
         'enable_rest_api' => '0',
         'api_key' => '',
-        'api_secret' => '',        
+        'api_secret' => '',     
+        'api_debug' => 0,
         'license_number' => '',
         'license_check' => 0,
         'license_status' => ''

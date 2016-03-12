@@ -59,6 +59,19 @@ class Hmac
      */
     public function auth($key, $secret)
     {
+        //make sure we have the require attributes
+        $required = array('timestamp');
+        $data = $this->getData();
+        foreach($required AS $require) {
+            if(!isset($data[$this->prefix.$require])) {
+                return false;
+            }
+        }
+        
+        echo $this->getRoute();
+        exit;
+        
+        //looks good, now let's process it
         $auth  = new Auth($this->getMethod(), $this->getRoute(), $this->getData(), [
             new CheckKey,
             new CheckVersion,

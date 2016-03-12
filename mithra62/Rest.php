@@ -39,6 +39,12 @@ class Rest
     protected $server = null;
     
     /**
+     * The route being requested
+     * @var string
+     */
+    protected $route = null;
+    
+    /**
      * Returns an instance of the REST Server
      * @return \Rest\AbstractServer
      */
@@ -66,6 +72,12 @@ class Rest
     public function setLang(\mithra62\Language $lang)
     {
         $this->lang = $lang;
+        return $this;
+    }
+    
+    public function setRoute($route)
+    {
+        $this->route = $route;
         return $this;
     }
 }
