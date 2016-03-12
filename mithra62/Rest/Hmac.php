@@ -32,7 +32,7 @@ class Hmac
      * The prefix authentication keys will be named after
      * @var string
      */
-    private $prefix = 'bp_auth_';
+    private $prefix = 'm62_auth_';
     
     /**
      * The REQUEST method we're working with
@@ -67,9 +67,6 @@ class Hmac
                 return false;
             }
         }
-        
-        echo $this->getRoute();
-        exit;
         
         //looks good, now let's process it
         $auth  = new Auth($this->getMethod(), $this->getRoute(), $this->getData(), [

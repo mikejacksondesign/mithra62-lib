@@ -38,6 +38,12 @@ class Rest extends AbstractView
         return new Hal($route, $item);
     }
     
+    /**
+     * Returns an instance of ApiProblem object
+     * @param string $title
+     * @param string $type
+     * @return \Crell\ApiProblem\ApiProblem
+     */
     public function getApiProblem($title, $type)
     {
         return new ApiProblem($this->m62Lang($title), $type);
