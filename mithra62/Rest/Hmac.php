@@ -145,4 +145,9 @@ class Hmac
     {
         return $this->data;
     }
+    
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
 }

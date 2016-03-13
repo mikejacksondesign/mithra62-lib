@@ -1,6 +1,23 @@
 <?php
+/**
+ * mithra62
+ *
+ * @copyright	Copyright (c) 2016, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @version		1.0
+ * @filesource 	./mithra62/Rest/Platforms/Controllers/Rest.php
+ */
+ 
 namespace mithra62\Platforms\Controllers;
 
+/**
+ * mithra62 - REST Base Controller
+ *
+ * Contains the global REST methods
+ *
+ * @package Rest\Authentication
+ * @author Eric Lamb <eric@mithra62.com>
+ */
 class Rest
 {
     /**
@@ -9,12 +26,18 @@ class Rest
      */
     public function authenticate()
     {
-        $data = $this->getRequestHeaders();
         $hmac = $this->rest->getServer()->getHmac();
-        return $hmac->setData($data)
-        ->setRoute($this->platform->getPost('bp_method'))
-        ->setMethod($_SERVER['REQUEST_METHOD'])
-        ->auth($this->settings['api_key'], $this->settings['api_secret']);
+        $data = array_merge($this->getRequestHeaders(true), $this->getBodyData());
+        $auth = $hmac->setData($data)
+                     ->setRoute($this->platform->getPost('bp_method'))
+                     ->setMethod($_SERVER['REQUEST_METHOD'])
+                     ->auth($this->settings['api_key'], $this->settings['api_secret']);
+        
+        if(!$auth) {
+            return false;
+        }
+        
+        return true;
     }
     
     /**
@@ -36,9 +59,21 @@ class Rest
      * Returns an associative array of the request headers
      * @return multitype:unknown
      */
-    public function getRequestHeaders()
+    public function getRequestHeaders($auth = true)
     {
-        return \getallheaders();
+        $headers = \getallheaders();
+        if($auth) {
+            $hmac = $this->rest->getServer()->getHmac();
+            $return = array(
+                $hmac->getPrefix().'timestamp' => $headers[$hmac->getPrefix().'timestamp'],
+                $hmac->getPrefix().'signature' => $headers[$hmac->getPrefix().'signature'],
+                $hmac->getPrefix().'key' => $headers[$hmac->getPrefix().'key'],
+                $hmac->getPrefix().'version' => $headers[$hmac->getPrefix().'version'],
+            );
+            $headers = $return;
+        }
+        
+        return $headers;
     }
     
     /**
