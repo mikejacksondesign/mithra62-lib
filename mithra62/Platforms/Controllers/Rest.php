@@ -20,6 +20,8 @@ namespace mithra62\Platforms\Controllers;
  */
 class Rest
 {
+    protected $body_data = null;
+    
     /**
      * Authenticates the request
      * @return boolean
@@ -46,13 +48,18 @@ class Rest
      */
     public function getBodyData()
     {
-        $data = json_decode(file_get_contents("php://input"), true);
-        if(!$data)
+        if(is_null($this->body_data)) 
         {
-            return array();
+            $data = json_decode(file_get_contents("php://input"), true);
+            if(!$data)
+            {
+                $data = array();
+            }
+            
+            $this->body_data = $data;
         }
-    
-        return $data;
+        
+        return $this->body_data;
     }
     
     /**
