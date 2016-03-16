@@ -135,7 +135,7 @@ class SettingsTest extends TestFixture
             ->setTable($this->test_table_name)
             ->get();
         
-        $this->assertCount(5, $data);
+        $this->assertCount(9, $data);
         $this->assertArrayHasKey('date_format', $data);
         
         return $settings;
