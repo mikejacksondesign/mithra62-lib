@@ -72,10 +72,10 @@ class Rest
         if($auth) {
             $hmac = $this->rest->getServer()->getHmac();
             $return = array(
-                $hmac->getPrefix().'timestamp' => $headers[$hmac->getPrefix().'timestamp'],
-                $hmac->getPrefix().'signature' => $headers[$hmac->getPrefix().'signature'],
-                $hmac->getPrefix().'key' => $headers[$hmac->getPrefix().'key'],
-                $hmac->getPrefix().'version' => $headers[$hmac->getPrefix().'version'],
+                $hmac->getPrefix().'timestamp' => (isset($headers[$hmac->getPrefix().'timestamp']) ? $headers[$hmac->getPrefix().'timestamp'] : ''),
+                $hmac->getPrefix().'signature' => (isset($headers[$hmac->getPrefix().'signature']) ? $headers[$hmac->getPrefix().'signature'] : ''),
+                $hmac->getPrefix().'key' => (isset($headers[$hmac->getPrefix().'key']) ? $headers[$hmac->getPrefix().'key'] : ''),
+                $hmac->getPrefix().'version' => (isset($headers[$hmac->getPrefix().'version']) ? $headers[$hmac->getPrefix().'version'] : ''),
             );
             $headers = $return;
         }
