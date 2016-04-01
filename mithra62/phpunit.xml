@@ -2,11 +2,11 @@
 <phpunit colors="true" bootstrap="./tests/autoload.php" verbose="true">
 	<testsuites>
 		<testsuite name="mithra62 Test Suite">
-			<directory>./tests</directory>
-			<!-- 
+			<!--<directory>./tests</directory>
+			 
 			<directory>./tests/</directory>
-			<exclude>./BackupPro/tests/Browser/</exclude>
-			<directory>./BackupPro/tests/Browser/Prestashop</directory> -->
+			<exclude>./BackupPro/tests/Browser/</exclude>-->
+			<directory>./BackupPro/tests/Browser/Prestashop/Settings</directory> 
 		</testsuite>
 	</testsuites>
 </phpunit>
