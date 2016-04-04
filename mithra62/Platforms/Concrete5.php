@@ -75,7 +75,7 @@ class Concrete5 extends AbstractPlatform
     
     public function getSiteUrl()
     {
-        
+        return SITE_URL;
     }
     
     public function getEncryptionKey()
