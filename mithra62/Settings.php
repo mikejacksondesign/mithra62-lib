@@ -436,6 +436,16 @@ abstract class Settings
             }
             
             $this->settings = $settings;
+            
+            if($this->settings['api_key'] == '')
+            {
+                $this->settings['api_key'] = $this->getEncrypt()->guid();
+            }
+            
+            if($this->settings['api_secret'] == '')
+            {
+                $this->settings['api_secret'] = $this->getEncrypt()->guid();
+            }            
         }
         
         return $this->settings;
