@@ -12,6 +12,7 @@ namespace mithra62\tests;
 use mithra62\Settings;
 use mithra62\Db;
 use mithra62\Language;
+use mithra62\Encrypt;
 use mithra62\tests\TestFixture;
 
 /**
@@ -24,7 +25,12 @@ use mithra62\tests\TestFixture;
  */
 class _settings extends Settings
 {
-
+    public function __construct($db, $lang)
+    {
+        parent::__construct($db, $lang);
+        $this->setEncrypt(new Encrypt);
+    }
+    
     /**
      * (non-PHPdoc)
      * 
