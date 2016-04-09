@@ -60,7 +60,7 @@ class Validate extends Validator
     protected function loadRules()
     {
         $old_cwd = getcwd();
-        chdir(dirname(__FILE__));
+        chdir(__DIR__);
         $path = 'Validate' . DIRECTORY_SEPARATOR . 'Rules';
         if (! is_dir($path)) {
             throw new ValidateException("Rules Directory " . $path . " isn't a directory...");
