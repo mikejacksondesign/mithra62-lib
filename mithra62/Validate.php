@@ -151,4 +151,9 @@ class Validate extends Validator
         $this->regex = $regex;
         return $this;
     }
+    
+    public function getRegex()
+    {
+        return $this->regex;
+    }
 }
