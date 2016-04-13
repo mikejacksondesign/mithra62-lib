@@ -28,6 +28,12 @@ class Ee3 extends AbstractPlatform
      * @var array
      */
     private $config = null;
+    
+    /**
+     * The key to look for within hidden config overrides
+     * @var string
+     */
+    protected $config_key = null;    
 
     /**
      * Sets the Eecms config array
@@ -140,15 +146,15 @@ class Ee3 extends AbstractPlatform
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \mithra62\Platforms\AbstractPlatform::getConfigOverrides()
      */
     public function getConfigOverrides()
     {
-        if (! empty(ee()->config->config['backup_pro']) && is_array(ee()->config->config['backup_pro'])) {
-            return ee()->config->config['backup_pro'];
+        if (! empty(ee()->config->config[$this->config_key]) && is_array(ee()->config->config[$this->config_key])) {
+            return ee()->config->config[$this->config_key];
         }
-        
+    
         return array();
     }
 
