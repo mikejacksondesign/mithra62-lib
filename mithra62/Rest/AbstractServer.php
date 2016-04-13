@@ -33,6 +33,12 @@ abstract class AbstractServer
     protected $rest = null;
     
     /**
+     * The API version we're using
+     * @var string
+     */
+    protected $version = null;
+    
+    /**
      * Set it up
      * @param \mithra62\Platforms\AbstractPlatform $platform
      * @param \mithra62\BackupPro\Rest $rest
@@ -53,8 +59,34 @@ abstract class AbstractServer
     }
     
     /**
+     * Creates the version of the API we're expected to use
+     * @param string $version_key
+     * @return string
+     */
+    public function getVersion($version_key)
+    {
+        if(is_null($this->version))
+        {
+            //determine the version
+            $headers = \getallheaders();
+            if(isset($headers[$version_key]) && is_numeric($headers[$version_key]) && in_array($headers[$version_key], $this->api_versions))
+            {
+                $version = 'V'.str_replace('.','_',$headers[$version_key]);
+            }
+            else
+            {
+                $version = 'V1';
+            }
+            
+            $this->version = $version;
+        }
+        
+        return $this->version;
+    }
+    
+    /**
      * Outlines the Server routes
      * @return void
      */
-    abstract public function run();
+    abstract public function run(array $routes = array());
 }
