@@ -132,28 +132,26 @@ class Files
         // Trim the trailing slash
         $path = rtrim($path, DIRECTORY_SEPARATOR);
         
-        if (! $current_dir = @opendir($path)) {
+        if (! $current_dir = opendir($path)) {
             return false;
         }
         
         $exclude[] = '.';
         $exclude[] = '..';
         
-        while (false !== ($filename = @readdir($current_dir))) {
+        while (false !== ($filename = readdir($current_dir))) {
             if (! in_array($filename, $exclude)) {
                 if (is_dir($path . DIRECTORY_SEPARATOR . $filename)) {
-                    if (substr($filename, 0, 1) != '.') {
-                        $this->deleteDir($path . DIRECTORY_SEPARATOR . $filename, $del_dir, $level + 1, $exclude);
-                    }
+                    $this->deleteDir($path . DIRECTORY_SEPARATOR . $filename, $del_dir);
                 } else {
                     $this->delete($path . DIRECTORY_SEPARATOR . $filename);
                 }
             }
         }
-        @closedir($current_dir);
+        closedir($current_dir);
         
-        if ($del_dir == true and $level >= 0) {
-            return @rmdir($path);
+        if ($del_dir == true) {
+            return rmdir($path);
         }
         
         return true;

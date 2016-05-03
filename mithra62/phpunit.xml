@@ -6,7 +6,7 @@
 			 
 			<directory>./tests/</directory>
 			<exclude>./BackupPro/tests/Browser/</exclude>-->
-			<directory>./BackupPro/tests/Browser/Prestashop/Settings</directory> 
+			<directory>./BackupPro/tests/Browser/Concrete5/Storage</directory> 
 		</testsuite>
 	</testsuites>
 </phpunit>
