@@ -21,6 +21,16 @@ use mithra62\Platforms\AbstractPlatform;
  */
 class Concrete5 extends AbstractPlatform
 {
+    /**
+     * The Concrete5 App object
+     * @var \Concrete\Core\Support\Facade\Application
+     */
+    private $app = null;
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getDbCredentials()
+     */
     public function getDbCredentials()
     {
         $database_config = \Config::get('database');
@@ -36,6 +46,10 @@ class Concrete5 extends AbstractPlatform
         );
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getEmailConfig()
+     */
     public function getEmailConfig()
     {
         if(!\Config::get('concrete.email.enabled')) {
@@ -58,36 +72,65 @@ class Concrete5 extends AbstractPlatform
         return $this->email_config;        
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getCurrentUrl()
+     */
     public function getCurrentUrl()
     {
         return $_SERVER["REQUEST_URI"];
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getSiteName()
+     */
     public function getSiteName()
     {
         return \Config::get('concrete.site');
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getTimezone()
+     */
     public function getTimezone()
     {
         return \Config::get('app.timezone');
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getSiteUrl()
+     */
     public function getSiteUrl()
     {
-        return SITE_URL;
+        $app = $this->getApp(); 
+        return (string)rtrim($app->make('url/canonical'), '/');
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getEncryptionKey()
+     */
     public function getEncryptionKey()
     {
         return \Config::get('concrete.security.token.encryption');
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::getConfigOverrides()
+     */
     public function getConfigOverrides()
     {
         return array();
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\AbstractPlatform::redirect()
+     */
     public function redirect($url)
     {
         return \Concrete\Core\Routing\Redirect::url($url);
@@ -107,6 +150,19 @@ class Concrete5 extends AbstractPlatform
         }
         
         return $default;
+    }
+    
+    /**
+     * Returns an instance of the Concrete5 app object
+     * @return \Concrete\Core\Support\Facade\Application
+     */
+    private function getApp()
+    {
+        if( is_null($this->app) ) {
+            $this->app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
+        }
+        
+        return $this->app;
     }
     
 }
