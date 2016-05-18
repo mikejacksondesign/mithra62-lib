@@ -41,7 +41,7 @@ class WritableTest extends TestFixture
         $val = new Validate();
         $creds = $this->getFtpCreds();
         $creds['ftp_store_location'] = '/fdsafdsa';
-        $val->rule('ftp_writable', 'connection_field', $creds)->val(array(
+        @$val->rule('ftp_writable', 'connection_field', $creds)->val(array(
             'connection_field' => 'Foo'
         ));
         $this->assertTrue($val->hasErrors());
@@ -53,7 +53,7 @@ class WritableTest extends TestFixture
     public function testRuleSuccess()
     {
         $val = new Validate();
-        $val->rule('ftp_writable', 'connection_field', $this->getFtpCreds())
+        @$val->rule('ftp_writable', 'connection_field', $this->getFtpCreds())
             ->val(array(
             'connection_field' => 'Foo'
         ));

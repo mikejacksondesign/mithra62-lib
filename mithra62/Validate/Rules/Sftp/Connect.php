@@ -63,13 +63,8 @@ if (! class_exists('\\mithra62\\Validate\\Rules\\Sftp\\Connect')) {
                     return false;
                 }
                 
-                $filesystem = new Remote(Sftp::getRemoteClient($params));
-                if (! $filesystem->getAdapter()->listContents()) {
-                    return false;
-                }
-                
-                $filesystem->getAdapter()->disconnect();
                 return true;
+                
             } catch (\Exception $e) {
                 return false;
             }
