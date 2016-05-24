@@ -35,7 +35,7 @@ interface ViewInterface
      * @param string $string            
      * @return \mithra62\string
      */
-    public function m62FileSize($string);
+    public function m62FileSize($string, $html = true);
 
     /**
      * Formats a date
