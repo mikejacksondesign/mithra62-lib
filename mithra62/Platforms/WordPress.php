@@ -19,7 +19,7 @@ use mithra62\Platforms\AbstractPlatform;
  * @package Platforms\Wordpress
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Wordpress extends AbstractPlatform
+class WordPress extends AbstractPlatform
 {
 
     /**
