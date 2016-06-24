@@ -124,7 +124,10 @@ class Concrete5 extends AbstractPlatform
      */
     public function getConfigOverrides()
     {
-        return array();
+        $config = \Config::get('backup_pro.overrides');
+        if( is_array($config) ) {
+            return $config;
+        }
     }
     
     /**
