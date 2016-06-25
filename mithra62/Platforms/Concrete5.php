@@ -128,6 +128,8 @@ class Concrete5 extends AbstractPlatform
         if( is_array($config) ) {
             return $config;
         }
+        
+        return array();
     }
     
     /**
