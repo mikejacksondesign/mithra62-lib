@@ -23,6 +23,12 @@
 		"jaeger-app/remote-dropbox": "^0.1",
 		"jaeger-app/encoding": "^0.1",
 		"jaeger-app/db-mysql": "^0.1",
+		"jaeger-app/validate-sftp": "^0.1",
+		"jaeger-app/validate-ftp": "^0.1",
+		"jaeger-app/validate-s3": "^0.1",
+		"jaeger-app/validate-gcs": "^0.1",
+		"jaeger-app/validate-rcf": "^0.1",
+		"jaeger-app/validate-dropbox": "^0.1",
         "soundintheory/php-sql-parser": "^1.0"
 	},
 	"require-dev": {
