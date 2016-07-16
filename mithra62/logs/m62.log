@@ -1,0 +1,1 @@
+2016 6 24, 9:51 am > DEBUG > Failed without error message: mysql --defaults-extra-file="D:\ProjectFiles\mithra62\ee3\develop\backups\database\tmp\my.cnf" dev_ee3 < D:\ProjectFiles\mithra62\ee3\develop\backups\database\tmp\1466786863@@dev_ee3.sql [] []
